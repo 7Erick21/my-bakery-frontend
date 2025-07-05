@@ -1,0 +1,1 @@
+export { useLangStore } from './languageStore'

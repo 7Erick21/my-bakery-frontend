@@ -1,0 +1,48 @@
+{
+  "navbar.about": "Sobre mí",
+  "navbar.resume": "Resumen",
+  "navbar.portfolio": "Portfolio",
+  "navbar.contact": "Contacto",
+
+  "sidebar.role": "Desarrollador Web",
+  "sidebar.email": "Correo",
+  "sidebar.birthday": "Cumpleaños",
+  "sidebar.birthday.value": "Agosto 21, 2001",
+  "sidebar.location": "Ubicación",
+  "sidebar.location.value": "Barcelona, España, ESP",
+  "sidebar.downloadCV": "Descargar CV",
+
+  "about.title": "Sobre mí",
+  "about.description1": "Soy Erick, un apasionado programador full stack de 23 años con sede en Perú. Tengo 4 años de experiencia en el frontend y 6 meses explorando el backend. En el frontend, me especializo en crear interfaces intuitivas con tecnologías como React, Next.js y Astro. En el backend, trabajo con Node.js, Serverless y bases de datos.",
+  "about.description2": "Mi mayor motivación es enfrentar nuevos desafíos y seguir aprendiendo. Busco colaborar con equipos dinámicos y talentosos, aportando soluciones creativas y efectivas.",
+  "about.technologies.frontend": "Frontend",
+  "about.technologies.frameworks": "Frameworks & UI",
+  "about.technologies.backend": "Backend & Datos",
+  "about.technologies.herramientas": "Herramientas",
+  "about.recommendations": "Recomendaciones",
+
+  "resume.title": "Resumen",
+  "resume.education": "Educación",
+  "resume.education.unjfsc": "Estudios Superiores - Ingeniería de Sistemas.",
+  "resume.education.udemy": "Cursos digitales y especialización en desarrollo software tanto como frontend como backend.",
+  "resume.experience": "Experiencia",
+  "resume.experience.freelance": "Freelance Proyecto en equipo - Grupo de estudios de la universidad para crear proyectos personales",
+  "resume.experience.2myr": "Desarrollador Full Stack - Node js, Serverless, Prisma, Typescript como backend y React, Next, Gatsby, Typescript, Mui como frontend y strapi, sonic como cms",
+  "resume.experience.fromsolvers": "Desarrollador Frontend Senior - React, Typescript, Rxjs, Styled-Components y demas librerias de React",
+  "resume.experience.indra": "Desarrollador Frontend Senior - React, Typescript, TailwindCss y demas librerias de React",
+
+  "portfolio.title": "Portfolio",
+  "portfolio.washku.landing": "Simplifica la gestión de tu carta digital con Washku, mejora tu presencia online y haz crecer tu bar.",
+  "portfolio.washku.portal": "Descubre los mejores cócteles y tragos: Recetas, tips y más",
+  "portfolio.washku.intranet": "Administra tu negocio con Washku",
+
+  "contact.title": "Contacto",
+  "contact.form.title": "Formulario de contacto",
+  "contact.form.fullname": "Nombre Completo",
+  "contact.form.email": "Dirección de correo electrónico",
+  "contact.form.message": "Mensaje",
+  "contact.form.send": "Enviar mensaje",
+
+  "date.august21": "Agosto 21, 2001",
+  "location.barcelona": "Barcelona, España, ESP"
+}

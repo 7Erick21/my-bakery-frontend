@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/app/*": ["app/*"],
+      "@/icons/*": ["src/presentation/assets/icons/*"],
+      "@/images/*": ["src/presentation/assets/images/*"],
+      "@/components/*": ["src/presentation/components/*"],
+      "@/layouts/*": ["src/presentation/layouts/*"],
+      "@/views/*": ["src/presentation/views/*"],
+      "@/shared/*": ["src/presentation/shared/*"],
+      "@/presentation/*": ["src/presentation/*"],
+      "@/src/*": ["src/*"],
+      "@/styles/*": ["styles/*"]
+    }
+  }
+}

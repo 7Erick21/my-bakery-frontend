@@ -1,0 +1,1 @@
+export { BakeryAnimate } from './BakeryAnimate';
