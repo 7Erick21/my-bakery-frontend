@@ -14,13 +14,13 @@ export const Header: FC = () => {
 
   const navigationItems = [
     { key: 'Home', href: '#home' },
-    { key: 'Products', href: '#products' },
     { key: 'About', href: '#about' },
+    { key: 'Products', href: '#products' },
     { key: 'Contact', href: '#contact' }
   ];
 
   return (
-    <Card variant='children' className='fixed w-100-40 top-2 max-w-8xl !rounded-4xl'>
+    <Card variant='children' className='fixed w-100-40 top-2 max-w-8xl !rounded-4xl z-10'>
       <div className='px-6 py-4'>
         <div className='flex items-center justify-between'>
           {/* Logo */}

@@ -18,7 +18,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
 
   return (
     <main className='flex flex-col items-center bg-main-light min-h-dvh w-full dark:bg-main-dark'>
-      <article className='flex flex-col grow basis-full shrink max-w-8xl px-5 w-full '>
+      <article className='flex flex-col grow basis-full shrink max-w-8xl px-5 w-full'>
         <Header />
         <section className='overflow-hidden mt-28'>{children}</section>
       </article>
