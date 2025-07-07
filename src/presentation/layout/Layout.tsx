@@ -17,10 +17,10 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   if (!mounted) return <Loading />;
 
   return (
-    <main className='flex flex-col items-center bg-main-light min-h-dvh w-full dark:bg-main-dark'>
-      <article className='flex flex-col grow basis-full shrink max-w-8xl px-5 w-full'>
-        <Header />
-        <section className='overflow-hidden mt-28'>{children}</section>
+    <main className='flex flex-col items-center min-h-dvh w-full bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-pink-50/80 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-pink-950/30'>
+      <Header />
+      <article className='flex flex-col grow basis-full shrink max-w-8xl px-24-64 w-full overflow-hidden z-0'>
+        {children}
       </article>
       <Footer />
     </main>

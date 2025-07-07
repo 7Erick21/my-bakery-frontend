@@ -5,6 +5,9 @@ export default function RootPage() {
   return (
     <Layout>
       <Home />
+      <Home />
+      <Home />
+      <Home />
     </Layout>
   );
 }

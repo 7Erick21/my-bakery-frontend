@@ -20,11 +20,14 @@ export const Header: FC = () => {
   ];
 
   return (
-    <Card variant='children' className='fixed w-100-40 top-2 max-w-8xl !rounded-4xl z-10'>
+    <Card
+      variant='children'
+      className='fixed bg-bakery-200/30 dark:bg-bakery-900/30 w-full !rounded-b-2xl !rounded-t-none z-10'
+    >
       <div className='px-6 py-4'>
         <div className='flex items-center justify-between'>
           {/* Logo */}
-          <Link href='/' className='relative flex cursor-pointer items-center space-x-2 group'>
+          <Link href='/' className='relative flex cursor-pointer items-center gap-2 group'>
             <div className='absolute inset-0 w-full bg-bakery-400 rounded-full blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300'></div>
             <CoffeeIcon className='w-16-24 h-16-24 text-bakery-600 dark:text-bakery-400 transition-transform duration-300 group-hover:rotate-12' />
             <span className='text-16-24 font-bold bg-gradient-to-r from-bakery-600 to-amber-600 dark:from-bakery-400 dark:to-amber-400 bg-clip-text text-transparent'>
@@ -33,7 +36,7 @@ export const Header: FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className='hidden md:flex items-center space-x-8'>
+          <nav className='hidden md:flex items-center gap-8'>
             {navigationItems.map(item => (
               <a
                 key={item.key}
@@ -47,7 +50,7 @@ export const Header: FC = () => {
           </nav>
 
           {/* Controls */}
-          <div className='flex items-center space-x-4'>
+          <div className='flex items-center gap-4'>
             {/* Language Selector */}
             <SelectLanguage />
 
@@ -85,7 +88,7 @@ export const Header: FC = () => {
 
         {/* <div className='md:hidden mt-4 glass dark:glass-dark rounded-lg p-4 animate-fade-in'> */}
         <div
-          className={`md:hidden transition-all duration-500 overflow-hidden ${
+          className={`md:hidden z-10 transition-all duration-500 overflow-hidden ${
             isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >

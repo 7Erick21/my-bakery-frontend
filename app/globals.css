@@ -16,10 +16,12 @@ body {
   /* Spacing */
   --spacing-8xl: 1440px;
   --spacing-16-24: clamp(1rem, 0.8077rem + 0.7692vw, 1.5rem);
-  --spacing-100-40: calc(100% - 40px);
+  --spacing-96-128: clamp(6rem, 5.2308rem + 3.0769vw, 8rem);
+  --spacing-24-64: clamp(1.5rem, 0.5385rem + 3.8462vw, 4rem);
 
   /* Font Size */
   --text-16-24: clamp(1rem, 0.8077rem + 0.7692vw, 1.5rem);
+  --text-34-56: clamp(2.125rem, 1.5962rem + 2.1154vw, 3.5rem);
 
   /* Colors (variables HSL desde config) */
   --color-border-card-light: rgba(255, 255, 255, 0.4);
