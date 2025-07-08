@@ -1,72 +1,34 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
 
-type Variant = 'default' | 'filled' | 'outline';
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: Variant;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, PropsWithChildren {
+  variant?: 'default' | 'outline' | 'ghost' | 'glass';
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, className = '', variant = 'default', ...props }, ref) => {
-    const baseStyles = `
-      relative inline-flex items-center justify-center 
-          rounded-xl text-sm font-medium cursor-pointer overflow-hidden
-          backdrop-blur-md focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500
-      backdrop-blur-md transition-transform duration-300 ease-in-out
-    `;
+export const Button: FC<ButtonProps> = ({
+  variant = 'default',
+  className = '',
+  children,
+  ...props
+}) => {
+  const baseStyles =
+    'cursor-pointer inline-flex items-center justify-center rounded-xl font-medium transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed';
 
-    const beforeBase = `
-      before:absolute before:inset-0 before:rounded-[inherit] before:-z-10
-          before:bg-button-inner-light dark:before:bg-button-inner-dark
-          before:transition-all before:duration-300 before:ease-in-out
-    `;
+  const variants = {
+    default:
+      'bg-gradient-to-r from-amber-500 via-amber-600 to-orange-600 border-0 hover:from-amber-600 hover:via-amber-700 hover:to-orange-700 hover:shadow-xl hover:scale-105 hover:shadow-amber-500/25 active:scale-95 active:from-amber-700 active:via-amber-800 active:to-orange-800 shadow-lg shadow-amber-500/20 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%]',
+    outline:
+      'border-2 border-amber-600 hover:bg-amber-50 hover:border-amber-700 dark:hover:bg-amber-950/20 dark:border-amber-500 dark:hover:border-amber-400 hover:scale-105 active:scale-95 shadow-sm',
+    ghost:
+      'bg-transparent border border-transparent border-border-card-light hover:bg-gray-300/50 dark:hover:bg-gray-600/50 dark:border-border-card-dark hover:scale-105 active:scale-95',
+    glass:
+      'backdrop-blur-md backdrop-saturate-180 bg-amber-600/20 border border-amber-600/30 font-semibold hover:backdrop-blur-lg hover:backdrop-saturate-200 hover:bg-amber-600/30 hover:border-amber-600/50 hover:scale-105 hover:-translate-y-0.5 active:scale-95 shadow-lg hover:shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%] dark:bg-amber-600/15 dark:border-amber-500/20 dark:hover:bg-amber-600/25 dark:hover:border-amber-500/40'
+  };
 
-    const afterBase = `after:absolute after:inset-0 after:rounded-[inherit] after:z-0
-          after:bg-[linear-gradient(to_right,_rgba(184,68,11,0.1)_0%,_rgba(222,90,10,0.08)_35%,_rgba(241,146,52,0.05)_60%,_transparent_90%)]
-          after:opacity-0 hover:after:opacity-100
-          after:transition-opacity after:duration-300 after:ease-in-out`;
-
-    let variantStyles = '';
-
-    switch (variant) {
-      case 'default':
-        variantStyles = `
-          bg-red dark:bg-bg-button-dark
-          shadow-button-light dark:shadow-button-dark
-          border border-solid border-button-light dark:border-button-dark
-          ${beforeBase} ${afterBase}
-          before:bg-gradient-to-br before:from-[#fffaf3] before:to-[#f9e8d2]
-          dark:before:from-[#3b2f2f] dark:before:to-[#2a1f1c]
-          hover:shadow-lg
-          hover:scale-105
-        `;
-        break;
-      case 'filled':
-        variantStyles = `
-          bg-bakery-300/80 shadow-md
-          dark:bg-amber-400/30
-          before:bg-transparent
-          hover:bg-bakery-300 dark:hover:bg-amber-500/40
-          hover:shadow-lg hover:scale-105
-        `;
-        break;
-      case 'outline':
-        variantStyles = `
-          border border-amber-500
-          dark:border-amber-400
-          before:bg-transparent
-          hover:bg-amber-100/20 dark:hover:bg-amber-400/10
-          hover:scale-105
-        `;
-        break;
-    }
-
-    return (
-      <button ref={ref} className={`${baseStyles} ${variantStyles} ${className}`} {...props}>
-        {children}
-      </button>
-    );
-  }
-);
+  return (
+    <button className={`${baseStyles} ${variants[variant]} ${className}`} {...props}>
+      {children}
+    </button>
+  );
+};
 
 Button.displayName = 'Button';

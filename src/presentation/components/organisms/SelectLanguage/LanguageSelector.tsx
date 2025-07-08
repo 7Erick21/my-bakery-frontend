@@ -22,6 +22,7 @@ export const SelectLanguage: FC = () => {
   return (
     <div className='relative'>
       <Button
+        variant='ghost'
         onClick={() => setIsOpen(!isOpen)}
         className='flex items-center gap-2 px-3 py-2 min-w-20 justify-center'
         aria-label='Seleccionar idioma'
@@ -49,13 +50,14 @@ export const SelectLanguage: FC = () => {
       >
         {LanguageOptions.map(({ Icon, ...option }) => (
           <Button
+            variant='ghost'
             key={option.code}
             onClick={() => handleLanguageChange(option.code as ELanguage)}
             className={`relative overflow-hidden w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150
             hover:!scale-100 focus:!scale-100 !shadow-none !rounded-none !border-none
             ${
               lang === option.code
-                ? 'text-bakery-500 before:absolute before:inset-0 before:rounded-[inherit] before:z-0 before:opacity-100 before:!bg-[linear-gradient(to_right,_rgba(255,170,120,0.15)_0%,_rgba(255,140,90,0.10)_40%,_rgba(255,110,60,0.05)_75%,_transparent_100%)]'
+                ? 'text-amber-500 !bg-amber-500/20 hover:!bg-gray-300/50 dark:hover:!bg-gray-600/50 font-semibold'
                 : 'text-gray-700 dark:text-gray-200'
             }`}
           >

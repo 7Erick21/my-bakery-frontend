@@ -22,15 +22,15 @@ export const Header: FC = () => {
   return (
     <Card
       variant='children'
-      className='fixed bg-bakery-200/30 dark:bg-bakery-900/30 w-full !rounded-b-2xl !rounded-t-none z-10'
+      className='fixed bg-gray-300/30 dark:bg-gray-900/30 w-full !rounded-b-2xl !rounded-t-none z-10'
     >
       <div className='px-6 py-4'>
         <div className='flex items-center justify-between'>
           {/* Logo */}
           <Link href='/' className='relative flex cursor-pointer items-center gap-2 group'>
-            <div className='absolute inset-0 w-full bg-bakery-400 rounded-full blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300'></div>
-            <CoffeeIcon className='w-16-24 h-16-24 text-bakery-600 dark:text-bakery-400 transition-transform duration-300 group-hover:rotate-12' />
-            <span className='text-16-24 font-bold bg-gradient-to-r from-bakery-600 to-amber-600 dark:from-bakery-400 dark:to-amber-400 bg-clip-text text-transparent'>
+            <div className='absolute inset-0 w-full bg-amber-400 rounded-full blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300'></div>
+            <CoffeeIcon className='w-16-24 h-16-24 text-amber-600 dark:text-amber-400 transition-transform duration-300 group-hover:rotate-12' />
+            <span className='text-16-24 font-bold bg-gradient-to-r from-amber-600 to-amber-600 dark:from-amber-400 dark:to-amber-400 bg-clip-text text-transparent'>
               My Bakery
             </span>
           </Link>
@@ -44,7 +44,7 @@ export const Header: FC = () => {
                 className='text-gray-700 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400 text-base font-medium transition-colors duration-300 relative group'
               >
                 {item.key}
-                <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-bakery-500 transition-all duration-300 group-hover:w-full'></span>
+                <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full'></span>
               </a>
             ))}
           </nav>
@@ -101,7 +101,7 @@ export const Header: FC = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.key}
-                <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-bakery-500 transition-all duration-150 group-hover:w-full'></span>
+                <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-150 group-hover:w-full'></span>
               </a>
             ))}
           </nav>

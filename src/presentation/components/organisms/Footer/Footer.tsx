@@ -8,7 +8,7 @@ import TwitterIcon from '@/icons/twitter.svg';
 
 export const Footer: FC = () => {
   return (
-    <footer className='bg-white/10 w-full h-full dark:bg-gray-800/10 backdrop-blur-lg border-t border-white/20 dark:border-gray-700/20 z-10'>
+    <footer className='bg-gray-300/30 w-full h-full dark:bg-gray-900/30 backdrop-blur-lg border-t border-white/20 dark:border-gray-700/20 z-10'>
       <div className='container mx-auto px-4 py-12'>
         <div className='grid md:grid-cols-4 gap-8'>
           <div className='space-y-4'>

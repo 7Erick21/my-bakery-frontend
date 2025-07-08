@@ -8,9 +8,9 @@ export const NotFound: FC = () => {
     <div className='flex w-dwh h-dvh items-center justify-center bg-main-light relative overflow-hidden dark:bg-main-dark'>
       {/* Background animated elements */}
       <div className='absolute inset-0'>
-        <div className='absolute top-20 left-20 w-32 h-32 bg-bakery-200/30 rounded-full blur-3xl animate-float' />
+        <div className='absolute top-20 left-20 w-32 h-32 bg-amber-200/30 rounded-full blur-3xl animate-float' />
         <div className='absolute bottom-32 right-32 w-40 h-40 bg-cream-200/30 rounded-full blur-2xl animate-float' />
-        <div className='absolute top-1/2 left-1/3 w-24 h-24 bg-bakery-300/20 rounded-full blur-xl animate-pulse' />
+        <div className='absolute top-1/2 left-1/3 w-24 h-24 bg-amber-300/20 rounded-full blur-xl animate-pulse' />
       </div>
 
       <div className='text-center z-10 px-4 max-w-2xl mx-auto'>
@@ -34,13 +34,13 @@ export const NotFound: FC = () => {
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
             <Link
               href='/'
-              className='bg-bakery-600 hover:bg-bakery-700 text-white px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
+              className='bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
             >
               🏠 Volver al Inicio
             </Link>
             <button
               // onClick={() => window.history.back()}
-              className='border border-bakery-600 text-bakery-600 cursor-pointer hover:bg-bakery-50 dark:hover:bg-bakery-900/20 px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
+              className='border border-amber-600 text-amber-600 cursor-pointer hover:bg-amber-50 dark:hover:bg-amber-900/20 px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
             >
               ← Página Anterior
             </button>

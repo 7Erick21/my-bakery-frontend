@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   output: 'export',
   trailingSlash: true,
   images: {
-    unoptimized: false
+    unoptimized: true
   },
   compiler: {
     removeConsole: true

@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { FC } from 'react';
+import Image from 'next/image';
 
 import { Card } from '@/components/atoms';
 import CoffeeIcon from '@/icons/coffe.svg';
@@ -7,17 +7,8 @@ import PlaceholderImage from '@/images/placeholder.webp';
 
 export const Home: FC = () => {
   return (
-    <div className='flex justify-center'>
-      {/* Background with glass effect */}
-      <div className='absolute inset-0 bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-pink-50/80 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-pink-950/30'></div>
-      {/* Floating background elements */}
-      <div className='absolute top-20 left-10 w-72 h-72 bg-amber-300/20 rounded-full blur-3xl animate-float'></div>
-      <div
-        className='absolute bottom-20 right-10 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl animate-float'
-        style={{ animationDelay: '2s' }}
-      ></div>
-
-      <div className='py-96-128 relative z-10'>
+    <div id='home' className='flex justify-center items-center min-h-dvh'>
+      <div className='relative z-10'>
         <div className='grid lg:grid-cols-2 gap-12 items-center'>
           {/* Content */}
           <div className={`flex flex-col gap-8 transition-all duration-1000 animate-slide-in`}>
@@ -60,10 +51,12 @@ export const Home: FC = () => {
             className='relative transition-transform duration-500 animate-slide-in p-3 hover:scale-105'
           >
             <div className='rounded-lg overflow-hidden glass shadow-2xl hover:shadow-3xl'>
-              <img
-                src={PlaceholderImage.src}
+              <Image
+                src={PlaceholderImage}
                 alt='Panadería My Bakery con productos frescos'
                 className='w-full h-full object-contain'
+                placeholder='blur'
+                priority
               />
             </div>
 
