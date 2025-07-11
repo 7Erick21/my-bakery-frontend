@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { Button, Card } from '@/components/atoms';
+import { Card } from '@/components/atoms';
 import CoffeeIcon from '@/icons/coffe.svg';
 
 export function Contact() {
@@ -100,22 +100,21 @@ export function Contact() {
                 ))}
               </div>
             </div>
-
-            {/* Map Placeholder */}
-            <Card className='overflow-hidden hover:shadow-lg transition-all duration-300'>
-              <Card className='p-0'>
-                <div className='aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300'>
-                  <div className='text-center text-gray-500 dark:text-gray-400'>
-                    <CoffeeIcon className='h-12 w-12 mx-auto mb-2 animate-bounce' />
-                    <p>{'contact.mapLocation'}</p>
-                  </div>
-                </div>
-              </Card>
-            </Card>
           </div>
 
+          {/* Map Placeholder */}
+          <Card className='overflow-hidden hover:shadow-lg transition-all duration-300'>
+            <Card className='p-0'>
+              <div className='aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300'>
+                <div className='text-center text-gray-500 dark:text-gray-400'>
+                  <CoffeeIcon className='h-12 w-12 mx-auto mb-2 animate-bounce' />
+                  <p>{'contact.mapLocation'}</p>
+                </div>
+              </div>
+            </Card>
+          </Card>
           {/* Contact Form */}
-          <Card
+          {/* <Card
             className={`transition-all duration-1000 delay-300 hover:shadow-xl ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
             }`}
@@ -208,7 +207,7 @@ export function Contact() {
                 </Button>
               </form>
             </Card>
-          </Card>
+          </Card> */}
         </div>
       </div>
     </section>

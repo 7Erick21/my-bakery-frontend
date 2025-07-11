@@ -357,8 +357,8 @@ export function About() {
           {features.map((feature, index) => (
             <Card
               key={index}
-              variant='glass-light'
-              className={`p-6 text-center rounded-2xl transition-transform duration-500 hover:scale-105 group ${
+              variant='glass'
+              className={`p-6 text-center rounded-2xl transition-transform duration-500  hover:scale-105 group ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
               }`}
             >
