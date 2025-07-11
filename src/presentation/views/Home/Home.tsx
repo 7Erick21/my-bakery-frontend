@@ -7,7 +7,7 @@ import PlaceholderImage from '@/images/placeholder.webp';
 
 export const Home: FC = () => {
   return (
-    <div id='home' className='flex justify-center items-center min-h-dvh'>
+    <div id='home' className='flex justify-center items-center min-h-dvh py-24'>
       <div className='relative z-10'>
         <div className='grid lg:grid-cols-2 gap-12 items-center'>
           {/* Content */}
@@ -46,22 +46,21 @@ export const Home: FC = () => {
           </div>
 
           {/* Image */}
-          <Card
-            variant='children'
-            className='relative transition-transform duration-500 animate-slide-in p-3 hover:scale-105'
-          >
-            <div className='rounded-lg overflow-hidden glass shadow-2xl hover:shadow-3xl'>
-              <Image
-                src={PlaceholderImage}
-                alt='Panadería My Bakery con productos frescos'
-                className='w-full h-full object-contain'
-                placeholder='blur'
-                priority
-              />
-            </div>
+          <div className='relative transition-transform duration-500 animate-slide-in shadow-2xl hover:shadow-3xl hover:scale-105'>
+            <Card variant='glass' className='relative p-3 !rounded-lg overflow-hidden'>
+              <div className=''>
+                <Image
+                  src={PlaceholderImage}
+                  alt='Panadería My Bakery con productos frescos'
+                  className='w-full h-full object-contain'
+                  placeholder='blur'
+                  priority
+                />
+              </div>
+            </Card>
 
             {/* Floating Card */}
-            <Card className='absolute -bottom-6 -left-6 glass-amber rounded-2xl shadow-2xl p-6 max-w-xs transition-transform duration-500 hover:scale-105 hover:shadow-3xl animate-glass-float'>
+            <Card className='absolute -bottom-6 -left-6 glass-amber rounded-2xl shadow-2xl p-16-24 max-w-xs transition-transform duration-500 hover:scale-105 hover:shadow-3xl animate-glass-float'>
               <div className='flex items-center gap-3'>
                 <div className='w-12 h-12 glass-light rounded-full flex items-center justify-center'>
                   <CoffeeIcon className='h-6 w-6 text-amber-600 animate-bounce drop-shadow-sm' />
@@ -76,7 +75,7 @@ export const Home: FC = () => {
                 </div>
               </div>
             </Card>
-          </Card>
+          </div>
         </div>
       </div>
     </div>

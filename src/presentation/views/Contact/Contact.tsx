@@ -20,22 +20,22 @@ export function Contact() {
       { threshold: 0.1 }
     );
 
-    const section = document.getElementById('contacto');
+    const section = document.getElementById('contact');
     if (section) observer.observe(section);
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section id='contact' className='min-h-dvh flex items-center justify-center'>
+    <section id='contact' className='min-h-dvh flex items-center justify-center py-24'>
       <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='text-center space-y-4 mb-16 animate-fade-in'>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100'>
-            {'contact.title'}
+            Contáctanos
           </h2>
           <p className='text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto'>
-            {'contact.description'}
+            ¿Tienes alguna pregunta o quieres hacer un pedido especial? Estamos aquí para ayudarte.
           </p>
         </div>
 
@@ -48,33 +48,33 @@ export function Contact() {
           >
             <div className='space-y-6'>
               <h3 className='text-2xl font-semibold text-gray-900 dark:text-gray-100'>
-                {'contact.info'}
+                Información de Contacto
               </h3>
 
               <div className='space-y-4'>
                 {[
                   {
                     icon: CoffeeIcon,
-                    title: 'contact.address',
-                    content: 'contact.addressValue'.split('\n')
+                    title: 'Dirección',
+                    content: 'Calle Principal 123 Centro, Ciudad 12345'.split('\n')
                   },
                   {
                     icon: CoffeeIcon,
-                    title: 'contact.phone',
-                    content: ['hero.phone']
+                    title: 'Teléfono',
+                    content: ['(555) 123-4567']
                   },
                   {
                     icon: CoffeeIcon,
-                    title: 'contact.email',
+                    title: 'Email',
                     content: ['info@mybakery.com']
                   },
                   {
                     icon: CoffeeIcon,
-                    title: 'contact.hours',
+                    title: 'Horarios',
                     content: [
-                      'contact.hoursWeekdays',
-                      'contact.hoursSaturday',
-                      'contact.hoursSunday'
+                      'Lunes - Viernes: 6:00 AM - 8:00 PM',
+                      'Sábados: 7:00 AM - 9:00 PM',
+                      'Domingos: 7:00 AM - 6:00 PM'
                     ]
                   }
                 ].map((item, index) => (

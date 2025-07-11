@@ -144,7 +144,7 @@ export function Products() {
   }, []);
 
   return (
-    <section id='products' className='relative min-h-dvh flex items-center justify-cente'>
+    <section id='products' className='relative min-h-dvh flex items-center justify-cente pt-24'>
       {/* Background elements */}
       <div className='absolute -top-1/12 left-1/3 w-64 h-64 bg-amber-200/20 rounded-full blur-3xl'></div>
       <div className='absolute top-1/4 -right-0 w-80 h-80 bg-orange-200/20 rounded-full blur-3xl'></div>
@@ -168,7 +168,7 @@ export function Products() {
             <Card
               variant='glass'
               key={index}
-              className={`product-card group rounded-2xl transition-[opacity,transform] duration-500  ${
+              className={`product-card group rounded-3xl transition-[opacity,transform] duration-500  ${
                 visibleCards.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
@@ -178,34 +178,27 @@ export function Products() {
                 transitionDelay: `${index * 100}ms`
               }}
             >
-              <div className='relative overflow-hidden rounded-t-2xl'>
+              <div className='rounded-3xl overflow-hidden'>
                 <Image
                   src={product.image || PlaceholderImage}
                   alt='Panadería My Bakery con productos frescos'
-                  className='w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1'
+                  className='w-full h-full object-cover transition-all duration-700 group-hover:scale-110'
                   placeholder='blur'
                   priority
                 />
-                {/* {product.badge && (
-                  <Badge className='absolute top-4 left-4 shadow-lg'>{product.badge}</Badge>
-                )} */}
-                <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
               </div>
-              <Card variant='glass-light' className='p-6 rounded-b-2xl h-full'>
+              <div className='p-6 rounded-b-3xl h-full'>
                 <div className='space-y-3'>
                   <div className='flex items-center justify-between'>
                     <h3 className='text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 transition-colors duration-300 drop-shadow-sm'>
                       {product.name}
                     </h3>
-                    {/* <span className='text-lg font-bold text-amber-600 animate-pulse drop-shadow-sm'>
-                      {product.price}
-                    </span> */}
                   </div>
                   <p className='text-gray-600 dark:text-gray-400 drop-shadow-sm'>
                     {product.description}
                   </p>
                 </div>
-              </Card>
+              </div>
             </Card>
           ))}
         </div>
