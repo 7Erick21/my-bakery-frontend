@@ -8,7 +8,7 @@ import CloclIcon from '@/icons/clock.svg';
 import CoffeeIcon from '@/icons/coffe.svg';
 import LocationIcon from '@/icons/location.svg';
 import PhoneIcon from '@/icons/phone.svg';
-import MyBakery from '@/images/myBakery.webp';
+import MyBakery from '@/images/myBakery.avif';
 import { useTranslation } from '@/shared/hooks';
 
 export const Home: FC = () => {

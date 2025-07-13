@@ -8,7 +8,7 @@ import { SelectLanguage } from '../SelectLanguage';
 import { SwitchTheme } from '../SwitchTheme';
 
 import { Button, Card } from '@/components/atoms';
-import LogoImage from '@/images/logo.webp';
+import LogoImage from '@/images/logo.avif';
 import { useTranslation } from '@/presentation/shared/hooks/useTranslate';
 import { menusItems } from '@/shared/defaults';
 

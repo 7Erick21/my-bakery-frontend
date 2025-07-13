@@ -6,7 +6,7 @@ import { Card } from '@/components/atoms';
 import FacebookIcon from '@/icons/facebooks.svg';
 import InstagramIcon from '@/icons/instagram.svg';
 import TwitterIcon from '@/icons/twitter.svg';
-import LogoImage from '@/images/logo.webp';
+import LogoImage from '@/images/logo.avif';
 import { useTranslation } from '@/presentation/shared/hooks/useTranslate';
 import { menusItems } from '@/shared/defaults';
 

@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { Card } from '@/components/atoms';
-import BreadTomatoImage from '@/images/breadTomato.webp';
-import CroissantImage from '@/images/croissants.webp';
-import EnsaimadasImage from '@/images/ensaimadas.webp';
-import NapolitanasImage from '@/images/napolitanas.webp';
+import BreadTomatoImage from '@/images/breadTomato.avif';
+import CroissantImage from '@/images/croissants.avif';
+import EnsaimadasImage from '@/images/ensaimadas.avif';
+import NapolitanasImage from '@/images/napolitanas.avif';
 import { useTranslation } from '@/shared/hooks';
 
 export function Products() {

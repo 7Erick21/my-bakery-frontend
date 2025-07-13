@@ -11,7 +11,7 @@ import ClockIcon from '@/icons/clock.svg';
 import CoffeeIcon from '@/icons/coffe.svg';
 import HeartIcon from '@/icons/heart.svg';
 import UserIcon from '@/icons/user.svg';
-import MyBakeryImage from '@/images/myBakery.webp';
+import MyBakeryImage from '@/images/myBakery.avif';
 import { useTranslation } from '@/shared/hooks';
 
 const timelineEvents = [
