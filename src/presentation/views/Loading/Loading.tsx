@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { BakeryAnimate } from '@/components/molecules';
 
@@ -23,10 +23,7 @@ export const Loading: FC = () => {
 
         {/* Loading Text */}
         <div className='animate-fade-in'>
-          <h2 className='text-3xl font-bold mb-4 text-gradient'>Horneando...</h2>
-          <p className='text-lg text-muted-foreground mb-8'>
-            Preparando las mejores delicias para ti
-          </p>
+          <h2 className='text-3xl leading-normal font-bold mb-4 text-gradient'>Loading ...</h2>
         </div>
 
         {/* Loading Dots */}

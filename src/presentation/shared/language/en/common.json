@@ -9,6 +9,13 @@
       "contact": "Contact"
     }
   },
+  "notFound": {
+    "title": "Oops!",
+    "subtitle": "The page you're looking for doesn't exist",
+    "description": "Looks like this page was baked a little too long and is no longer available. But don’t worry, we have many other treats waiting for you.",
+    "homeButton": "Go to Homepage",
+    "backButton": "Go Back"
+  },
   "home": {
     "title": "Freshly baked",
     "subtitle": "every day",

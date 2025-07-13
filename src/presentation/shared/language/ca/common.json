@@ -9,6 +9,13 @@
       "contact": "Contacte"
     }
   },
+  "notFound": {
+    "title": "Ups!",
+    "subtitle": "La pàgina que busques no existeix",
+    "description": "Sembla que aquesta pàgina s'ha quedat massa temps al forn i ja no està disponible. Però no et preocupis, tenim moltes altres delícies que t'estan esperant.",
+    "homeButton": "Tornar a l'inici",
+    "backButton": "Pàgina anterior"
+  },
   "home": {
     "title": "Forn acabat de fer",
     "subtitle": "cada dia",

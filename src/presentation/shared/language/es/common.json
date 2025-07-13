@@ -9,6 +9,13 @@
       "contact": "Contacto"
     }
   },
+  "notFound": {
+    "title": "¡Oops!",
+    "subtitle": "La página que buscas no existe",
+    "description": "Parece que esta página se ha horneado demasiado y ya no está disponible. Pero no te preocupes, tenemos muchas otras delicias esperándote.",
+    "homeButton": "Volver al Inicio",
+    "backButton": "Página Anterior"
+  },
   "home": {
     "title": "Horneado fresco",
     "subtitle": "todos los días",
