@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
   output: 'export',
   trailingSlash: true,
   images: {
-    unoptimized: true
+    unoptimized: true,
+    domains: ['localhost', 'my-bakery-frontend-delta.vercel.app']
   },
   compiler: {
     removeConsole: true
