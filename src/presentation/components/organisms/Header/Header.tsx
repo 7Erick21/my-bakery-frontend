@@ -31,7 +31,7 @@ export const Header: FC = () => {
   return (
     <Card
       variant='children'
-      className='fixed bg-gray-300/30 dark:bg-gray-900/30 w-full !rounded-b-2xl !rounded-t-none z-10'
+      className='fixed bg-gray-300/30 dark:bg-gray-900/30 w-full !rounded-b-2xl !rounded-t-none z-20'
     >
       <div className='max-w-8xl mx-auto px-6 py-4'>
         <div className='flex items-center justify-between'>
