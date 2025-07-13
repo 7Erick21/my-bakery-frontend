@@ -1,19 +1,15 @@
 import type { Metadata } from 'next';
 import { Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Lobster_Two } from 'next/font/google';
 
 import { Providers } from './providers';
 
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
+const poppins = Lobster_Two({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
@@ -35,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body suppressHydrationWarning className={`${poppins.className}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

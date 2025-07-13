@@ -1,11 +1,16 @@
+'use client';
+
 import { FC } from 'react';
 import Link from 'next/link';
 
 import { OvenAnimate } from '@/components/molecules';
+import { useTranslation } from '@/presentation/shared/hooks/useTranslate';
 
 export const NotFound: FC = () => {
+  const { t } = useTranslation();
+
   return (
-    <div className='flex w-dwh h-dvh items-center justify-center bg-main-light relative overflow-hidden dark:bg-main-dark'>
+    <div className='flex w-dwh h-dvh items-center justify-center relative overflow-hidden bg-white bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-pink-50/80 dark:bg-gray-900 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-pink-950/30'>
       {/* Background animated elements */}
       <div className='absolute inset-0'>
         <div className='absolute top-20 left-20 w-32 h-32 bg-amber-200/30 rounded-full blur-3xl animate-float' />
@@ -22,27 +27,26 @@ export const NotFound: FC = () => {
         </div>
 
         <div className='animate-slide-in'>
-          <h1 className='text-6xl font-bold mb-4 text-gradient'>¡Oops!</h1>
-          <h2 className='text-2xl font-semibold mb-4 text-foreground'>
-            La página que buscas no existe
-          </h2>
+          <h1 className='text-6xl font-bold mb-4 text-gradient'>{t('notFound.title')}</h1>
+          <h2 className='text-2xl font-semibold mb-4 text-foreground'>{t('notFound.subtitle')}</h2>
           <p className='text-lg text-muted-foreground mb-8 leading-relaxed'>
-            Parece que esta página se ha horneado demasiado y ya no está disponible. Pero no te
-            preocupes, tenemos muchas otras delicias esperándote.
+            {t('notFound.description')}
           </p>
 
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
             <Link
-              href='/'
+              href={{ pathname: '/' }}
               className='bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
+              aria-label={t('notFound.homeAria')}
             >
-              🏠 Volver al Inicio
+              🏠 {t('notFound.homeButton')}
             </Link>
             <button
-              // onClick={() => window.history.back()}
+              onClick={() => window.history.back()}
               className='border border-amber-600 text-amber-600 cursor-pointer hover:bg-amber-50 dark:hover:bg-amber-900/20 px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
+              aria-label={t('notFound.backAria')}
             >
-              ← Página Anterior
+              ← {t('notFound.backButton')}
             </button>
           </div>
         </div>

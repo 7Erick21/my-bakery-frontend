@@ -9,8 +9,7 @@ export function BakeryAnimate() {
       {/* Baker's Hat */}
       <path
         d='M150 50 C120 50, 100 70, 100 100 L200 100 C200 70, 180 50, 150 50 Z'
-        fill='white'
-        className='animate-bounce-slow'
+        className='animate-bounce-slow fill-gray-400 dark:fill-gray-200'
       />
 
       {/* Hat Top */}
@@ -19,8 +18,7 @@ export function BakeryAnimate() {
         cy='45'
         rx='30'
         ry='15'
-        fill='white'
-        className='animate-bounce-slow'
+        className='animate-bounce-slow fill-gray-400 dark:fill-gray-200'
         style={{ animationDelay: '0.2s' }}
       />
 
@@ -48,8 +46,7 @@ export function BakeryAnimate() {
         width='60'
         height='80'
         rx='30'
-        fill='white'
-        className='animate-fade-in'
+        className='animate-fade-in fill-gray-400 dark:fill-gray-200'
         style={{ animationDelay: '0.5s' }}
       />
 

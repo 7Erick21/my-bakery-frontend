@@ -10,7 +10,6 @@ export const SwitchTheme: FC = () => {
   const { resolvedTheme, setTheme } = useTheme();
 
   const handleChangeColor = () => {
-    console.log('first');
     if (resolvedTheme === ETheme.DARK) setTheme(ETheme.LIGHT);
     else setTheme(ETheme.DARK);
   };

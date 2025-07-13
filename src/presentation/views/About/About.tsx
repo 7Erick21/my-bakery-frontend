@@ -6,8 +6,13 @@ import Image from 'next/image';
 import { Button, Card } from '@/components/atoms';
 import ArrowLeft from '@/icons/arrowLeft.svg';
 import ArrowRight from '@/icons/arrowRight.svg';
+import AwardIcon from '@/icons/award.svg';
+import ClockIcon from '@/icons/clock.svg';
 import CoffeeIcon from '@/icons/coffe.svg';
-import PlaceholderImage from '@/images/placeholder.webp';
+import HeartIcon from '@/icons/heart.svg';
+import UserIcon from '@/icons/user.svg';
+import MyBakeryImage from '@/images/myBakery.webp';
+import { useTranslation } from '@/shared/hooks';
 
 const timelineEvents = [
   {
@@ -15,7 +20,7 @@ const timelineEvents = [
     title: 'Fundación',
     description: 'Abrimos nuestra primera panadería con recetas familiares tradicionales',
     icon: CoffeeIcon,
-    image: PlaceholderImage,
+    image: MyBakeryImage,
     position: 'top'
   },
 
@@ -24,7 +29,7 @@ const timelineEvents = [
     title: 'Sostenibilidad',
     description: 'Implementamos prácticas 100% sostenibles y packaging ecológico',
     icon: CoffeeIcon,
-    image: PlaceholderImage,
+    image: MyBakeryImage,
     position: 'bottom'
   },
   {
@@ -32,7 +37,7 @@ const timelineEvents = [
     title: 'Presente',
     description: 'Más de 50 productos únicos y miles de clientes satisfechos',
     icon: CoffeeIcon,
-    image: PlaceholderImage,
+    image: MyBakeryImage,
     position: 'top'
   },
   {
@@ -40,7 +45,7 @@ const timelineEvents = [
     title: 'Expansión',
     description: 'Agregamos café premium y productos artesanales a nuestro menú',
     icon: CoffeeIcon,
-    image: PlaceholderImage,
+    image: MyBakeryImage,
     position: 'bottom'
   },
   {
@@ -48,7 +53,7 @@ const timelineEvents = [
     title: 'Reconocimiento',
     description: "Ganamos el premio 'Mejor Panadería Local' por tres años consecutivos",
     icon: CoffeeIcon,
-    image: PlaceholderImage,
+    image: MyBakeryImage,
     position: 'top'
   },
   {
@@ -56,7 +61,7 @@ const timelineEvents = [
     title: 'Innovación',
     description: 'Introducimos opciones veganas y sin gluten para toda la comunidad',
     icon: CoffeeIcon,
-    image: PlaceholderImage,
+    image: MyBakeryImage,
     position: 'bottom'
   },
   {
@@ -64,32 +69,32 @@ const timelineEvents = [
     title: 'Digitalización',
     description: 'Lanzamos nuestra plataforma online y servicio de delivery',
     icon: CoffeeIcon,
-    image: PlaceholderImage,
+    image: MyBakeryImage,
     position: 'top'
   }
 ];
 
 const features = [
   {
-    icon: CoffeeIcon,
+    icon: HeartIcon,
     title: 'Hecho con Amor',
     description:
       'Cada producto está elaborado con pasión y dedicación por nuestros maestros panaderos.'
   },
   {
-    icon: CoffeeIcon,
+    icon: AwardIcon,
     title: 'Hecho con Amor',
     description:
       'Cada producto está elaborado con pasión y dedicación por nuestros maestros panaderos.'
   },
   {
-    icon: CoffeeIcon,
+    icon: UserIcon,
     title: 'Hecho con Amor',
     description:
       'Cada producto está elaborado con pasión y dedicación por nuestros maestros panaderos.'
   },
   {
-    icon: CoffeeIcon,
+    icon: ClockIcon,
     title: 'Hecho con Amor',
     description:
       'Cada producto está elaborado con pasión y dedicación por nuestros maestros panaderos.'
@@ -97,6 +102,8 @@ const features = [
 ];
 
 export function About() {
+  const { t } = useTranslation();
+
   const [isVisible, setIsVisible] = useState(false);
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -156,36 +163,42 @@ export function About() {
 
       <div className='relative z-10 w-full'>
         {/* Header */}
-        <div className='text-center space-y-4 mb-16'>
-          <h2 className='text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 drop-shadow-lg'>
-            Nuestra Historia
+        <div className='text-center flex flex-col gap-4 mb-16'>
+          <h2 className='text-60-96 leading-normal font-bold text-gray-900 dark:text-gray-100 drop-shadow-lg'>
+            {t('about.title')}
           </h2>
-          <p className='text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto drop-shadow-sm'>
-            My Bakery nació del sueño de compartir el auténtico sabor de la panadería tradicional.
-            Desde 2003, hemos estado sirviendo a nuestra comunidad con productos frescos, elaborados
-            con recetas que han pasado de generación en generación.
+          <p className='text-2xl leading-normal text-gray-600 dark:text-gray-400 max-w-3xl mx-auto drop-shadow-sm'>
+            {t('about.description')}
           </p>
         </div>
 
         {/* Desktop Timeline - Horizontal Slider */}
-        <div className='hidden lg:block relative mb-20'>
+        <div className='hidden lg:flex lg:flex-col lg:gap-8 relative mb-20'>
           {/* Navigation Buttons */}
-          <div className='absolute left-0 top-1/2 transform -translate-y-1/2 z-20'>
+          <div
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-20 ${
+              currentSlide === 0 ? 'cursor-not-allowed' : 'cursor-pointer'
+            }`}
+          >
             <Button
               variant='glass'
               onClick={prevSlide}
-              className='hover:scale-110 shadow-lg'
+              className='hover:scale-110 shadow-lg p-1'
               disabled={currentSlide === 0}
             >
               <ArrowLeft className='h-5 w-5' />
             </Button>
           </div>
 
-          <div className='absolute right-0 top-1/2 transform -translate-y-1/2 z-20'>
+          <div
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 ${
+              currentSlide === maxSlides ? 'cursor-not-allowed' : 'cursor-pointer'
+            }`}
+          >
             <Button
               variant='glass'
               onClick={nextSlide}
-              className='hover:scale-110 shadow-lg'
+              className='hover:scale-110 shadow-lg p-1'
               disabled={currentSlide === maxSlides}
             >
               <ArrowRight className='h-5 w-5' />
@@ -194,22 +207,22 @@ export function About() {
 
           {/* Timeline Line */}
           <div className='absolute w-11/12 top-1/2 left-1/2 right-1/2 -translate-x-1/2 h-1 bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 rounded-full transform -translate-y-1/2 z-0'>
-            {/* <div
+            <div
               className={`h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-2000 ease-out ${
                 isVisible ? 'w-4/5' : 'w-0'
               }`}
-            /> */}
+            />
           </div>
 
           {/* Timeline Container */}
-          <div className='mx-12 relative overflow-x-hidden !overflow-y-visible'>
+          <div className='mx-12 relative overflow-x-hidden'>
             {/* Timeline Items Slider */}
             <div
-              className='flex flex-nowrap gap-16 px-6 transition-transform duration-[3000ms] ease-in-out'
+              className='flex flex-nowrap gap-16 px-6 transition-transform duration-[5000ms] ease-in-out'
               style={{
                 transform: `translateX(-${(currentSlide * 100) / (maxSlides + 1)}%)`,
                 width: `${(timelineEvents.length / itemsPerView) * 100}%`,
-                minHeight: '450px'
+                minHeight: '600px'
               }}
             >
               {timelineEvents.map((event, index) => (
@@ -224,13 +237,13 @@ export function About() {
                   {/* Content Card */}
                   <Card
                     variant='glass-heavy'
-                    className={`w-72 hover:shadow-xl transition-all duration-700 ease-in-out p-6 text-center group ${
+                    className={`w-72 flex flex-col gap-4 hover:shadow-xl transition-all duration-700 ease-in-out p-6 text-center group ${
                       event.position === 'top' ? 'order-1 mb-8' : 'order-3 mt-12'
                     }`}
                   >
                     <figure className='max-w-3xs'>
                       <Image
-                        src={event.image || PlaceholderImage}
+                        src={event.image || MyBakeryImage}
                         alt='Panadería My Bakery con productos frescos'
                         className='w-full h-full rounded-xl object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1'
                         placeholder='blur'
@@ -238,10 +251,10 @@ export function About() {
                       />
                     </figure>
 
-                    <h3 className='text-lg font-bold text-amber-600 mb-2 drop-shadow-sm'>
+                    <h3 className='text-xl leading-normal font-bold text-amber-600 drop-shadow-sm'>
                       {event.title}
                     </h3>
-                    <p className='text-sm text-gray-600 dark:text-gray-400 leading-relaxed'>
+                    <p className='text-base leading-normal text-gray-600 dark:text-gray-400'>
                       {event.description}
                     </p>
                   </Card>
@@ -251,8 +264,8 @@ export function About() {
                     <div className='w-16 h-16 backdrop-blur-md backdrop-saturate-180 bg-amber-600/20 dark:bg-amber-600/15 border border-amber-600/30 dark:border-amber-500/20 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group'>
                       <event.icon className='h-6 w-6 text-amber-600 group-hover:rotate-12 transition-transform duration-300' />
                     </div>
-                    <div className='absolute -bottom-8 left-1/2 transform -translate-x-1/2'>
-                      <span className='text-2xl font-bold text-amber-600 drop-shadow-lg whitespace-nowrap'>
+                    <div className='absolute -bottom-9 left-1/2 transform -translate-x-1/2'>
+                      <span className='text-2xl leading-normal font-bold text-amber-600 drop-shadow-lg whitespace-nowrap'>
                         {event.year}
                       </span>
                     </div>
@@ -263,12 +276,12 @@ export function About() {
           </div>
 
           {/* Slide Indicators */}
-          <div className='flex justify-center mt-8 space-x-2'>
+          <div className='flex justify-center gap-2'>
             {Array.from({ length: maxSlides + 1 }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                className={`w-3 h-3 rounded-full transition-all duration-700 ease-in-out ${
                   currentSlide === index
                     ? 'bg-amber-600 scale-125'
                     : 'bg-gray-300 dark:bg-gray-600 hover:bg-amber-400'
@@ -294,11 +307,11 @@ export function About() {
           </div>
 
           {/* Vertical Timeline Items */}
-          <div className='space-y-12'>
+          <div className='flex flex-col gap-16'>
             {timelineEvents.map((event, index) => (
               <div
                 key={index}
-                className={`flex items-start space-x-6 transition-all duration-700 ${
+                className={`flex items-start gap-4 transition-all duration-700 ${
                   visibleItems.includes(index)
                     ? 'opacity-100 translate-x-0'
                     : 'opacity-0 -translate-x-10'
@@ -327,12 +340,12 @@ export function About() {
                   variant='glass'
                   className='p-6 w-full shadow-xl group rounded-2xl hover:shadow-2xl'
                 >
-                  <div className='flex items-start space-x-4'>
-                    <div className='w-16 h-16 rounded-full overflow-hidden backdrop-blur-md backdrop-saturate-180 bg-amber-600/20 dark:bg-amber-600/15 border border-amber-600/30 dark:border-amber-500/20 flex-shrink-0'>
+                  <div className='flex items-center gap-4'>
+                    <div className='w-20 h-20 rounded-xl overflow-hidden backdrop-blur-md backdrop-saturate-180 bg-amber-600/20 dark:bg-amber-600/15 border border-amber-600/30 dark:border-amber-500/20 flex-shrink-0'>
                       <Image
-                        src={event.image || PlaceholderImage}
+                        src={event.image || MyBakeryImage}
                         alt='Panadería My Bakery con productos frescos'
-                        className='w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1'
+                        className='w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1'
                         placeholder='blur'
                         priority
                       />
@@ -365,10 +378,10 @@ export function About() {
               <div className='w-16 h-16 backdrop-blur-md backdrop-saturate-180 bg-amber-600/20 dark:bg-amber-600/15 border border-amber-600/30 dark:border-amber-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 hover:rotate-12'>
                 <feature.icon className='h-8 w-8 text-amber-600' />
               </div>
-              <h3 className='text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 drop-shadow-sm'>
+              <h3 className='text-xl leading-normal font-semibold text-gray-900 dark:text-gray-100 mb-2 drop-shadow-sm'>
                 {feature.title}
               </h3>
-              <p className='text-gray-600 dark:text-gray-400 text-sm leading-relaxed'>
+              <p className='text-gray-600 dark:text-gray-400 text-base leading-normal'>
                 {feature.description}
               </p>
             </Card>
@@ -377,9 +390,8 @@ export function About() {
 
         {/* Bottom Description */}
         <div className='text-center mt-16'>
-          <p className='text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed drop-shadow-sm'>
-            Creemos que la buena comida une a las personas, y cada día trabajamos para crear
-            momentos especiales a través de nuestros panes, pasteles y café excepcional.
+          <p className='text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed drop-shadow-sm'>
+            {t('about.footer')}
           </p>
         </div>
       </div>

@@ -1,48 +1,80 @@
 {
-  "navbar.about": "About Me",
-  "navbar.resume": "Summary",
-  "navbar.portfolio": "Portfolio",
-  "navbar.contact": "Contact",
-
-  "sidebar.role": "Web Developer",
-  "sidebar.email": "Email",
-  "sidebar.birthday": "Birthday",
-  "sidebar.birthday.value": "August 21, 2001",
-  "sidebar.location": "Location",
-  "sidebar.location.value": "Barcelona, Spain, ESP",
-  "sidebar.downloadCV": "Download CV",
-
-  "about.title": "About me",
-  "about.description1": "I am Erick, a passionate 23-year-old full stack programmer based in Peru. I have 4 years of experience in frontend and 6 months exploring backend. In frontend, I specialize in creating intuitive interfaces with technologies like React, Next.js and Astro. In backend, I work with Node.js, Serverless and databases.",
-  "about.description2": "My greatest motivation is to face new challenges and keep learning. I seek to collaborate with dynamic and talented teams, providing creative and effective solutions.",
-  "about.technologies.frontend": "Frontend",
-  "about.technologies.frameworks": "Frameworks & UI",
-  "about.technologies.backend": "Backend & Data",
-  "about.technologies.herramientas": "Tools",
-  "about.recommendations": "Recommendations",
-
-  "resume.title": "Resume",
-  "resume.education": "Education",
-  "resume.education.unjfsc": "Higher Education - Systems Engineering.",
-  "resume.education.udemy": "Digital courses and specialization in software development, both front-end and back-end.",
-  "resume.experience": "Experience",
-  "resume.experience.freelance": "Freelance Team Project - University study group to create personal projects",
-  "resume.experience.2myr": "Full Stack Developer - Node js, Serverless, Prisma, Typescript as backend and React, Next, Gatsby, Typescript, Mui as frontend and strapi, sonic as cms",
-  "resume.experience.fromsolvers": "Senior Frontend Developer - React, Typescript, Rxjs, Styled-Components, and other React libraries",
-  "resume.experience.indra": "Senior Frontend Developer - React, Typescript, Rxjs, Styled-Components, and other React libraries",
-
-  "portfolio.title": "Portfolio",
-  "portfolio.washku.landing": "Discover the best cocktails and drinks: Recipes, tips, and more",
-  "portfolio.washku.portal": "Discover the best cocktails and drinks: Recipes, tips, and more",
-  "portfolio.washku.intranet": "Manage your business with Washku",
-
-  "contact.title": "Contact",
-  "contact.form.title": "Contact form",
-  "contact.form.fullname": "Full Name",
-  "contact.form.email": "Email Address",
-  "contact.form.message": "Message",
-  "contact.form.send": "Send message",
-
-  "date.august21": "August 21, 2001",
-  "location.barcelona": "Barcelona, Spain, ESP"
+  "header": {
+    "logo": "My Bakery",
+    "toggleMenu": "Toggle menu",
+    "menus": {
+      "home": "Home",
+      "about": "About",
+      "products": "Products",
+      "contact": "Contact"
+    }
+  },
+  "home": {
+    "title": "Freshly baked",
+    "subtitle": "every day",
+    "description": "Discover the authentic taste of our artisanal breads, homemade cakes, and freshly ground coffee. Every product is made with love and the finest ingredients.",
+    "openHours": "Open 6AM - 8PM",
+    "location": "Plaça dels Jardins d'Alfàbia, 5, Nou Barris.",
+    "phone": "+34 933 54 38 10",
+    "products": "More than 50",
+    "productsDescription": "Fresh daily products"
+  },
+  "products": {
+    "title": "Our Products",
+    "description": "Each product is made with fresh ingredients and traditional techniques to offer you the best gastronomic experience."
+  },
+  "about": {
+    "title": "Our History",
+    "description": "My Bakery was born from the dream of sharing the authentic flavor of traditional baking. Since 2000, we've been serving our community with fresh products made from recipes passed down through generations.",
+    "footer": "We believe that good food brings people together, and every day we work to create special moments through our breads, pastries, and exceptional coffee."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Do you have a question or want to place a special order? We're here to help.",
+    "contact": "Contact Information",
+    "address": {
+      "label": "Address",
+      "value": "Plaça dels Jardins d'Alfàbia, 5, Nou Barris."
+    },
+    "phone": {
+      "label": "Phone",
+      "value": "+34 933 54 38 10"
+    },
+    "email": {
+      "label": "Email",
+      "value": "hola@mi-panaderia.com"
+    },
+    "hours": {
+      "label": "Opening Hours",
+      "valueWeekdays": "Monday - Friday: 7:00 AM - 9:00 PM",
+      "valueSaturday": "Saturday: 7:00 AM - 9:00 PM",
+      "valueSunday": "Sunday: 7:00 AM - 2:00 PM"
+    }
+  },
+  "footer": {
+    "logo": "My Bakery",
+    "description": "Welcome to our bakery. We offer fresh, artisanal bread and pastries every day.",
+    "quickLinks": "Quick Links",
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "products": "Products",
+      "contact": "Contact"
+    },
+    "contact": "Contact Us",
+    "address": "Plaça dels Jardins d'Alfàbia, 5,Nou Barris.",
+    "city": "Barcelona, 08016.",
+    "phone": "+34 933 54 38 10",
+    "email": "hello@mybakery.com",
+    "followUs": "Follow Us",
+    "social": {
+      "facebook": "Follow us on Facebook",
+      "instagram": "Follow us on Instagram",
+      "twitter": "Follow us on Twitter"
+    },
+    "copyright": "My Bakery. All rights reserved."
+  },
+  "language": {
+    "select": "Select Language"
+  }
 }

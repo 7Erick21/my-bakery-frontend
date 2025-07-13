@@ -1,2 +1,2 @@
 export { useClickOutside } from './useClickOutside'
-export { useTranslation } from './useTraslate'
+export { useTranslation } from './useTranslate'

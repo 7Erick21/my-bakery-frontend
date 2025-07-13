@@ -4,7 +4,7 @@ import { BakeryAnimate } from '@/components/molecules';
 
 export const Loading: FC = () => {
   return (
-    <div className='w-dwh h-dvh bg-main-light flex items-center justify-center z-50 dark:bg-main-dark'>
+    <div className='w-dwh h-dvh flex items-center justify-center z-50 bg-white bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-pink-50/80 dark:bg-gray-900 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-pink-950/30'>
       {/* Background animated elements */}
       <div className='absolute inset-0 overflow-hidden'>
         <div className='absolute top-20 left-20 w-32 h-32 bg-amber-200/30 rounded-full blur-3xl animate-pulse' />

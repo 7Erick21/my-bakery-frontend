@@ -1,0 +1,80 @@
+{
+  "header": {
+    "logo": "My Bakery",
+    "toggleMenu": "Alternar menú",
+    "menus": {
+      "home": "Inici",
+      "about": "Sobre nosaltres",
+      "products": "Productes",
+      "contact": "Contacte"
+    }
+  },
+  "home": {
+    "title": "Forn acabat de fer",
+    "subtitle": "cada dia",
+    "description": "Descobreix el sabor autèntic dels nostres pans artesanals, pastissos casolans i cafè mòlt acabat de fer. Cada producte està fet amb amor i els millors ingredients.",
+    "openHours": "Obert de 6h a 20h",
+    "location": "Plaça dels Jardins d'Alfàbia, 5, Nou Barris.",
+    "phone": "+34 933 54 38 10",
+    "products": "Més de 50",
+    "productsDescription": "Productes frescos diaris"
+  },
+  "products": {
+    "title": "Els nostres productes",
+    "description": "Cada producte està elaborat amb ingredients frescos i tècniques tradicionals per oferir-te la millor experiència gastronòmica."
+  },
+  "about": {
+    "title": "La nostra història",
+    "description": "My Bakery va néixer del somni de compartir l'autèntic sabor de la fleca tradicional. Des del 2000, hem estat servint la nostra comunitat amb productes frescos elaborats amb receptes transmeses de generació en generació.",
+    "footer": "Creiem que el bon menjar uneix les persones, i cada dia treballem per crear moments especials a través dels nostres pans, pastissos i cafè excepcional."
+  },
+  "contact": {
+    "title": "Contacta'ns",
+    "description": "Tens alguna pregunta o vols fer una comanda especial? Estem aquí per ajudar-te.",
+    "contact": "Informació de contacte",
+    "address": {
+      "label": "Adreça",
+      "value": "Plaça dels Jardins d'Alfàbia, 5, Nou Barris."
+    },
+    "phone": {
+      "label": "Telèfon",
+      "value": "+34 933 54 38 10"
+    },
+    "email": {
+      "label": "Correu electrònic",
+      "value": "hola@mi-panaderia.com"
+    },
+    "hours": {
+      "label": "Horaris",
+      "valueWeekdays": "Dilluns - Divendres: 7:00 h - 21:00 h",
+      "valueSaturday": "Dissabtes: 7:00 h - 21:00 h",
+      "valueSunday": "Diumenges: 7:00 h - 14:00 h"
+    }
+  },
+  "footer": {
+    "logo": "La Meva Forn",
+    "description": "Benvingut a la nostra forn. Ofereixem pa i pastissos artesans frescs tots els dies.",
+    "quickLinks": "Enllaços ràpids",
+    "nav": {
+      "home": "Inici",
+      "about": "Sobre nosaltres",
+      "products": "Productes",
+      "contact": "Contacte"
+    },
+    "contact": "Contacteu-nos",
+    "address": "Plaça dels Jardins d'Alfàbia, 5,Nou Barris.",
+    "city": "Barcelona, 08016.",
+    "phone": "+34 933 54 38 10",
+    "email": "hola@la-meva-forn.com",
+    "followUs": "Segueix-nos",
+    "social": {
+      "facebook": "Segueix-nos a Facebook",
+      "instagram": "Segueix-nos a Instagram",
+      "twitter": "Segueix-nos a Twitter"
+    },
+    "copyright": "My Bakery. Tots els drets reservats."
+  },
+  "language": {
+    "select": "Seleccionar idioma"
+  }
+}

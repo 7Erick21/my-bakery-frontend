@@ -4,123 +4,41 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { Card } from '@/components/atoms';
-import PlaceholderImage from '@/images/placeholder.webp';
+import CroissantImage from '@/images/croissants.webp';
+import EnsaimadasImage from '@/images/ensaimadas.webp';
+import NapolitanasImage from '@/images/napolitanas.webp';
+import PanTomateImage from '@/images/PanTomate.webp';
+import { useTranslation } from '@/shared/hooks';
 
 export function Products() {
+  const { t } = useTranslation();
+
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
 
   const products = [
     {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.50`,
-      image: PlaceholderImage,
-      badge: 'products.mostPopular'
+      name: 'Croissant',
+      description:
+        'Hojaldre dorado y crujiente, hecho con mantequilla de calidad y laminado a mano para una textura ligera y delicada.',
+      image: CroissantImage
     },
     {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $15.00`,
-      image: PlaceholderImage,
-      badge: 'products.specialty'
+      name: 'Ensaimadas',
+      description:
+        'Delicada espiral de masa suave, fermentada lentamente y espolvoreada con azúcar glas. Un clásico balear con alma catalana.',
+      image: EnsaimadasImage
     },
     {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $4.00`,
-      image: PlaceholderImage,
-      badge: 'products.new'
+      name: 'Pan Tomate',
+      description:
+        'Bizcocho tradicional catalán, ligero y esponjoso, elaborado con huevos frescos y un toque de vainilla natural. Perfecto para acompañar el café.',
+      image: PanTomateImage
     },
     {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $2.50`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $3.00`,
-      image: PlaceholderImage,
-      badge: ''
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $1.50`,
-      image: PlaceholderImage,
-      badge: 'products.favorite'
-    },
-    {
-      name: 'Pan Artesanal',
-      description: 'Pan recién horneado con masa madre tradicional',
-      price: `Desde $1.50`,
-      image: PlaceholderImage,
-      badge: 'products.favorite'
+      name: 'Napolitanas',
+      description:
+        'Delicioso hojaldre relleno de chocolate fundido o crema pastelera, horneado hasta alcanzar una cobertura crujiente y dorada.',
+      image: NapolitanasImage
     }
   ];
 
@@ -150,15 +68,14 @@ export function Products() {
       <div className='absolute top-1/4 -right-0 w-80 h-80 bg-orange-200/20 rounded-full blur-3xl'></div>
       <div className='absolute top-2/3 -left-0 w-80 h-80 bg-orange-200/20 rounded-full blur-3xl'></div>
 
-      <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+      <div className='flex flex-col items-center gap-16 relative z-10'>
         {/* Header */}
-        <div className='text-center space-y-4 mb-16 animate-fade-in'>
-          <h2 className='text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 drop-shadow-lg'>
-            Nuestros Productos
+        <div className='text-center items-center flex flex-col gap-4 animate-fade-in'>
+          <h2 className='text-60-96 leading-normal font-bold text-gray-900 dark:text-gray-100 drop-shadow-lg'>
+            {t('products.title')}
           </h2>
-          <p className='text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto drop-shadow-sm'>
-            Cada producto está elaborado con ingredientes frescos y técnicas tradicionales para
-            ofrecerte la mejor experiencia gastronómica.
+          <p className='text-2xl leading-normal text-gray-600 dark:text-gray-400 max-w-2xl drop-shadow-sm'>
+            {t('products.description')}
           </p>
         </div>
 
@@ -168,7 +85,7 @@ export function Products() {
             <Card
               variant='glass'
               key={index}
-              className={`product-card group rounded-3xl transition-[opacity,transform] duration-500  ${
+              className={`product-card max-w-md group rounded-3xl transition-[opacity,translate] duration-700 ease-in-out  ${
                 visibleCards.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
@@ -180,24 +97,20 @@ export function Products() {
             >
               <div className='rounded-3xl overflow-hidden'>
                 <Image
-                  src={product.image || PlaceholderImage}
+                  src={product.image || CroissantImage}
                   alt='Panadería My Bakery con productos frescos'
                   className='w-full h-full object-cover transition-all duration-700 group-hover:scale-110'
                   placeholder='blur'
                   priority
                 />
               </div>
-              <div className='p-6 rounded-b-3xl h-full'>
-                <div className='space-y-3'>
-                  <div className='flex items-center justify-between'>
-                    <h3 className='text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 transition-colors duration-300 drop-shadow-sm'>
-                      {product.name}
-                    </h3>
-                  </div>
-                  <p className='text-gray-600 dark:text-gray-400 drop-shadow-sm'>
-                    {product.description}
-                  </p>
-                </div>
+              <div className='flex flex-col gap-4 p-6'>
+                <h3 className='text-2xl leading-normal font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 transition-colors duration-300 drop-shadow-sm'>
+                  {product.name}
+                </h3>
+                <p className='text-base leading-normal text-gray-600 dark:text-gray-400 drop-shadow-sm'>
+                  {product.description}
+                </p>
               </div>
             </Card>
           ))}
