@@ -1,9 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from '@vercel/og';
 
-export const runtime = 'edge';
-export const dynamic = 'force-static';
-
 export async function GET() {
   try {
     const font = await fetch(
@@ -28,7 +25,7 @@ export async function GET() {
           }}
         >
           <img
-            src='https://my-bakery-frontend-delta.vercel.app/assets/images/my-bakery-logo.jpg'
+            src='https://my-bakery-frontend-delta.vercel.app/my-bakery-logo.jpg'
             alt='My Bakery Logo'
             width={200}
             height={200}
