@@ -3,18 +3,18 @@ import { RuleSetRule } from 'webpack';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  trailingSlash: true,
-  images: {
-    unoptimized: true,
-    domains: ['localhost', 'my-bakery-frontend-delta.vercel.app']
-  },
+  images: { unoptimized: true },
+  // trailingSlash: true,
+  // images: {
+  //   unoptimized: true
+  // },
   compiler: {
     removeConsole: true
   },
-  reactStrictMode: true,
-  experimental: {
-    typedRoutes: true
-  },
+  // reactStrictMode: true,
+  // experimental: {
+  //   typedRoutes: true
+  // },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find(
@@ -34,6 +34,22 @@ const nextConfig: NextConfig = {
         test: /\.svg$/i,
         resourceQuery: { not: /url/ }, // exclude if *.svg?url
         use: ['@svgr/webpack']
+      },
+      // Add rule for AVIF images
+      {
+        test: /\.avif$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              fallback: 'file-loader',
+              publicPath: '/_next/static/images/',
+              outputPath: 'static/images/',
+              name: '[name].[ext]'
+            }
+          }
+        ]
       }
     );
 
