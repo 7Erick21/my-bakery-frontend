@@ -12,7 +12,6 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   experimental: {
-    optimizeCss: true,
     typedRoutes: true
   },
   webpack(config) {
