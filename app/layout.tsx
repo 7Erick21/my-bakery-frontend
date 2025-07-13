@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'My Bakery',
     images: [
       {
-        url: '/api/og',
+        url: '/my-bakery-logo.jpg',
         width: 1200,
         height: 630,
         alt: 'My Bakery - Panadería Artesanal'
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       'Descubre la mejor panadería artesanal en tu ciudad. Panes frescos, pasteles y dulces hechos con amor.',
     images: [
       {
-        url: '/api/og',
+        url: '/my-bakery-logo.jpg',
         width: 1200,
         height: 630,
         alt: 'My Bakery - Panadería Artesanal'
