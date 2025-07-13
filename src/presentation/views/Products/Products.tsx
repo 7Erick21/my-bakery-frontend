@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { Card } from '@/components/atoms';
+import BreadTomatoImage from '@/images/breadTomato.webp';
 import CroissantImage from '@/images/croissants.webp';
 import EnsaimadasImage from '@/images/ensaimadas.webp';
 import NapolitanasImage from '@/images/napolitanas.webp';
-import PanTomateImage from '@/images/PanTomate.webp';
 import { useTranslation } from '@/shared/hooks';
 
 export function Products() {
@@ -32,7 +32,7 @@ export function Products() {
       name: 'Pan Tomate',
       description:
         'Bizcocho tradicional catalán, ligero y esponjoso, elaborado con huevos frescos y un toque de vainilla natural. Perfecto para acompañar el café.',
-      image: PanTomateImage
+      image: BreadTomatoImage
     },
     {
       name: 'Napolitanas',
