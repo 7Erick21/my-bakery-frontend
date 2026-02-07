@@ -13,6 +13,7 @@ const LobsterTwo = Lobster_Two({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://my-bakery.app'),
   title: 'My Bakery - Panadería Artesanal',
   description:
     'Descubre la mejor panadería artesanal en tu ciudad. Panes frescos, pasteles y dulces hechos con amor.',
@@ -54,16 +55,15 @@ export const metadata: Metadata = {
   },
 
   // Metaetiquetas adicionales
-  robots: 'index, follow',
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#ffffff'
+  robots: 'index, follow'
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  userScalable: true
+  userScalable: true,
+  themeColor: '#ffffff'
 };
 
 export default function RootLayout({
