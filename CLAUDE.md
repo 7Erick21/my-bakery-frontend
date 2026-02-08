@@ -4,21 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A bakery showcase website built as a **static site** with Next.js 15 App Router. Supports three languages (Spanish default, English, Catalan) and light/dark themes. Deployed to Vercel as a static export.
+A bakery showcase website built as a **static site** with Next.js 16 App Router. Supports three languages (Spanish default, English, Catalan) and light/dark themes. Deployed to Vercel as a static export.
 
 ## Commands
 
-- `npm run dev` — Start development server
-- `npm run build` — Build static export (outputs to `/out`)
-- `npm run lint` — Run ESLint
-- `npm run start` — Serve production build
+- `pnpm dev` — Start development server
+- `pnpm build` — Build static export (outputs to `/out`)
+- `pnpm lint` — Run Biome linter
+- `pnpm lint:fix` — Auto-fix lint and format issues
+- `pnpm format` — Format code with Biome
+- `pnpm start` — Serve production build
 
 No test framework is configured.
 
 ## Tech Stack
 
-- **Next.js 15.3.4** (App Router, static export via `output: 'export'`)
+- **Next.js 16.1.6** (App Router, Turbopack default, static export via `output: 'export'`)
 - **React 19**, **TypeScript 5**
+- **pnpm** as package manager
+- **Biome 2** for linting and formatting (replaces ESLint + Prettier)
 - **Tailwind CSS 4** (new `@theme` directive in `globals.css`, no separate config file)
 - **Zustand 5** with persist middleware (language store)
 - **next-themes** for dark/light mode
@@ -76,7 +80,7 @@ src/
 
 - **Atomic Design**: atoms → molecules → organisms for components
 - **All components use `'use client'`** directive and `FC` type with `displayName`
-- **ESLint import sorting** (`simple-import-sort`): external libs → `@/` aliases → relative → styles
+- **Biome import sorting**: side-effects → external libs → `@/` aliases → relative
 - **Internationalization**: custom `useTranslation` hook with dot-notation keys (`t('home.title')`), JSON files per language
 - **Theming**: Tailwind `dark:` prefix + extensive CSS custom properties in `globals.css`
 - **Animations**: Intersection Observer for scroll-triggered animations with staggered delays via inline styles
@@ -84,7 +88,8 @@ src/
 
 ## Important Config Notes
 
-- `next.config.ts`: `output: 'export'`, `trailingSlash: true`, `removeConsole: true` in production, `experimental.typedRoutes: true`
-- Custom webpack config for SVGR (inline SVG as React components)
+- `next.config.ts`: `output: 'export'`, `trailingSlash: true`, `removeConsole: true` in production, `typedRoutes: true`
+- Turbopack SVGR rules in `turbopack.rules` + webpack fallback config for SVGR
+- `biome.json`: single quotes, no trailing commas, semicolons, 2-space indent, 100-char line width
 - Tailwind 4 theme defined entirely in `app/globals.css` using `@theme` blocks with responsive `clamp()` values
 - No `.env` files — no environment variables needed

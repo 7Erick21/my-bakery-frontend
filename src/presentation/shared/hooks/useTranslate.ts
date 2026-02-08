@@ -1,4 +1,4 @@
-import { ELanguage } from '../enums';
+import type { ELanguage } from '../enums';
 import ca from '../language/ca/common.json';
 import en from '../language/en/common.json';
 import es from '../language/es/common.json';

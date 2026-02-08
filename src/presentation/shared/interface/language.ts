@@ -1,6 +1,6 @@
-import { SVGProps } from 'react';
+import type { SVGProps } from 'react';
 
-import { ELanguage } from '../enums';
+import type { ELanguage } from '../enums';
 
 export interface LanguageOption {
   code: ELanguage;

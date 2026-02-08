@@ -10,8 +10,14 @@ const nextConfig: NextConfig = {
     removeConsole: true
   },
   reactStrictMode: true,
-  experimental: {
-    typedRoutes: true
+  typedRoutes: true,
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js'
+      }
+    }
   },
   webpack(config: any) {
     // Grab the existing rule that handles SVG imports

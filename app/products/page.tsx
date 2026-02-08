@@ -1,8 +1,5 @@
-import { ProductsPage } from '@/views/ProductsPage'
-import React from 'react'
+import { ProductsPage } from '@/views/ProductsPage';
 
 export default function Products() {
-  return (
-    <ProductsPage />
-  )
+  return <ProductsPage />;
 }

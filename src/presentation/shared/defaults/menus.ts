@@ -1,4 +1,4 @@
-import { MenusItems } from '../interface/menus';
+import type { MenusItems } from '../interface/menus';
 
 export const menusItems: MenusItems[] = [
   { key: 'home', href: '#home', ariaLabel: 'header.menus.home' },

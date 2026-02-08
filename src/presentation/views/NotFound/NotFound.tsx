@@ -1,24 +1,13 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
-
-import { Loading } from '../Loading';
-
+import type { FC } from 'react';
 import { OvenAnimate } from '@/components/molecules';
 import { SelectLanguage, SwitchTheme } from '@/components/organisms';
 import { useTranslation } from '@/presentation/shared/hooks/useTranslate';
 
 export const NotFound: FC = () => {
   const { t } = useTranslation();
-
-  const [mounted, setMounted] = useState<boolean>(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <Loading />;
 
   return (
     <div className='flex w-dwh h-dvh items-center justify-center relative overflow-hidden bg-white bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-pink-50/80 dark:bg-gray-900 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-pink-950/30'>

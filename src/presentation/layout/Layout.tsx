@@ -1,15 +1,12 @@
 'use client';
 
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { type FC, type PropsWithChildren, useEffect } from 'react';
 
 import { Footer, Header } from '@/components/organisms';
-import { Loading } from '@/views/Loading';
 
 type LayoutProps = PropsWithChildren;
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
-  const [mounted, setMounted] = useState<boolean>(false);
-
   useEffect(() => {
     document.addEventListener('contextmenu', e => e.preventDefault());
     return () => {
@@ -17,14 +14,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
     };
   }, []);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <Loading />;
-
   return (
-    <main className='relative bg-white flex flex-col items-center min-h-dvh w-full bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-pink-50/80 dark:bg-gray-900 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-pink-950/30'>
+    <main className='relative bg-white flex flex-col items-center min-h-dvh w-full bg-linear-to-br from-amber-50/80 via-orange-50/60 to-pink-50/80 dark:bg-gray-900 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-pink-950/30'>
       {/* Background with glass effect */}
       <div className='absolute top-0 left-1/4 w-64 h-64 bg-amber-200/20 rounded-full blur-3xl' />
 

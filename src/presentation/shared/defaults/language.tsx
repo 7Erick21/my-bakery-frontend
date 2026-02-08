@@ -1,7 +1,7 @@
 import { ELanguage } from '../enums';
 // import EnglishIcon from '@/icons/english.svg';
 // import SpanishIcon from '@/icons/spanish.svg';
-import { LanguageOption } from '../interface';
+import type { LanguageOption } from '../interface';
 
 export const LanguageOptions: LanguageOption[] = [
   {

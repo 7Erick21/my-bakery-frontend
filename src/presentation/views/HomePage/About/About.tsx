@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import { Button, Card } from '@/components/atoms';
 import ArrowLeft from '@/icons/arrowLeft.svg';

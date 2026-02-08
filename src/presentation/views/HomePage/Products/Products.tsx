@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import { Card } from '@/components/atoms';
 import BreadTomatoImage from '@/images/breadTomato.avif';
@@ -47,7 +47,7 @@ export function Products() {
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const index = Number.parseInt(entry.target.getAttribute('data-index') || '0');
+            const index = Number.parseInt(entry.target.getAttribute('data-index') || '0', 10);
             setVisibleCards(prev => [...prev, index]);
           }
         });

@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { Viewport } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Lobster_Two } from 'next/font/google';
 
 import { Providers } from './providers';

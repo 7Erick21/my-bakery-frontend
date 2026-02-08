@@ -1,1 +1,1 @@
-export { useLangStore } from './languageStore'
+export { useLangStore } from './languageStore';

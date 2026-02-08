@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
+import type { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
 
 /**
  * Props interface for the Button component

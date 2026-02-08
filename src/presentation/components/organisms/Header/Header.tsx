@@ -1,16 +1,14 @@
 'use client';
 
-import { FC, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import { SelectLanguage } from '../SelectLanguage';
-import { SwitchTheme } from '../SwitchTheme';
-
+import { type FC, useRef, useState } from 'react';
 import { Button, Card } from '@/components/atoms';
 import LogoImage from '@/images/logo.avif';
 import { useTranslation } from '@/presentation/shared/hooks/useTranslate';
 import { menusItems } from '@/shared/defaults';
+import { SelectLanguage } from '../SelectLanguage';
+import { SwitchTheme } from '../SwitchTheme';
 
 /**
  * Header component
