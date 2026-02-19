@@ -1,13 +1,23 @@
 import type { NextConfig } from 'next';
+import type { Configuration, RuleSetRule } from 'webpack';
 
 const nextConfig: NextConfig = {
-  output: 'export',
   trailingSlash: true,
   images: {
-    unoptimized: true
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com'
+      }
+    ]
   },
   compiler: {
-    removeConsole: true
+    removeConsole: process.env.NODE_ENV === 'production'
   },
   reactStrictMode: true,
   typedRoutes: true,
@@ -19,11 +29,14 @@ const nextConfig: NextConfig = {
       }
     }
   },
-  webpack(config: any) {
+  webpack(config: Configuration) {
+    const rules = config.module?.rules as RuleSetRule[];
     // Grab the existing rule that handles SVG imports
-    const fileLoaderRule = config.module.rules.find((rule: any) => rule.test?.test?.('.svg'));
+    const fileLoaderRule = rules.find(
+      (rule: RuleSetRule) => rule.test instanceof RegExp && rule.test.test('.svg')
+    ) as RuleSetRule;
 
-    config.module.rules.push(
+    rules.push(
       // Reapply the existing rule, but only for svg imports ending in ?url
       {
         ...fileLoaderRule,

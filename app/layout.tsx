@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Lobster_Two } from 'next/font/google';
+import { Aclonica, Lobster_Two } from 'next/font/google';
 
 import { Providers } from './providers';
 
@@ -9,6 +9,13 @@ const LobsterTwo = Lobster_Two({
   subsets: ['latin'],
   weight: ['400', '700'],
   display: 'swap'
+});
+
+const aclonica = Aclonica({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-aclonica'
 });
 
 export const metadata: Metadata = {
@@ -72,7 +79,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${LobsterTwo.className}`}>
+      <body suppressHydrationWarning className={`${LobsterTwo.className} ${aclonica.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

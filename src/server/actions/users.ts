@@ -1,0 +1,17 @@
+'use server';
+
+import { revalidatePath } from 'next/cache';
+
+import { requireRole } from '@/lib/auth/helpers';
+import { createClient } from '@/lib/supabase/server';
+import type { UserRole } from '@/lib/supabase/types';
+
+export async function updateUserRole(userId: string, role: UserRole) {
+  await requireRole(['super_admin']);
+  const supabase = await createClient();
+
+  const { error } = await supabase.from('profiles').update({ role }).eq('id', userId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath('/dashboard/users');
+}

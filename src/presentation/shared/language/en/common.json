@@ -6,7 +6,8 @@
       "home": "Home",
       "about": "About",
       "products": "Products",
-      "contact": "Contact"
+      "contact": "Contact",
+      "reviews": "Reviews"
     }
   },
   "notFound": {
@@ -28,7 +29,8 @@
   },
   "products": {
     "title": "Our Products",
-    "description": "Each product is made with fresh ingredients and traditional techniques to offer you the best gastronomic experience."
+    "description": "Each product is made with fresh ingredients and traditional techniques to offer you the best gastronomic experience.",
+    "viewAll": "View all products"
   },
   "about": {
     "title": "Our History",
@@ -81,7 +83,98 @@
     },
     "copyright": "My Bakery. All rights reserved."
   },
+  "reviews": {
+    "title": "Customer reviews",
+    "description": "Discover what our customers say about our products and services.",
+    "seeAll": "See all reviews",
+    "filterAll": "All",
+    "filterByRating": "Rating",
+    "filterByType": "Type",
+    "typeProduct": "Product",
+    "typeCompany": "Bakery",
+    "writeReview": "Write a review",
+    "thankYou": "Thank you for your review. It will be reviewed shortly.",
+    "submit": "Submit review",
+    "submitting": "Submitting...",
+    "placeholder": "Tell us about your experience...",
+    "ratingRequired": "Please select a rating",
+    "errorGeneric": "Error submitting review",
+    "empty": "No reviews yet",
+    "anonymous": "Anonymous",
+    "adminResponse": "Bakery response",
+    "reviewCount": "review(s)",
+    "addImages": "Add images",
+    "removeImage": "Remove image",
+    "uploading": "Uploading...",
+    "stars": "stars",
+    "averageRating": "Average rating",
+    "page": "Page",
+    "previous": "Previous",
+    "next": "Next",
+    "loginToReview": "Sign in to leave a review",
+    "rating": "Rating",
+    "comment": "Comment",
+    "writeFirst": "Be the first to leave a review!",
+    "withImages": "With images"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "checkout": "Checkout",
+    "add": "Add to cart",
+    "added": "Added"
+  },
   "language": {
     "select": "Select Language"
+  },
+  "auth": {
+    "login": "Sign in",
+    "logout": "Sign out",
+    "welcomeTitle": "Welcome to My Bakery",
+    "welcomeSubtitle": "Sign in to order your favourite products",
+    "googleButton": "Continue with Google",
+    "benefit1": "Order online",
+    "benefit2": "Track your orders",
+    "benefit3": "Leave your reviews",
+    "termsNote": "By signing in, you accept our terms of use and privacy policy.",
+    "userMenu": "User menu",
+    "myOrders": "My orders",
+    "dashboard": "Dashboard"
+  },
+  "dashboard": {
+    "welcome": "Welcome to Dashboard",
+    "nav": {
+      "home": "Home",
+      "products": "Products",
+      "categories": "Categories",
+      "orders": "Orders",
+      "inventory": "Inventory",
+      "production": "Production",
+      "reviews": "Reviews",
+      "coupons": "Coupons",
+      "content": "Content",
+      "languages": "Languages",
+      "notifications": "Notifications",
+      "audit": "Audit",
+      "users": "Users",
+      "recurring": "Recurring",
+      "invoices": "Invoices"
+    },
+    "cards": {
+      "products": "Products",
+      "productsDesc": "Manage product catalog",
+      "orders": "Orders",
+      "ordersDesc": "Manage customer orders",
+      "inventory": "Inventory",
+      "inventoryDesc": "Stock control and alerts",
+      "content": "Content",
+      "contentDesc": "Edit website content",
+      "languages": "Languages",
+      "languagesDesc": "Manage translations",
+      "users": "Users",
+      "usersDesc": "Manage user roles",
+      "audit": "Audit",
+      "auditDesc": "Activity log"
+    }
   }
 }

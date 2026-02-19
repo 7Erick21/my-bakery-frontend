@@ -34,7 +34,7 @@
         "useHookAtTopLevel": "error"
       },
       "suspicious": {
-        "noExplicitAny": "off",
+        "noExplicitAny": "error",
         "noArrayIndexKey": "warn",
         "useIterableCallbackReturn": "warn"
       },

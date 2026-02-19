@@ -10,6 +10,8 @@
       "@/views/*": ["src/presentation/views/*"],
       "@/shared/*": ["src/presentation/shared/*"],
       "@/presentation/*": ["src/presentation/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/server/*": ["src/server/*"],
       "@/src/*": ["src/*"],
       "@/styles/*": ["styles/*"]
     }

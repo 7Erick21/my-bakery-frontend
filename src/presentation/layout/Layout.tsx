@@ -1,17 +1,47 @@
 'use client';
 
 import { type FC, type PropsWithChildren, useEffect } from 'react';
-
 import { Footer, Header } from '@/components/organisms';
+import type {
+  LandingBusinessInfoItem,
+  LandingCmsSection,
+  LandingSocialLink
+} from '@/lib/supabase/models';
 
-type LayoutProps = PropsWithChildren;
+type LayoutVariant = 'default' | 'minimal';
 
-export const Layout: FC<LayoutProps> = ({ children }) => {
+type LayoutProps = PropsWithChildren<{
+  variant?: LayoutVariant;
+  footerContent?: LandingCmsSection;
+  businessInfo?: LandingBusinessInfoItem[];
+  socialLinks?: LandingSocialLink[];
+}>;
+
+export const Layout: FC<LayoutProps> = ({
+  children,
+  variant = 'default',
+  footerContent,
+  businessInfo,
+  socialLinks
+}) => {
   useEffect(() => {
     document.addEventListener('contextmenu', e => e.preventDefault());
     return () => {
       document.removeEventListener('contextmenu', e => e.preventDefault());
     };
+  }, []);
+
+  // Scroll to hash anchor after cross-page navigation
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const id = hash.replace('#', '');
+      // Small delay to let the DOM render
+      const timer = setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
@@ -27,11 +57,17 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
         style={{ animationDelay: '2s' }}
       />
 
-      <Header />
+      <Header variant={variant} />
       <article className='flex flex-col grow basis-full shrink max-w-8xl px-24-64 w-full z-0'>
         {children}
       </article>
-      <Footer />
+      {variant !== 'minimal' && (
+        <Footer
+          footerContent={footerContent}
+          businessInfo={businessInfo}
+          socialLinks={socialLinks}
+        />
+      )}
     </main>
   );
 };

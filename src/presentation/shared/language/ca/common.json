@@ -6,7 +6,8 @@
       "home": "Inici",
       "about": "Sobre nosaltres",
       "products": "Productes",
-      "contact": "Contacte"
+      "contact": "Contacte",
+      "reviews": "Ressenyes"
     }
   },
   "notFound": {
@@ -28,7 +29,8 @@
   },
   "products": {
     "title": "Els nostres productes",
-    "description": "Cada producte està elaborat amb ingredients frescos i tècniques tradicionals per oferir-te la millor experiència gastronòmica."
+    "description": "Cada producte està elaborat amb ingredients frescos i tècniques tradicionals per oferir-te la millor experiència gastronòmica.",
+    "viewAll": "Veure tots els productes"
   },
   "about": {
     "title": "La nostra història",
@@ -81,7 +83,98 @@
     },
     "copyright": "My Bakery. Tots els drets reservats."
   },
+  "reviews": {
+    "title": "Ressenyes de clients",
+    "description": "Descobreix què diuen els nostres clients sobre els nostres productes i serveis.",
+    "seeAll": "Veure totes les ressenyes",
+    "filterAll": "Totes",
+    "filterByRating": "Puntuacio",
+    "filterByType": "Tipus",
+    "typeProduct": "Producte",
+    "typeCompany": "Fleca",
+    "writeReview": "Escriu una ressenya",
+    "thankYou": "Gràcies per la teva ressenya. Serà revisada aviat.",
+    "submit": "Enviar ressenya",
+    "submitting": "Enviant...",
+    "placeholder": "Explica'ns la teva experiència...",
+    "ratingRequired": "Si us plau selecciona una valoració",
+    "errorGeneric": "Error en enviar la ressenya",
+    "empty": "Encara no hi ha ressenyes",
+    "anonymous": "Anònim",
+    "adminResponse": "Resposta de la fleca",
+    "reviewCount": "ressenya/es",
+    "addImages": "Afegir imatges",
+    "removeImage": "Eliminar imatge",
+    "uploading": "Pujant...",
+    "stars": "estrelles",
+    "averageRating": "Valoració mitjana",
+    "page": "Pàgina",
+    "previous": "Anterior",
+    "next": "Següent",
+    "loginToReview": "Inicia sessió per deixar una ressenya",
+    "rating": "Valoració",
+    "comment": "Comentari",
+    "writeFirst": "Sigues el primer en deixar una ressenya!",
+    "withImages": "Amb imatges"
+  },
+  "cart": {
+    "title": "Cistella",
+    "empty": "La teva cistella esta buida",
+    "checkout": "Fer comanda",
+    "add": "Afegir a la cistella",
+    "added": "Afegit"
+  },
   "language": {
     "select": "Seleccionar idioma"
+  },
+  "auth": {
+    "login": "Iniciar sessió",
+    "logout": "Tancar sessió",
+    "welcomeTitle": "Benvingut a My Bakery",
+    "welcomeSubtitle": "Inicia sessió per demanar els teus productes preferits",
+    "googleButton": "Continuar amb Google",
+    "benefit1": "Demana en línia",
+    "benefit2": "Segueix les teves comandes",
+    "benefit3": "Deixa les teves ressenyes",
+    "termsNote": "En iniciar sessió, acceptes les nostres condicions d'ús i política de privacitat.",
+    "userMenu": "Menú d'usuari",
+    "myOrders": "Les meves comandes",
+    "dashboard": "Dashboard"
+  },
+  "dashboard": {
+    "welcome": "Benvingut al Dashboard",
+    "nav": {
+      "home": "Inici",
+      "products": "Productes",
+      "categories": "Categories",
+      "orders": "Comandes",
+      "inventory": "Inventari",
+      "production": "Producció",
+      "reviews": "Ressenyes",
+      "coupons": "Cupons",
+      "content": "Contingut",
+      "languages": "Idiomes",
+      "notifications": "Notificacions",
+      "audit": "Auditoria",
+      "users": "Usuaris",
+      "recurring": "Recurrents",
+      "invoices": "Factures"
+    },
+    "cards": {
+      "products": "Productes",
+      "productsDesc": "Gestiona el catàleg de productes",
+      "orders": "Comandes",
+      "ordersDesc": "Gestiona comandes de clients",
+      "inventory": "Inventari",
+      "inventoryDesc": "Control d'estoc i alertes",
+      "content": "Contingut",
+      "contentDesc": "Edita el contingut del web",
+      "languages": "Idiomes",
+      "languagesDesc": "Gestiona traduccions",
+      "users": "Usuaris",
+      "usersDesc": "Gestiona rols d'usuaris",
+      "audit": "Auditoria",
+      "auditDesc": "Registre d'activitat"
+    }
   }
 }

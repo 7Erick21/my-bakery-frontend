@@ -49,7 +49,12 @@ a:focus {
   --spacing-24-64: clamp(1.5rem, 0.5385rem + 3.8462vw, 4rem);
 
   /* Font Size */
+  --text-14-16: clamp(0.875rem, 0.8269rem + 0.1923vw, 1rem);
+  --text-16-20: clamp(1rem, 0.9038rem + 0.3846vw, 1.25rem);
+  --text-18-24: clamp(1.125rem, 1.034rem + 0.3883vw, 1.5rem);
   --text-16-24: clamp(1rem, 0.8077rem + 0.7692vw, 1.5rem);
+  --text-16-24: clamp(1rem, 0.8077rem + 0.7692vw, 1.5rem);
+  --text-32-48: clamp(2rem, 1.6154rem + 1.5385vw, 3rem);
   --text-60-96: clamp(3.75rem, 2.8846rem + 3.4615vw, 6rem);
   --text-72-128: clamp(4.5rem, 3.1538rem + 5.3846vw, 8rem);
 
@@ -112,6 +117,14 @@ a:focus {
   --background-image-bg-button-dark: linear-gradient(to bottom, #3b2f2f60, #2a1f1c40);
   --background-image-button-inner-light: linear-gradient(to bottom right, #fffaf3, #f9e8d2);
   --background-image-button-inner-dark: linear-gradient(to bottom right, #3b2f2f, #2a1f1c);
+
+  /* Dashboard */
+  --background-image-dashboard-light: linear-gradient(135deg, #fffbf5 0%, #fef5e7 50%, #fdf0dc 100%);
+  --background-image-dashboard-dark: linear-gradient(135deg, #1a1310 0%, #1f1915 50%, #2a1f1c 100%);
+  --background-image-dashboard-card-light: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,250,243,0.6));
+  --background-image-dashboard-card-dark: linear-gradient(135deg, rgba(42,31,28,0.6), rgba(59,47,47,0.4));
+  --shadow-dashboard-card-light: 0 1px 3px rgba(249,232,210,0.3), 0 4px 12px rgba(249,232,210,0.15);
+  --shadow-dashboard-card-dark: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.15);
 
   /* Shadows */
   --shadow-card-light: 0 4px 20px rgba(249, 232, 210, 0.3);

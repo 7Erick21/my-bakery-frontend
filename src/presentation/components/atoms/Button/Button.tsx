@@ -9,7 +9,7 @@ import type { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
  * @property type - Button type (submit, button, reset)
  */
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, PropsWithChildren {
-  variant?: 'default' | 'outline' | 'ghost' | 'glass';
+  variant?: 'default' | 'outline' | 'ghost' | 'glass' | 'primary' | 'secondary';
   disabled?: boolean;
   type?: 'submit' | 'button' | 'reset';
 }
@@ -59,18 +59,29 @@ export const Button: FC<ButtonProps> = ({
       dark:shadow-gray-200/20 dark:transition-all dark:duration-500 dark:ease-in-out
     `,
     glass: `
-      backdrop-blur-md backdrop-saturate-180 bg-amber-600/20 
-      border border-amber-600/30 font-semibold 
-      hover:backdrop-blur-lg hover:backdrop-saturate-200 
-      hover:bg-amber-600/30 hover:border-amber-600/50 
-      hover:scale-105 hover:-translate-y-0.5 active:scale-95 
-      shadow-lg hover:shadow-xl relative overflow-hidden 
-      before:absolute before:inset-0 before:bg-gradient-to-r 
-      before:from-transparent before:via-white/20 before:to-transparent 
-      before:translate-x-[-100%] before:transition-transform before:duration-700 
-      hover:before:translate-x-[100%] 
-      dark:bg-amber-600/15 dark:border-amber-500/20 
+      backdrop-blur-md backdrop-saturate-180 bg-amber-600/20
+      border border-amber-600/30 font-semibold
+      hover:backdrop-blur-lg hover:backdrop-saturate-200
+      hover:bg-amber-600/30 hover:border-amber-600/50
+      hover:scale-105 hover:-translate-y-0.5 active:scale-95
+      shadow-lg hover:shadow-xl relative overflow-hidden
+      before:absolute before:inset-0 before:bg-gradient-to-r
+      before:from-transparent before:via-white/20 before:to-transparent
+      before:translate-x-[-100%] before:transition-transform before:duration-700
+      hover:before:translate-x-[100%]
+      dark:bg-amber-600/15 dark:border-amber-500/20
       dark:hover:bg-amber-600/25 dark:hover:border-amber-500/40
+    `,
+    primary: `
+      px-6 py-2 text-14-16 bg-gradient-to-r from-amber-500 to-orange-500
+      hover:from-amber-600 hover:to-orange-600 shadow-sm hover:shadow-md
+      hover:shadow-amber-500/20 text-white rounded-lg font-medium transition-all
+    `,
+    secondary: `
+      px-6 py-2 text-14-16 border border-border-card-children-light
+      dark:border-border-card-children-dark rounded-lg text-gray-700
+      dark:text-gray-300 hover:bg-amber-50/50 dark:hover:bg-amber-900/10
+      transition-colors
     `
   };
 
