@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { getSession } from '@/lib/auth/helpers';
-import { stripe } from '@/lib/stripe/client';
+import { getStripe } from '@/lib/stripe/client';
 import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
   let customerId = profile?.stripe_customer_id;
 
   if (!customerId) {
-    const customer = await stripe.customers.create({
+    const customer = await getStripe().customers.create({
       email: profile?.email ?? undefined,
       name: profile?.full_name ?? undefined,
       metadata: { supabase_user_id: user.id }
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Create PaymentIntent
-  const paymentIntent = await stripe.paymentIntents.create({
+  const paymentIntent = await getStripe().paymentIntents.create({
     amount: Math.round(order.total * 100),
     currency: 'eur',
     customer: customerId,
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     expYear: number;
   }[] = [];
   if (customerId) {
-    const methods = await stripe.paymentMethods.list({
+    const methods = await getStripe().paymentMethods.list({
       customer: customerId,
       type: 'card'
     });
