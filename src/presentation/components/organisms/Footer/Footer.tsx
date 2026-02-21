@@ -5,31 +5,65 @@ import type { FC } from 'react';
 import { Card } from '@/components/atoms';
 import FacebookIcon from '@/icons/facebooks.svg';
 import InstagramIcon from '@/icons/instagram.svg';
+import LinkedinIcon from '@/icons/linkedin.svg';
+import PinterestIcon from '@/icons/pinterest.svg';
+import TelegramIcon from '@/icons/telegram.svg';
+import ThreadsIcon from '@/icons/threads.svg';
+import TiktokIcon from '@/icons/tiktok.svg';
 import TwitterIcon from '@/icons/twitter.svg';
+import WhatsappIcon from '@/icons/whatsapp.svg';
+import YoutubeIcon from '@/icons/youtube.svg';
 import LogoImage from '@/images/logo.avif';
+import type {
+  LandingBusinessInfoItem,
+  LandingCmsSection,
+  LandingSocialLink
+} from '@/lib/supabase/models';
+import { getBusinessValue, getTranslation } from '@/lib/utils/translation';
 import { useTranslation } from '@/presentation/shared/hooks/useTranslate';
 import { menusItems } from '@/shared/defaults';
 
-/**
- * Social media link interface
- */
-interface SocialLink {
-  icon: typeof FacebookIcon | typeof InstagramIcon | typeof TwitterIcon;
-  href: string;
-  ariaLabel: string;
+const socialIconMap: Record<string, typeof FacebookIcon> = {
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  twitter: TwitterIcon,
+  tiktok: TiktokIcon,
+  youtube: YoutubeIcon,
+  whatsapp: WhatsappIcon,
+  linkedin: LinkedinIcon,
+  pinterest: PinterestIcon,
+  telegram: TelegramIcon,
+  threads: ThreadsIcon
+};
+
+interface FooterProps {
+  footerContent?: LandingCmsSection;
+  businessInfo?: LandingBusinessInfoItem[];
+  socialLinks?: LandingSocialLink[];
 }
 
-/**
- * Footer component
- */
-export const Footer: FC = () => {
-  const { t } = useTranslation();
+export const Footer: FC<FooterProps> = ({ footerContent, businessInfo = [], socialLinks }) => {
+  const { lang, t } = useTranslation();
 
-  const socialLinks: SocialLink[] = [
-    { icon: FacebookIcon, href: '#', ariaLabel: t('footer.social.facebook') },
-    { icon: InstagramIcon, href: '#', ariaLabel: t('footer.social.instagram') },
-    { icon: TwitterIcon, href: '#', ariaLabel: t('footer.social.twitter') }
-  ];
+  const footerCms = getTranslation(footerContent?.cms_content_translations, lang);
+  const description = footerCms?.body || t('footer.description');
+
+  const address = getBusinessValue(businessInfo, 'address', lang) || t('footer.address');
+  const city = getBusinessValue(businessInfo, 'city', lang) || t('footer.city');
+  const phone = getBusinessValue(businessInfo, 'phone', lang) || t('footer.phone');
+  const email = getBusinessValue(businessInfo, 'email', lang) || t('footer.email');
+
+  const resolvedSocialLinks = socialLinks?.length
+    ? socialLinks.map(link => ({
+        icon: socialIconMap[link.platform] || FacebookIcon,
+        href: link.url,
+        ariaLabel: t(`footer.social.${link.platform}`)
+      }))
+    : [
+        { icon: FacebookIcon, href: '#', ariaLabel: t('footer.social.facebook') },
+        { icon: InstagramIcon, href: '#', ariaLabel: t('footer.social.instagram') },
+        { icon: TwitterIcon, href: '#', ariaLabel: t('footer.social.twitter') }
+      ];
 
   const currentYear = new Date().getFullYear();
 
@@ -51,7 +85,7 @@ export const Footer: FC = () => {
                 {t('header.logo')}
               </span>
             </Link>
-            <p className='text-gray-600 text-lg dark:text-gray-400'>{t('footer.description')}</p>
+            <p className='text-gray-600 text-lg dark:text-gray-400'>{description}</p>
           </div>
 
           {/* Quick links */}
@@ -79,10 +113,10 @@ export const Footer: FC = () => {
               {t('footer.contact')}
             </h3>
             <div className='flex flex-col gap-3 text-gray-600 dark:text-gray-400 text-lg leading-tight'>
-              <p>{t('footer.address')}</p>
-              <p>{t('footer.city')}</p>
-              <p>{t('footer.phone')}</p>
-              <p>{t('footer.email')}</p>
+              <p>{address}</p>
+              <p>{city}</p>
+              <p>{phone}</p>
+              <p>{email}</p>
             </div>
           </div>
 
@@ -92,7 +126,7 @@ export const Footer: FC = () => {
               {t('footer.followUs')}
             </h3>
             <div className='flex space-x-4'>
-              {socialLinks.map(link => (
+              {resolvedSocialLinks.map(link => (
                 <Link
                   key={link.ariaLabel}
                   href={{ pathname: link.href }}

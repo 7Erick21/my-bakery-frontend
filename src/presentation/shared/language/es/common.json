@@ -6,7 +6,8 @@
       "home": "Inicio",
       "about": "Sobre nosotros",
       "products": "Productos",
-      "contact": "Contacto"
+      "contact": "Contacto",
+      "reviews": "Reseñas"
     }
   },
   "notFound": {
@@ -28,7 +29,8 @@
   },
   "products": {
     "title": "Nuestros Productos",
-    "description": "Cada producto está elaborado con ingredientes frescos y técnicas tradicionales para ofrecerte la mejor experiencia gastronómica."
+    "description": "Cada producto está elaborado con ingredientes frescos y técnicas tradicionales para ofrecerte la mejor experiencia gastronómica.",
+    "viewAll": "Ver todos los productos"
   },
   "about": {
     "title": "Nuestra Historia",
@@ -77,11 +79,109 @@
     "social": {
       "facebook": "Síguenos en Facebook",
       "instagram": "Síguenos en Instagram",
-      "twitter": "Síguenos en Twitter"
+      "twitter": "Síguenos en Twitter",
+      "tiktok": "Síguenos en TikTok",
+      "youtube": "Síguenos en YouTube",
+      "whatsapp": "Contáctanos por WhatsApp",
+      "linkedin": "Síguenos en LinkedIn",
+      "pinterest": "Síguenos en Pinterest",
+      "telegram": "Únete a nuestro Telegram",
+      "threads": "Síguenos en Threads"
     },
     "copyright": "My Bakery. Todos los derechos reservados."
   },
+  "reviews": {
+    "title": "Reseñas de clientes",
+    "description": "Descubre lo que dicen nuestros clientes sobre nuestros productos y servicios.",
+    "seeAll": "Ver todas las reseñas",
+    "filterAll": "Todas",
+    "filterByRating": "Puntuacion",
+    "filterByType": "Tipo",
+    "typeProduct": "Producto",
+    "typeCompany": "Panadería",
+    "writeReview": "Escribe una reseña",
+    "thankYou": "Gracias por tu reseña. Será revisada pronto.",
+    "submit": "Enviar reseña",
+    "submitting": "Enviando...",
+    "placeholder": "Cuéntanos tu experiencia...",
+    "ratingRequired": "Por favor selecciona una valoración",
+    "errorGeneric": "Error al enviar la reseña",
+    "empty": "Aún no hay reseñas",
+    "anonymous": "Anónimo",
+    "adminResponse": "Respuesta de la panadería",
+    "reviewCount": "reseña(s)",
+    "addImages": "Añadir imágenes",
+    "removeImage": "Eliminar imagen",
+    "uploading": "Subiendo...",
+    "stars": "estrellas",
+    "averageRating": "Valoración media",
+    "page": "Página",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "loginToReview": "Inicia sesión para dejar una reseña",
+    "rating": "Valoración",
+    "comment": "Comentario",
+    "writeFirst": "¡Sé el primero en dejar una reseña!",
+    "withImages": "Con imágenes"
+  },
+  "cart": {
+    "title": "Carrito",
+    "empty": "Tu carrito está vacío",
+    "checkout": "Realizar pedido",
+    "add": "Añadir al carrito",
+    "added": "Añadido"
+  },
   "language": {
     "select": "Seleccionar idioma"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "welcomeTitle": "Bienvenido a My Bakery",
+    "welcomeSubtitle": "Inicia sesión para pedir tus productos favoritos",
+    "googleButton": "Continuar con Google",
+    "benefit1": "Pide en línea",
+    "benefit2": "Sigue tus pedidos",
+    "benefit3": "Deja tus reseñas",
+    "termsNote": "Al iniciar sesión, aceptas nuestras condiciones de uso y política de privacidad.",
+    "userMenu": "Menú de usuario",
+    "myOrders": "Mis pedidos",
+    "dashboard": "Dashboard"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido al Dashboard",
+    "nav": {
+      "home": "Inicio",
+      "products": "Productos",
+      "categories": "Categorías",
+      "orders": "Pedidos",
+      "inventory": "Inventario",
+      "production": "Producción",
+      "reviews": "Reseñas",
+      "coupons": "Cupones",
+      "content": "Contenido",
+      "languages": "Idiomas",
+      "notifications": "Notificaciones",
+      "audit": "Auditoría",
+      "users": "Usuarios",
+      "recurring": "Recurrentes",
+      "invoices": "Facturas"
+    },
+    "cards": {
+      "products": "Productos",
+      "productsDesc": "Gestiona el catálogo de productos",
+      "orders": "Pedidos",
+      "ordersDesc": "Gestiona pedidos de clientes",
+      "inventory": "Inventario",
+      "inventoryDesc": "Control de stock y alertas",
+      "content": "Contenido",
+      "contentDesc": "Edita el contenido de la web",
+      "languages": "Idiomas",
+      "languagesDesc": "Gestiona traducciones",
+      "users": "Usuarios",
+      "usersDesc": "Gestiona roles de usuarios",
+      "audit": "Auditoría",
+      "auditDesc": "Registro de actividad"
+    }
   }
 }

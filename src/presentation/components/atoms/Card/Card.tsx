@@ -2,16 +2,16 @@ import type React from 'react';
 import { forwardRef } from 'react';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'children' | 'glass' | 'glass-light' | 'glass-heavy';
+  variant?: 'default' | 'children' | 'glass' | 'glass-light';
 }
 
 const cardVariants: Record<NonNullable<CardProps['variant']>, string> = {
   default: `
-    bg-card-light border-1 backdrop-blur-lg border-solid rounded-3xl shadow-card-children-light border border-solid border-border-card-children-light
+    bg-card-light border-1 backdrop-blur-lg border-solid rounded-2xl shadow-card-children-light border border-solid border-border-card-children-light
     dark:bg-card-dark dark:border-border-card-dark dark:shadow-card-dark
   `,
   children: `
-    rounded-xl bg-card-children-light backdrop-blur-lg shadow-card-children-light border border-solid border-border-card-children-light 
+    rounded-xl bg-card-children-light shadow-card-children-light border border-solid border-border-card-children-light
     dark:bg-card-children-dark dark:shadow-card-children-dark dark:border-border-card-children-dark
   `,
   glass: `
@@ -26,10 +26,6 @@ const cardVariants: Record<NonNullable<CardProps['variant']>, string> = {
     shadow-md shadow-black/5 dark:shadow-black/10
     hover:backdrop-blur-md hover:backdrop-saturate-180 
     hover:border-white/50 dark:hover:border-white/25 hover:shadow-lg
-    `,
-  'glass-heavy': `
-    overflow-hidden relative group rounded-xl bg-card-children-light backdrop-blur-lg shadow-card-children-light border border-solid border-border-card-children-light 
-    dark:bg-card-children-dark dark:shadow-card-children-dark dark:border-border-card-children-dark
     `
 };
 

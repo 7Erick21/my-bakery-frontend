@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'react-day-picker/style.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -42,14 +43,23 @@ a:focus {
 }
 
 @theme {
+  /* Font families */
+  --font-display: 'Lobster Two', cursive;
+
   /* Spacing */
   --spacing-8xl: 1536px;
   --spacing-16-24: clamp(1rem, 0.8077rem + 0.7692vw, 1.5rem);
   --spacing-96-128: clamp(6rem, 5.2308rem + 3.0769vw, 8rem);
   --spacing-24-64: clamp(1.5rem, 0.5385rem + 3.8462vw, 4rem);
-
+  --spacing-32-40: clamp(2rem, 1.8802rem + 0.5112vw, 2.5rem);
+  
   /* Font Size */
+  --text-14-16: clamp(0.875rem, 0.8269rem + 0.1923vw, 1rem);
+  --text-16-20: clamp(1rem, 0.9038rem + 0.3846vw, 1.25rem);
+  --text-18-24: clamp(1.125rem, 1.034rem + 0.3883vw, 1.5rem);
   --text-16-24: clamp(1rem, 0.8077rem + 0.7692vw, 1.5rem);
+  --text-32-40: clamp(2rem, 1.8802rem + 0.5112vw, 2.5rem);
+  --text-32-48: clamp(2rem, 1.6154rem + 1.5385vw, 3rem);
   --text-60-96: clamp(3.75rem, 2.8846rem + 3.4615vw, 6rem);
   --text-72-128: clamp(4.5rem, 3.1538rem + 5.3846vw, 8rem);
 
@@ -62,6 +72,9 @@ a:focus {
 
   --color-button-light: rgba(243, 225, 213, 0.9); /* antes era 1 */
   --color-button-dark: rgba(47, 29, 24, 0.3);
+
+  --color-modal-light: #fdf6f0f1;
+  --color-modal-dark: #1d1614f1;
 
   /* Background Image */
   --background-image-main-light: linear-gradient(
@@ -113,6 +126,14 @@ a:focus {
   --background-image-button-inner-light: linear-gradient(to bottom right, #fffaf3, #f9e8d2);
   --background-image-button-inner-dark: linear-gradient(to bottom right, #3b2f2f, #2a1f1c);
 
+  /* Dashboard */
+  --background-image-dashboard-light: linear-gradient(135deg, #fffbf5 0%, #fef5e7 50%, #fdf0dc 100%);
+  --background-image-dashboard-dark: linear-gradient(135deg, #1a1310 0%, #1f1915 50%, #2a1f1c 100%);
+  --background-image-dashboard-card-light: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,250,243,0.6));
+  --background-image-dashboard-card-dark: linear-gradient(135deg, rgba(42,31,28,0.6), rgba(59,47,47,0.4));
+  --shadow-dashboard-card-light: 0 1px 3px rgba(249,232,210,0.3), 0 4px 12px rgba(249,232,210,0.15);
+  --shadow-dashboard-card-dark: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.15);
+
   /* Shadows */
   --shadow-card-light: 0 4px 20px rgba(249, 232, 210, 0.3);
   --shadow-card-dark: 0 4px 20px rgba(43, 30, 25, 0.3);
@@ -131,6 +152,8 @@ a:focus {
   --animate-spin-slow: spin-slow 3s linear infinite;
   --animate-float: float 3s ease-in-out infinite;
   --animate-wiggle: wiggle 1s ease-in-out infinite;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out;
+  --animate-fade-in-up: fade-in-up 0.4s ease-out;
 
   /* Backdrop blur */
   --backdrop-blur-xs: 2px;
@@ -227,4 +250,120 @@ a:focus {
       transform: rotate(3deg);
     }
   }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    0% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+/* ── react-day-picker bakery theme ── */
+.rdp-bakery {
+  --rdp-accent-color: #d97706;
+  --rdp-accent-background-color: #fef3c7;
+  --rdp-today-color: #b45309;
+  --rdp-day-height: 36px;
+  --rdp-day-width: 36px;
+  --rdp-day_button-height: 34px;
+  --rdp-day_button-width: 34px;
+  --rdp-day_button-border-radius: 8px;
+  --rdp-weekday-opacity: 0.6;
+  --rdp-outside-opacity: 0.35;
+  --rdp-animation_duration: 0.25s;
+
+  padding: 12px;
+  font-size: 0.875rem;
+  color: #1f2937;
+}
+
+.rdp-bakery .rdp-month_caption {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.rdp-bakery .rdp-day_button {
+  border-radius: 8px;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.rdp-bakery .rdp-day_button:hover:not([disabled]) {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.rdp-bakery-today:not(.rdp-bakery-selected) .rdp-day_button {
+  font-weight: 700;
+  color: #b45309;
+  border: 1.5px solid #d97706;
+}
+
+.rdp-bakery-selected .rdp-day_button {
+  background-color: #d97706 !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.rdp-bakery-disabled .rdp-day_button {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.rdp-bakery-chevron {
+  fill: #d97706;
+}
+
+.rdp-bakery .rdp-button_previous:hover,
+.rdp-bakery .rdp-button_next:hover {
+  background-color: #fef3c7;
+  border-radius: 8px;
+}
+
+/* Dark mode */
+.dark .rdp-bakery {
+  --rdp-accent-color: #f59e0b;
+  --rdp-accent-background-color: rgba(217, 119, 6, 0.2);
+  --rdp-today-color: #fbbf24;
+
+  color: #e5e7eb;
+}
+
+.dark .rdp-bakery .rdp-day_button:hover:not([disabled]) {
+  background-color: rgba(217, 119, 6, 0.2);
+  color: #fcd34d;
+}
+
+.dark .rdp-bakery-today:not(.rdp-bakery-selected) .rdp-day_button {
+  color: #fbbf24;
+  border-color: #f59e0b;
+}
+
+.dark .rdp-bakery-selected .rdp-day_button {
+  background-color: #f59e0b !important;
+  color: #1c1917 !important;
+}
+
+.dark .rdp-bakery-chevron {
+  fill: #f59e0b;
+}
+
+.dark .rdp-bakery .rdp-button_previous:hover,
+.dark .rdp-bakery .rdp-button_next:hover {
+  background-color: rgba(217, 119, 6, 0.2);
 }
