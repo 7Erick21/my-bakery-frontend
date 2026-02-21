@@ -62,7 +62,7 @@ export const RecurringScheduleFormAdmin: FC<RecurringScheduleFormProps> = ({ sch
 
   return (
     <div>
-      <h1 className='text-24-32 font-bold text-gray-900 dark:text-gray-100 mb-6'>
+      <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100 mb-6'>
         {isEditing ? 'Editar pedido recurrente' : 'Nuevo pedido recurrente'}
       </h1>
 
@@ -109,28 +109,24 @@ export const RecurringScheduleFormAdmin: FC<RecurringScheduleFormProps> = ({ sch
               <Select
                 id='delivery_type'
                 value={deliveryType}
-                onChange={e => setDeliveryType(e.target.value)}
-              >
-                {Object.entries(DELIVERY_TYPE_LABELS).map(([key, labels]) => (
-                  <option key={key} value={key}>
-                    {labels.es}
-                  </option>
-                ))}
-              </Select>
+                onChange={setDeliveryType}
+                options={Object.entries(DELIVERY_TYPE_LABELS).map(([key, labels]) => ({
+                  value: key,
+                  label: labels.es
+                }))}
+              />
             </div>
             <div>
               <Label htmlFor='payment_method'>Metodo de pago</Label>
               <Select
                 id='payment_method'
                 value={paymentMethod}
-                onChange={e => setPaymentMethod(e.target.value)}
-              >
-                {Object.entries(PAYMENT_METHOD_LABELS).map(([key, labels]) => (
-                  <option key={key} value={key}>
-                    {labels.es}
-                  </option>
-                ))}
-              </Select>
+                onChange={setPaymentMethod}
+                options={Object.entries(PAYMENT_METHOD_LABELS).map(([key, labels]) => ({
+                  value: key,
+                  label: labels.es
+                }))}
+              />
             </div>
           </div>
 

@@ -1,11 +1,35 @@
 'use client';
 
+import {
+  closestCenter,
+  DndContext,
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { useRouter } from 'next/navigation';
-import { type FC, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
-import { Button, DashboardCard, Input, Label } from '@/components/atoms';
+import { Button, DashboardCard, IconButton, Input, Label } from '@/components/atoms';
+import GripIcon from '@/icons/grip.svg';
+import PencilIcon from '@/icons/pencil.svg';
+import TrashIcon from '@/icons/trash.svg';
 import type { LandingTimelineEvent } from '@/lib/supabase/models';
-import { deleteTimelineEvent, upsertTimelineEvent } from '@/server/actions/cms';
+import {
+  deleteTimelineEvent,
+  reorderTimelineEvents,
+  upsertTimelineEvent
+} from '@/server/actions/cms';
+import { useToastStore } from '@/shared/stores/toastStore';
 import { FormActions } from '../shared/FormActions';
 import { ImageUploader } from '../shared/ImageUploader';
 import { PageHeader } from '../shared/PageHeader';
@@ -19,8 +43,39 @@ interface TimelineEditorProps {
 
 export const TimelineEditor: FC<TimelineEditorProps> = ({ events, languages }) => {
   const router = useRouter();
+  const addToast = useToastStore(s => s.addToast);
   const [editing, setEditing] = useState<LandingTimelineEvent | null>(null);
   const [isNew, setIsNew] = useState(false);
+  const [items, setItems] = useState(events);
+
+  useEffect(() => {
+    setItems(events);
+  }, [events]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(KeyboardSensor)
+  );
+
+  async function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = items.findIndex(i => i.id === active.id);
+    const newIndex = items.findIndex(i => i.id === over.id);
+    const reordered = arrayMove(items, oldIndex, newIndex);
+
+    setItems(reordered);
+
+    try {
+      await reorderTimelineEvents(reordered.map(i => i.id));
+      addToast({ message: 'Orden actualizado', type: 'success' });
+      router.refresh();
+    } catch {
+      setItems(events);
+      addToast({ message: 'Error al reordenar', type: 'error' });
+    }
+  }
 
   return (
     <div className='space-y-6'>
@@ -62,52 +117,91 @@ export const TimelineEditor: FC<TimelineEditorProps> = ({ events, languages }) =
           }}
         />
       ) : (
-        <div className='grid gap-4'>
-          {events.map(event => {
-            const esTitle =
-              event.timeline_event_translations.find(t => t.language_code === 'es')?.title ||
-              event.timeline_event_translations[0]?.title ||
-              '';
-            return (
-              <DashboardCard key={event.id} title={`${event.year} — ${esTitle}`}>
-                <div className='flex items-center justify-between'>
-                  <p className='text-14-16 text-gray-500'>Orden: {event.sort_order}</p>
-                  <div className='flex gap-2'>
-                    <Button
-                      variant='secondary'
-                      className='cursor-pointer'
-                      onClick={() => {
-                        setEditing(event);
-                        setIsNew(false);
-                      }}
-                    >
-                      Editar
-                    </Button>
-                    <Button
-                      variant='secondary'
-                      className='cursor-pointer text-red-500'
-                      onClick={async () => {
-                        await deleteTimelineEvent(event.id);
-                        router.refresh();
-                      }}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                </div>
-              </DashboardCard>
-            );
-          })}
-          {events.length === 0 && (
-            <p className='text-gray-500 text-center py-8'>No hay eventos en el timeline</p>
-          )}
-        </div>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
+            <div className='grid gap-4'>
+              {items.map(event => (
+                <SortableTimelineItem
+                  key={event.id}
+                  event={event}
+                  onEdit={() => {
+                    setEditing(event);
+                    setIsNew(false);
+                  }}
+                  onDelete={async () => {
+                    await deleteTimelineEvent(event.id);
+                    router.refresh();
+                  }}
+                />
+              ))}
+              {items.length === 0 && (
+                <p className='text-gray-500 text-center py-8'>No hay eventos en el timeline</p>
+              )}
+            </div>
+          </SortableContext>
+        </DndContext>
       )}
     </div>
   );
 };
 
 TimelineEditor.displayName = 'TimelineEditor';
+
+// ─── Sortable Item ──────────────────────────────────────────
+
+interface SortableTimelineItemProps {
+  event: LandingTimelineEvent;
+  onEdit: () => void;
+  onDelete: () => void;
+}
+
+function SortableTimelineItem({ event, onEdit, onDelete }: SortableTimelineItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: event.id
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : undefined
+  };
+
+  const esTitle =
+    event.timeline_event_translations.find(t => t.language_code === 'es')?.title ||
+    event.timeline_event_translations[0]?.title ||
+    '';
+
+  return (
+    <div ref={setNodeRef} style={style}>
+      <DashboardCard>
+        <div className='flex items-center gap-3'>
+          <button
+            type='button'
+            className='cursor-grab active:cursor-grabbing touch-none text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+            aria-label='Reordenar evento'
+            {...attributes}
+            {...listeners}
+          >
+            <GripIcon className='w-5 h-5' />
+          </button>
+
+          <span className='font-semibold text-gray-900 dark:text-gray-100 flex-1'>
+            {event.year} — {esTitle}
+          </span>
+
+          <div className='flex gap-1'>
+            <IconButton aria-label='Editar' variant='accent' onClick={onEdit}>
+              <PencilIcon className='w-4 h-4' />
+            </IconButton>
+            <IconButton aria-label='Eliminar' variant='danger' onClick={onDelete}>
+              <TrashIcon className='w-4 h-4' />
+            </IconButton>
+          </div>
+        </div>
+      </DashboardCard>
+    </div>
+  );
+}
 
 // ─── Event Form ─────────────────────────────────────────────
 
@@ -121,7 +215,6 @@ interface EventFormProps {
 
 function EventForm({ event, isNew, languages, onCancel, onSaved }: EventFormProps) {
   const [year, setYear] = useState(String(event.year));
-  const [sortOrder, setSortOrder] = useState(String(event.sort_order));
   const [imageUrl, setImageUrl] = useState(event.image_url || '');
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [translations, setTranslations] = useState<Translation[]>(
@@ -141,7 +234,7 @@ function EventForm({ event, isNew, languages, onCancel, onSaved }: EventFormProp
       const formData = new FormData();
       if (!isNew && event.id) formData.set('id', event.id);
       formData.set('year', year);
-      formData.set('sort_order', sortOrder);
+      formData.set('sort_order', String(event.sort_order));
       formData.set('image_url', finalImageUrl);
       formData.set('translations', JSON.stringify(translations));
 
@@ -161,15 +254,9 @@ function EventForm({ event, isNew, languages, onCancel, onSaved }: EventFormProp
   return (
     <form onSubmit={handleSubmit} className='space-y-6 max-w-3xl'>
       <DashboardCard title={isNew ? 'Nuevo evento' : `Editar evento ${year}`}>
-        <div className='grid grid-cols-2 gap-4'>
-          <div>
-            <Label required>Año</Label>
-            <Input type='number' value={year} onChange={e => setYear(e.target.value)} required />
-          </div>
-          <div>
-            <Label>Orden</Label>
-            <Input type='number' value={sortOrder} onChange={e => setSortOrder(e.target.value)} />
-          </div>
+        <div>
+          <Label required>Año</Label>
+          <Input type='number' value={year} onChange={e => setYear(e.target.value)} required />
         </div>
       </DashboardCard>
 

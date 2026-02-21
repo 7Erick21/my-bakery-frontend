@@ -4,6 +4,7 @@ import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { type FC, useState } from 'react';
 
+import { Button, Input, Select, Textarea } from '@/components/atoms';
 import type { AddressItem } from '@/lib/supabase/models';
 import { Layout } from '@/presentation/layout/Layout';
 import { createRecurringSchedule, updateRecurringSchedule } from '@/server/actions/recurring';
@@ -85,13 +86,12 @@ export const RecurringScheduleForm: FC<RecurringScheduleFormProps> = ({
               >
                 {t('recurring.businessName', 'Nombre empresa')} *
               </label>
-              <input
+              <Input
                 id='business_name'
                 name='business_name'
                 type='text'
                 required
                 defaultValue={initialData?.business_name || ''}
-                className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent'
               />
             </div>
 
@@ -103,12 +103,11 @@ export const RecurringScheduleForm: FC<RecurringScheduleFormProps> = ({
                 >
                   {t('recurring.contactName', 'Persona de contacto')}
                 </label>
-                <input
+                <Input
                   id='contact_name'
                   name='contact_name'
                   type='text'
                   defaultValue={initialData?.contact_name || ''}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent'
                 />
               </div>
               <div>
@@ -118,12 +117,11 @@ export const RecurringScheduleForm: FC<RecurringScheduleFormProps> = ({
                 >
                   {t('recurring.contactPhone', 'Telefono')}
                 </label>
-                <input
+                <Input
                   id='contact_phone'
                   name='contact_phone'
                   type='tel'
                   defaultValue={initialData?.contact_phone || ''}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent'
                 />
               </div>
             </div>
@@ -136,18 +134,15 @@ export const RecurringScheduleForm: FC<RecurringScheduleFormProps> = ({
                 >
                   {t('checkout.deliveryType', 'Tipo de entrega')}
                 </label>
-                <select
+                <Select
                   id='delivery_type'
                   name='delivery_type'
                   defaultValue={initialData?.delivery_type || 'pickup'}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent'
-                >
-                  {Object.entries(DELIVERY_TYPE_LABELS).map(([val, labels]) => (
-                    <option key={val} value={val}>
-                      {labels[lang]}
-                    </option>
-                  ))}
-                </select>
+                  options={Object.entries(DELIVERY_TYPE_LABELS).map(([val, labels]) => ({
+                    value: val,
+                    label: labels[lang]
+                  }))}
+                />
               </div>
               <div>
                 <label
@@ -156,18 +151,15 @@ export const RecurringScheduleForm: FC<RecurringScheduleFormProps> = ({
                 >
                   {t('checkout.paymentMethod', 'Metodo de pago')}
                 </label>
-                <select
+                <Select
                   id='payment_method'
                   name='payment_method'
                   defaultValue={initialData?.payment_method || 'cash'}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent'
-                >
-                  {Object.entries(PAYMENT_METHOD_LABELS).map(([val, labels]) => (
-                    <option key={val} value={val}>
-                      {labels[lang]}
-                    </option>
-                  ))}
-                </select>
+                  options={Object.entries(PAYMENT_METHOD_LABELS).map(([val, labels]) => ({
+                    value: val,
+                    label: labels[lang]
+                  }))}
+                />
               </div>
             </div>
 
@@ -179,19 +171,18 @@ export const RecurringScheduleForm: FC<RecurringScheduleFormProps> = ({
                 >
                   {t('checkout.address', 'Direccion de envio')}
                 </label>
-                <select
+                <Select
                   id='address_id'
                   name='address_id'
                   defaultValue={initialData?.address_id || ''}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent'
-                >
-                  <option value=''>Sin direccion</option>
-                  {addresses.map(addr => (
-                    <option key={addr.id} value={addr.id}>
-                      {addr.label || addr.full_name} — {addr.street}, {addr.city}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: '', label: 'Sin direccion' },
+                    ...addresses.map(addr => ({
+                      value: addr.id,
+                      label: `${addr.label || addr.full_name} — ${addr.street}, ${addr.city}`
+                    }))
+                  ]}
+                />
               </div>
             )}
 
@@ -202,34 +193,20 @@ export const RecurringScheduleForm: FC<RecurringScheduleFormProps> = ({
               >
                 {t('recurring.notes', 'Notas')}
               </label>
-              <textarea
-                id='notes'
-                name='notes'
-                rows={3}
-                defaultValue={initialData?.notes || ''}
-                className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent'
-              />
+              <Textarea id='notes' name='notes' rows={3} defaultValue={initialData?.notes || ''} />
             </div>
 
             <div className='flex gap-3 pt-2'>
-              <button
-                type='submit'
-                disabled={saving}
-                className='px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg disabled:opacity-50 cursor-pointer'
-              >
+              <Button variant='primary' type='submit' disabled={saving}>
                 {saving
                   ? '...'
                   : isEdit
                     ? t('common.save', 'Guardar')
                     : t('common.create', 'Crear')}
-              </button>
-              <button
-                type='button'
-                onClick={() => router.push('/orders/recurring' as Route)}
-                className='px-6 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer'
-              >
+              </Button>
+              <Button variant='secondary' onClick={() => router.push('/orders/recurring' as Route)}>
                 {t('common.cancel', 'Cancelar')}
-              </button>
+              </Button>
             </div>
           </form>
         </div>

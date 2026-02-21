@@ -230,6 +230,40 @@ export async function deleteTimelineEvent(id: string) {
   revalidatePath('/dashboard/content');
 }
 
+export async function reorderTimelineEvents(orderedIds: string[]) {
+  await requireRole(['marketing', 'admin', 'super_admin']);
+  const supabase = await createClient();
+
+  await Promise.all(
+    orderedIds.map((id, index) =>
+      supabase
+        .from('timeline_events')
+        .update({ sort_order: index + 1 })
+        .eq('id', id)
+    )
+  );
+
+  revalidatePath('/');
+  revalidatePath('/dashboard/content');
+}
+
+export async function reorderFeatureCards(orderedIds: string[]) {
+  await requireRole(['marketing', 'admin', 'super_admin']);
+  const supabase = await createClient();
+
+  await Promise.all(
+    orderedIds.map((id, index) =>
+      supabase
+        .from('feature_cards')
+        .update({ sort_order: index + 1 })
+        .eq('id', id)
+    )
+  );
+
+  revalidatePath('/');
+  revalidatePath('/dashboard/content');
+}
+
 export async function upsertFeatureCard(formData: FormData) {
   await requireRole(['marketing', 'admin', 'super_admin']);
   const supabase = await createClient();
@@ -280,6 +314,23 @@ export async function deleteFeatureCard(id: string) {
 
   await supabase.from('feature_card_translations').delete().eq('card_id', id);
   await supabase.from('feature_cards').delete().eq('id', id);
+
+  revalidatePath('/');
+  revalidatePath('/dashboard/content');
+}
+
+export async function reorderSocialLinks(orderedIds: string[]) {
+  await requireRole(['marketing', 'admin', 'super_admin']);
+  const supabase = await createClient();
+
+  await Promise.all(
+    orderedIds.map((id, index) =>
+      supabase
+        .from('social_links')
+        .update({ sort_order: index + 1 })
+        .eq('id', id)
+    )
+  );
 
   revalidatePath('/');
   revalidatePath('/dashboard/content');

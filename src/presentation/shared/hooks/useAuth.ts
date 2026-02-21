@@ -41,8 +41,14 @@ export function useAuth() {
         setUser({
           id: authUser.id,
           email: authUser.email!,
-          fullName: profile?.full_name ?? null,
-          avatarUrl: profile?.avatar_url ?? null,
+          fullName:
+            profile?.full_name ??
+            (authUser.user_metadata?.full_name as string | undefined) ??
+            null,
+          avatarUrl:
+            profile?.avatar_url ??
+            (authUser.user_metadata?.avatar_url as string | undefined) ??
+            null,
           role: profile?.role ?? 'user'
         });
       } else {

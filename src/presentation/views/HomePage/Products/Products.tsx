@@ -94,7 +94,7 @@ export function Products({ products, introContent }: ProductsProps) {
               <Link key={product.id} href={`/products/${product.slug}` as Route}>
                 <Card
                   variant='glass'
-                  className={`product-card max-w-md group rounded-3xl cursor-pointer transition-[opacity,translate] duration-700 ease-in-out ${
+                  className={`product-card max-w-md group rounded-2xl cursor-pointer transition-[opacity,translate] duration-700 ease-in-out ${
                     visibleCards.includes(index)
                       ? 'opacity-100 translate-y-0'
                       : 'opacity-0 translate-y-10'
@@ -105,13 +105,13 @@ export function Products({ products, introContent }: ProductsProps) {
                   }}
                 >
                   {primaryImage && (
-                    <div className='rounded-3xl overflow-hidden aspect-square'>
+                    <div className='rounded-2xl overflow-hidden aspect-square'>
                       <Image
                         src={primaryImage.url}
                         alt={primaryImage.alt_text || translation?.name || 'Producto'}
                         width={400}
                         height={400}
-                        className='w-full h-full object-cover transition-all duration-700 group-hover:scale-110'
+                        className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
                       />
                     </div>
                   )}
@@ -137,17 +137,17 @@ export function Products({ products, introContent }: ProductsProps) {
                       </p>
                     )}
                     {SALES_ENABLED && (
-                      <button
-                        type='button'
+                      <Button
+                        variant='primary'
                         onClick={e => handleAddToCart(e, product)}
-                        className={`w-full py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                        className={`w-full !py-2.5 !text-sm ${
                           isAdded
-                            ? 'bg-green-500 text-white'
-                            : 'bg-amber-500 hover:bg-amber-600 text-white'
+                            ? '!from-green-500 !to-green-500 !hover:from-green-600 !hover:to-green-600'
+                            : ''
                         }`}
                       >
                         {isAdded ? t('cart.added', 'Anadido') : t('cart.add', 'Anadir al carrito')}
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </Card>
@@ -158,7 +158,7 @@ export function Products({ products, introContent }: ProductsProps) {
 
         {/* Ver todos button */}
         <Link href={(intro?.cta_url || '/products') as Route}>
-          <Button variant='primary' className='cursor-pointer'>
+          <Button variant='primary'>
             {intro?.cta_text || t('products.viewAll', 'Ver todos los productos')}
           </Button>
         </Link>

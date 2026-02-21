@@ -2,7 +2,7 @@
 
 import { type FC, useState } from 'react';
 
-import { Input, Label, Textarea } from '@/components/atoms';
+import { Button, Input, Label, Textarea } from '@/components/atoms';
 
 interface TranslationField {
   key: string;
@@ -56,18 +56,18 @@ export const TranslationFields: FC<TranslationFieldsProps> = ({
       {/* Language tabs */}
       <div className='flex gap-1 border-b border-border-card-children-light dark:border-border-card-children-dark'>
         {languages.map(lang => (
-          <button
+          <Button
             key={lang.code}
-            type='button'
+            variant='ghost'
             onClick={() => setActiveLang(lang.code)}
-            className={`px-4 py-2 text-14-16 font-medium transition-colors cursor-pointer ${
+            className={`!px-4 !py-2 !text-16-20 !font-medium !rounded-none !rounded-t-lg !border-0 ${
               activeLang === lang.code
-                ? 'border-b-2 border-amber-500 text-amber-600 dark:text-amber-400'
-                : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                ? '!border-b-2 !border-amber-500 !text-amber-600 dark:!text-amber-400'
+                : '!text-gray-500 hover:!text-gray-700 dark:hover:!text-gray-300'
             }`}
           >
             {lang.name}
-          </button>
+          </Button>
         ))}
       </div>
 

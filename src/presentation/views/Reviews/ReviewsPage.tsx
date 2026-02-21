@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 
+import { Button, Card } from '@/components/atoms';
+import { EmptyState } from '@/components/molecules';
 import type { ReviewWithProfile } from '@/lib/supabase/models';
 import { useTranslation } from '@/shared/hooks/useTranslate';
 
@@ -18,7 +20,6 @@ interface ReviewsPageProps {
   stats: { average: string; total: number };
   currentPage: number;
   currentRating?: number;
-  currentType?: string;
   currentHasImages?: boolean;
   isAuthenticated: boolean;
 }
@@ -31,7 +32,6 @@ export const ReviewsPage: FC<ReviewsPageProps> = ({
   stats,
   currentPage,
   currentRating,
-  currentType,
   currentHasImages,
   isAuthenticated
 }) => {
@@ -40,21 +40,13 @@ export const ReviewsPage: FC<ReviewsPageProps> = ({
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
-  function buildUrl(params: {
-    page?: number;
-    rating?: number | null;
-    type?: string | null;
-    images?: boolean | null;
-  }) {
+  function buildUrl(params: { page?: number; rating?: number | null; images?: boolean | null }) {
     const searchParams = new URLSearchParams();
     const page = params.page ?? currentPage;
     if (page > 1) searchParams.set('page', String(page));
 
     const rating = params.rating === undefined ? currentRating : params.rating;
     if (rating) searchParams.set('rating', String(rating));
-
-    const type = params.type === undefined ? currentType : params.type;
-    if (type) searchParams.set('type', type);
 
     const images = params.images === undefined ? currentHasImages : params.images;
     if (images) searchParams.set('images', '1');
@@ -67,22 +59,30 @@ export const ReviewsPage: FC<ReviewsPageProps> = ({
     router.push(buildUrl({ rating, page: 1 }));
   }
 
-  function handleTypeFilter(type: string | null) {
-    router.push(buildUrl({ type, page: 1 }));
-  }
-
   function handleImagesFilter(images: boolean | null) {
     router.push(buildUrl({ images, page: 1 }));
   }
 
-  const filterBtnBase = 'px-3 py-1.5 text-14-16 rounded-lg border transition-colors cursor-pointer';
-  const filterBtnActive = 'bg-amber-500 text-white border-amber-500';
-  const filterBtnInactive =
-    'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800';
-
   return (
-    <section className='min-h-dvh pt-24 pb-16'>
+    <section className='pt-24 pb-16'>
       <div className='max-w-4xl mx-auto'>
+        <Link
+          href='/#reviews'
+          className='inline-flex items-center gap-2 text-base text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 mb-6 transition-colors group'
+        >
+          <svg
+            className='w-4 h-4 transition-transform group-hover:-translate-x-0.5'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={2}
+            stroke='currentColor'
+            aria-hidden='true'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
+          </svg>
+          {t('reviews.backToHome', 'Volver')}
+        </Link>
+
         <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100 mb-2'>
           {t('reviews.title')}
         </h1>
@@ -104,61 +104,34 @@ export const ReviewsPage: FC<ReviewsPageProps> = ({
             <span className='text-sm font-medium text-gray-500 dark:text-gray-400 mr-1'>
               {t('reviews.filterByRating', 'Puntuacion')}:
             </span>
-            <button
-              type='button'
+            <Button
+              variant={!currentRating ? 'primary' : 'secondary'}
               onClick={() => handleRatingFilter(null)}
-              className={`${filterBtnBase} ${!currentRating ? filterBtnActive : filterBtnInactive}`}
+              className='!px-3 !py-1.5 !text-14-16'
             >
               {t('reviews.filterAll')}
-            </button>
+            </Button>
             {[5, 4, 3, 2, 1].map(star => (
-              <button
+              <Button
                 key={star}
-                type='button'
+                variant={currentRating === star ? 'primary' : 'secondary'}
                 onClick={() => handleRatingFilter(star)}
-                className={`${filterBtnBase} ${currentRating === star ? filterBtnActive : filterBtnInactive}`}
+                className='!px-3 !py-1.5 !text-14-16'
               >
                 {star} ★
-              </button>
+              </Button>
             ))}
           </div>
 
-          {/* Type filter + images filter */}
+          {/* Images filter */}
           <div className='flex flex-wrap items-center gap-2'>
-            <span className='text-sm font-medium text-gray-500 dark:text-gray-400 mr-1'>
-              {t('reviews.filterByType', 'Tipo')}:
-            </span>
-            <button
-              type='button'
-              onClick={() => handleTypeFilter(null)}
-              className={`${filterBtnBase} ${!currentType ? filterBtnActive : filterBtnInactive}`}
-            >
-              {t('reviews.filterAll')}
-            </button>
-            <button
-              type='button'
-              onClick={() => handleTypeFilter('product')}
-              className={`${filterBtnBase} ${currentType === 'product' ? filterBtnActive : filterBtnInactive}`}
-            >
-              {t('reviews.typeProduct')}
-            </button>
-            <button
-              type='button'
-              onClick={() => handleTypeFilter('company')}
-              className={`${filterBtnBase} ${currentType === 'company' ? filterBtnActive : filterBtnInactive}`}
-            >
-              {t('reviews.typeCompany')}
-            </button>
-
-            <span className='w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1' />
-
-            <button
-              type='button'
+            <Button
+              variant={currentHasImages ? 'primary' : 'secondary'}
               onClick={() => handleImagesFilter(currentHasImages ? null : true)}
-              className={`${filterBtnBase} ${currentHasImages ? filterBtnActive : filterBtnInactive}`}
+              className='!px-3 !py-1.5 !text-14-16'
             >
               {t('reviews.withImages')}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -180,7 +153,26 @@ export const ReviewsPage: FC<ReviewsPageProps> = ({
 
         {/* Reviews list */}
         {reviews.length === 0 ? (
-          <p className='text-center text-gray-500 py-12'>{t('reviews.empty')}</p>
+          <EmptyState
+            icon={
+              <svg
+                className='w-16 h-16'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={1}
+                stroke='currentColor'
+                aria-hidden='true'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z'
+                />
+              </svg>
+            }
+            title={t('reviews.empty')}
+            description={t('reviews.emptyDescription', 'Se el primero en dejar una resena.')}
+          />
         ) : (
           <div className='space-y-4'>
             {reviews.map(review => (
@@ -192,25 +184,25 @@ export const ReviewsPage: FC<ReviewsPageProps> = ({
         {/* Pagination */}
         {totalPages > 1 && (
           <div className='flex items-center justify-center gap-4 mt-12'>
-            <button
-              type='button'
+            <Button
+              variant='ghost'
               disabled={currentPage <= 1}
               onClick={() => router.push(buildUrl({ page: currentPage - 1 }))}
-              className='px-4 py-2 text-14-16 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer'
+              className='!px-4 !py-2 !text-14-16'
             >
               {t('reviews.previous')}
-            </button>
+            </Button>
             <span className='text-14-16 text-gray-600 dark:text-gray-400'>
               {t('reviews.page')} {currentPage} / {totalPages}
             </span>
-            <button
-              type='button'
+            <Button
+              variant='ghost'
               disabled={currentPage >= totalPages}
               onClick={() => router.push(buildUrl({ page: currentPage + 1 }))}
-              className='px-4 py-2 text-14-16 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer'
+              className='!px-4 !py-2 !text-14-16'
             >
               {t('reviews.next')}
-            </button>
+            </Button>
           </div>
         )}
       </div>

@@ -63,7 +63,7 @@ export const InventoryMovements: FC<InventoryMovementsProps> = ({ movements }) =
       key: 'date',
       header: 'Fecha',
       render: (item: InventoryMovementItem) => (
-        <span className='text-gray-500 dark:text-gray-400 text-xs'>
+        <span className='text-gray-500 dark:text-gray-400 text-sm'>
           {new Date(item.created_at).toLocaleString('es-ES', {
             day: '2-digit',
             month: '2-digit',

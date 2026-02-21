@@ -4,7 +4,8 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
 
-import { Button, StatusBadge } from '@/components/atoms';
+import { Button, IconButton, StatusBadge } from '@/components/atoms';
+import EyeIcon from '@/icons/eye.svg';
 import type { RecurringScheduleWithItems } from '@/lib/supabase/models';
 import { formatDate } from '@/lib/utils/format';
 import { toggleRecurringSchedule } from '@/server/actions/recurring';
@@ -39,7 +40,7 @@ export const RecurringSchedulesListAdmin: FC<RecurringSchedulesListProps> = ({ s
       render: (s: RecurringScheduleWithItems) => (
         <div>
           <span className='font-medium text-gray-900 dark:text-gray-100'>{s.business_name}</span>
-          {s.contact_name && <p className='text-xs text-gray-500'>{s.contact_name}</p>}
+          {s.contact_name && <p className='text-sm text-gray-500'>{s.contact_name}</p>}
         </div>
       )
     },
@@ -52,7 +53,7 @@ export const RecurringSchedulesListAdmin: FC<RecurringSchedulesListProps> = ({ s
       key: 'delivery',
       header: 'Entrega',
       render: (s: RecurringScheduleWithItems) => (
-        <span className='text-xs'>
+        <span className='text-sm'>
           {DELIVERY_TYPE_LABELS[s.delivery_type]?.[lang] || s.delivery_type}
         </span>
       )
@@ -61,7 +62,7 @@ export const RecurringSchedulesListAdmin: FC<RecurringSchedulesListProps> = ({ s
       key: 'payment',
       header: 'Pago',
       render: (s: RecurringScheduleWithItems) => (
-        <span className='text-xs'>
+        <span className='text-sm'>
           {PAYMENT_METHOD_LABELS[s.payment_method]?.[lang] || s.payment_method}
         </span>
       )
@@ -77,34 +78,33 @@ export const RecurringSchedulesListAdmin: FC<RecurringSchedulesListProps> = ({ s
       key: 'status',
       header: 'Estado',
       render: (s: RecurringScheduleWithItems) => (
-        <button
-          type='button'
+        <Button
+          variant='ghost'
           onClick={() => handleToggle(s.id, !s.is_active)}
           disabled={togglingId === s.id}
-          className='cursor-pointer disabled:opacity-50'
+          className='!p-0 !border-0'
         >
           <StatusBadge variant={s.is_active ? 'green' : 'gray'}>
             {s.is_active ? 'Activo' : 'Inactivo'}
           </StatusBadge>
-        </button>
+        </Button>
       )
     },
     {
       key: 'created',
       header: 'Creado',
       render: (s: RecurringScheduleWithItems) => (
-        <span className='text-xs'>{formatDate(s.created_at)}</span>
+        <span className='text-sm'>{formatDate(s.created_at)}</span>
       )
     },
     {
       key: 'actions',
       header: 'Acciones',
       render: (s: RecurringScheduleWithItems) => (
-        <Link
-          href={`/dashboard/recurring/${s.id}` as Route}
-          className='text-amber-600 hover:text-amber-700 text-xs font-medium'
-        >
-          Ver
+        <Link href={`/dashboard/recurring/${s.id}` as Route}>
+          <IconButton aria-label='Ver' variant='info'>
+            <EyeIcon className='w-4 h-4' />
+          </IconButton>
         </Link>
       )
     }

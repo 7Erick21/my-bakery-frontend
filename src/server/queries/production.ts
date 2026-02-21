@@ -1,6 +1,6 @@
 import type { ProductionScheduleItem, RecurringProductionItem } from '@/lib/supabase/models';
-import { getTranslation } from '@/lib/utils/translation';
 import { createClient } from '@/lib/supabase/server';
+import { getTranslation } from '@/lib/utils/translation';
 
 export async function getProductionSchedule(): Promise<ProductionScheduleItem[]> {
   const supabase = await createClient();

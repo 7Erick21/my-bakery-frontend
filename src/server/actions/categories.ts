@@ -92,6 +92,24 @@ export async function updateCategory(id: string, formData: FormData) {
   revalidatePath('/dashboard/categories');
 }
 
+export async function reorderCategories(orderedIds: string[]) {
+  await requireRole(['admin', 'super_admin']);
+  const supabase = await createClient();
+
+  await Promise.all(
+    orderedIds.map((id, index) =>
+      supabase
+        .from('categories')
+        .update({ sort_order: index + 1 })
+        .eq('id', id)
+    )
+  );
+
+  revalidatePath('/');
+  revalidatePath('/products');
+  revalidatePath('/dashboard/categories');
+}
+
 export async function deleteCategory(id: string) {
   await requireRole(['admin', 'super_admin']);
   const supabase = await createClient();

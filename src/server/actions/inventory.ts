@@ -146,3 +146,22 @@ export async function createDailyReport(formData: FormData) {
   revalidatePath('/dashboard/inventory/daily-report/history');
   revalidatePath('/dashboard/inventory/movements');
 }
+
+export async function replaceDailyReport(oldReportId: string, formData: FormData) {
+  await requireRole(['admin', 'super_admin']);
+  const supabase = await createClient();
+
+  const reportDate = formData.get('report_date') as string;
+
+  // Delete old movements linked to this report date
+  await supabase.from('inventory_movements').delete().eq('notes', `Informe diario ${reportDate}`);
+
+  // Delete old report items (cascade doesn't apply here, items have FK)
+  await supabase.from('daily_inventory_report_items').delete().eq('report_id', oldReportId);
+
+  // Delete old report
+  await supabase.from('daily_inventory_reports').delete().eq('id', oldReportId);
+
+  // Create fresh report with new data
+  await createDailyReport(formData);
+}

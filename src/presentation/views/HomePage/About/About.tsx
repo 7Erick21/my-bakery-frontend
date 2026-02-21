@@ -9,10 +9,19 @@ import { Button, Card } from '@/components/atoms';
 import ArrowLeft from '@/icons/arrowLeft.svg';
 import ArrowRight from '@/icons/arrowRight.svg';
 import AwardIcon from '@/icons/award.svg';
+import CakeIcon from '@/icons/cake.svg';
 import ClockIcon from '@/icons/clock.svg';
 import CoffeeIcon from '@/icons/coffe.svg';
+import GiftIcon from '@/icons/gift.svg';
+import HandshakeIcon from '@/icons/handshake.svg';
 import HeartIcon from '@/icons/heart.svg';
+import LeafIcon from '@/icons/leaf.svg';
+import ShieldIcon from '@/icons/shield.svg';
+import SparklesIcon from '@/icons/sparkles.svg';
+import StarIcon from '@/icons/star.svg';
+import TruckIcon from '@/icons/truck.svg';
 import UserIcon from '@/icons/user.svg';
+import WheatIcon from '@/icons/wheat.svg';
 import MyBakeryImage from '@/images/myBakery.avif';
 import type {
   LandingCmsSection,
@@ -25,9 +34,18 @@ import { useTranslation } from '@/shared/hooks';
 const iconMap: Record<string, typeof HeartIcon> = {
   heart: HeartIcon,
   award: AwardIcon,
-  user: UserIcon,
+  star: StarIcon,
+  cake: CakeIcon,
+  wheat: WheatIcon,
+  coffee: CoffeeIcon,
+  leaf: LeafIcon,
+  sparkles: SparklesIcon,
   clock: ClockIcon,
-  coffee: CoffeeIcon
+  truck: TruckIcon,
+  shield: ShieldIcon,
+  gift: GiftIcon,
+  user: UserIcon,
+  handshake: HandshakeIcon
 };
 
 interface AboutProps {
@@ -118,9 +136,7 @@ export function About({
           </p>
           {intro?.cta_text && intro?.cta_url && (
             <Link href={intro.cta_url as Route} className='mx-auto'>
-              <Button variant='primary' className='cursor-pointer'>
-                {intro.cta_text}
-              </Button>
+              <Button variant='primary'>{intro.cta_text}</Button>
             </Link>
           )}
         </div>
@@ -193,7 +209,7 @@ export function About({
                     >
                       {/* Content Card */}
                       <Card
-                        variant='glass-heavy'
+                        variant='children'
                         className={`w-72 flex flex-col gap-4 hover:shadow-xl transition-all duration-700 ease-in-out p-6 text-center group ${
                           position === 'top' ? 'order-1 mb-8' : 'order-3 mt-12'
                         }`}
@@ -204,7 +220,7 @@ export function About({
                             alt={tr?.title || ''}
                             width={300}
                             height={200}
-                            className='w-full h-full rounded-xl object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1'
+                            className='w-full h-full rounded-xl object-cover transition-all duration-700 group-hover:scale-105 group-hover:rotate-1'
                           />
                         </figure>
 
@@ -282,7 +298,7 @@ export function About({
                         <CoffeeIcon className='h-6 w-6 text-amber-600 group-hover:rotate-12 transition-transform duration-300' />
                       </div>
                       <Card
-                        variant='glass-heavy'
+                        variant='children'
                         className='absolute flex items-center justify-center -bottom-6 left-1/2 transform -translate-x-1/2'
                       >
                         <span className='text-lg font-bold text-amber-600 drop-shadow-lg whitespace-nowrap'>
@@ -303,7 +319,7 @@ export function About({
                             alt={tr?.title || ''}
                             width={80}
                             height={80}
-                            className='w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1'
+                            className='w-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:rotate-1'
                           />
                         </div>
                         <div className='flex-1'>
@@ -360,9 +376,7 @@ export function About({
           </p>
           {footer?.cta_text && footer?.cta_url && (
             <Link href={footer.cta_url as Route} className='mx-auto'>
-              <Button variant='primary' className='cursor-pointer'>
-                {footer.cta_text}
-              </Button>
+              <Button variant='primary'>{footer.cta_text}</Button>
             </Link>
           )}
         </div>

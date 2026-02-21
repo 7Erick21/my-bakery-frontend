@@ -3,7 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { type FC, useState } from 'react';
 
-import { Button, DashboardCard, Input, Label } from '@/components/atoms';
+import { Button, DashboardCard, IconButton, Input, Label } from '@/components/atoms';
+import PencilIcon from '@/icons/pencil.svg';
 import type { LandingBusinessInfoItem } from '@/lib/supabase/models';
 import { createBusinessInfo, updateBusinessInfo } from '@/server/actions/cms';
 import { FormActions } from '../shared/FormActions';
@@ -58,17 +59,17 @@ export const BusinessInfoEditor: FC<BusinessInfoEditorProps> = ({ items, languag
           {items.map(item => (
             <DashboardCard key={item.id} title={item.key}>
               <div className='flex items-center justify-between'>
-                <p className='text-14-16 text-gray-500 truncate max-w-xs'>{item.value}</p>
-                <Button
-                  variant='secondary'
-                  className='cursor-pointer'
+                <p className='text-16-20 text-gray-500 truncate max-w-xs'>{item.value}</p>
+                <IconButton
+                  aria-label='Editar'
+                  variant='accent'
                   onClick={() => {
                     setEditing(item);
                     setIsNew(false);
                   }}
                 >
-                  Editar
-                </Button>
+                  <PencilIcon className='w-4 h-4' />
+                </IconButton>
               </div>
             </DashboardCard>
           ))}

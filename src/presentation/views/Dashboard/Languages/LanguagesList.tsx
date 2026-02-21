@@ -26,7 +26,7 @@ export const LanguagesList: FC<LanguagesListProps> = ({ languages }) => {
       key: 'code',
       header: 'Código',
       render: (item: LanguageRow) => (
-        <span className='font-mono text-14-16 font-medium text-gray-900 dark:text-gray-100'>
+        <span className='font-mono text-16-20 font-medium text-gray-900 dark:text-gray-100'>
           {item.code}
         </span>
       )
@@ -49,8 +49,8 @@ export const LanguagesList: FC<LanguagesListProps> = ({ languages }) => {
       key: 'active',
       header: 'Activo',
       render: (item: LanguageRow) => (
-        <button
-          type='button'
+        <Button
+          variant='ghost'
           onClick={async () => {
             const formData = new FormData();
             formData.set('code', item.code);
@@ -61,14 +61,14 @@ export const LanguagesList: FC<LanguagesListProps> = ({ languages }) => {
             await upsertLanguage(formData);
             router.refresh();
           }}
-          className={`px-2 py-1 rounded-full text-xs font-medium cursor-pointer ${
+          className={`!px-2 !py-1 !rounded-full !text-sm !border-0 ${
             item.is_active
-              ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-              : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500'
+              ? '!bg-green-100 !text-green-700 dark:!bg-green-900/30 dark:!text-green-400'
+              : '!bg-gray-100 !text-gray-500 dark:!bg-gray-800 dark:!text-gray-500'
           }`}
         >
           {item.is_active ? 'Sí' : 'No'}
-        </button>
+        </Button>
       )
     },
     {

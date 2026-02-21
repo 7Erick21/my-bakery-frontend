@@ -79,7 +79,7 @@ export const LoginPage: FC = () => {
             <Button
               variant='ghost'
               type='submit'
-              className='w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl text-16-20 hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer'
+              className='w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl text-16-20 hover:scale-[1.02] active:scale-95 transition-all duration-300'
             >
               <GoogleIcon />
               <span className='text-gray-700 dark:text-gray-200 font-medium'>

@@ -10,19 +10,17 @@ export default async function ReviewsRoute({
   searchParams: Promise<{
     page?: string;
     rating?: string;
-    type?: string;
     images?: string;
   }>;
 }) {
   const params = await searchParams;
   const page = Math.max(1, Number(params.page) || 1);
   const rating = params.rating ? Number(params.rating) : undefined;
-  const reviewType = params.type || undefined;
   const hasImages = params.images === '1';
 
   const [user, { data: reviews, total }, stats] = await Promise.all([
     getSession(),
-    getPaginatedReviews({ page, rating, reviewType, hasImages }),
+    getPaginatedReviews({ page, rating, hasImages }),
     getReviewStats()
   ]);
 
@@ -34,7 +32,6 @@ export default async function ReviewsRoute({
         stats={stats}
         currentPage={page}
         currentRating={rating}
-        currentType={reviewType}
         currentHasImages={hasImages}
         isAuthenticated={!!user}
       />

@@ -16,12 +16,51 @@ interface ContentSectionEditorProps {
   languages: { code: string; name: string }[];
 }
 
+type FieldDef = { key: string; label: string; type: 'text' | 'textarea' };
+
+interface SectionConfig {
+  fields: FieldDef[];
+  hasImage: boolean;
+}
+
+const allFields: Record<string, FieldDef> = {
+  title: { key: 'title', label: 'Titulo', type: 'text' },
+  subtitle: { key: 'subtitle', label: 'Subtitulo', type: 'text' },
+  body: { key: 'body', label: 'Contenido', type: 'textarea' },
+  cta_text: { key: 'cta_text', label: 'Texto del boton', type: 'text' },
+  cta_url: { key: 'cta_url', label: 'URL del boton', type: 'text' }
+};
+
+const f = (...keys: string[]) => keys.map(k => allFields[k]);
+
+const sectionConfig: Record<string, SectionConfig> = {
+  hero: { fields: f('title', 'subtitle', 'body', 'cta_text', 'cta_url'), hasImage: true },
+  products_intro: { fields: f('title', 'body', 'cta_text', 'cta_url'), hasImage: false },
+  about_intro: { fields: f('title', 'body', 'cta_text', 'cta_url'), hasImage: false },
+  about_footer: { fields: f('body', 'cta_text', 'cta_url'), hasImage: false },
+  contact_intro: { fields: f('title', 'subtitle', 'body', 'cta_text', 'cta_url'), hasImage: false },
+  footer: { fields: f('body'), hasImage: false },
+  seo: {
+    fields: [
+      { key: 'title', label: 'Meta titulo', type: 'text' },
+      { key: 'body', label: 'Meta descripcion', type: 'textarea' }
+    ],
+    hasImage: false
+  }
+};
+
+const defaultConfig: SectionConfig = {
+  fields: f('title', 'subtitle', 'body', 'cta_text', 'cta_url'),
+  hasImage: false
+};
+
 export const ContentSectionEditor: FC<ContentSectionEditorProps> = ({
   section,
   content,
   languages
 }) => {
   const router = useRouter();
+  const config = sectionConfig[section] || defaultConfig;
 
   const item = content[0];
   const [imageUrl, setImageUrl] = useState(item?.image_url || '');
@@ -70,7 +109,7 @@ export const ContentSectionEditor: FC<ContentSectionEditorProps> = ({
   return (
     <form onSubmit={handleSubmit} className='space-y-8 max-w-3xl'>
       <div className='flex items-center justify-between'>
-        <h1 className='text-24-32 font-bold text-gray-900 dark:text-gray-100'>
+        <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100'>
           Editar: {section.replace('_', ' ')}
         </h1>
       </div>
@@ -78,28 +117,24 @@ export const ContentSectionEditor: FC<ContentSectionEditorProps> = ({
       <DashboardCard title='Traducciones'>
         <TranslationFields
           languages={languages}
-          fields={[
-            { key: 'title', label: 'Titulo', type: 'text' },
-            { key: 'subtitle', label: 'Subtitulo', type: 'text' },
-            { key: 'body', label: 'Contenido', type: 'textarea' },
-            { key: 'cta_text', label: 'Texto del boton', type: 'text' },
-            { key: 'cta_url', label: 'URL del boton', type: 'text' }
-          ]}
+          fields={config.fields}
           translations={translations}
           onChange={setTranslations}
         />
       </DashboardCard>
 
-      <DashboardCard title='Imagen'>
-        <ImageUploader
-          value={pendingFile ? undefined : imageUrl || undefined}
-          pendingFile={pendingFile}
-          onFileSelect={file => {
-            setPendingFile(file);
-            if (file) setImageUrl('');
-          }}
-        />
-      </DashboardCard>
+      {config.hasImage && (
+        <DashboardCard title='Imagen'>
+          <ImageUploader
+            value={pendingFile ? undefined : imageUrl || undefined}
+            pendingFile={pendingFile}
+            onFileSelect={file => {
+              setPendingFile(file);
+              if (file) setImageUrl('');
+            }}
+          />
+        </DashboardCard>
+      )}
 
       <Checkbox checked={isVisible} onChange={setIsVisible} label='Visible' />
 

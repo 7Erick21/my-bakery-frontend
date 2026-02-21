@@ -4,7 +4,7 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
 
-import { DashboardCard, StatusBadge } from '@/components/atoms';
+import { Button, DashboardCard, StatusBadge } from '@/components/atoms';
 import type { OrderWithItems } from '@/lib/supabase/models';
 import { formatDate, formatPrice } from '@/lib/utils/format';
 import { updatePaymentStatus } from '@/server/actions/orders';
@@ -43,7 +43,7 @@ export const OrderManage: FC<OrderManageProps> = ({ order, invoiceId }) => {
 
       <DashboardCard className='space-y-6'>
         <div className='flex items-center justify-between'>
-          <h1 className='text-24-32 font-bold text-gray-900 dark:text-gray-100'>
+          <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100'>
             Pedido #{order.id.slice(0, 8)}
           </h1>
           <StatusBadge variant={ORDER_STATUS_BADGE_VARIANTS[order.status] || 'gray'}>
@@ -51,13 +51,13 @@ export const OrderManage: FC<OrderManageProps> = ({ order, invoiceId }) => {
           </StatusBadge>
         </div>
 
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 text-14-16'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 text-16-20'>
           <div>
             <span className='text-gray-500'>Cliente</span>
             <p className='text-gray-900 dark:text-gray-100 font-medium'>
               {order.profiles?.full_name || '—'}
             </p>
-            <p className='text-gray-500 text-xs'>{order.profiles?.email}</p>
+            <p className='text-gray-500 text-sm'>{order.profiles?.email}</p>
           </div>
           <div>
             <span className='text-gray-500'>Fecha</span>
@@ -76,21 +76,21 @@ export const OrderManage: FC<OrderManageProps> = ({ order, invoiceId }) => {
                 {order.payment_status}
               </StatusBadge>
               {order.payment_status === 'pending' && order.payment_method !== 'stripe' && (
-                <button
-                  type='button'
+                <Button
+                  variant='primary'
                   onClick={handleMarkAsPaid}
                   disabled={marking}
-                  className='px-2 py-0.5 bg-green-500 hover:bg-green-600 text-white text-xs rounded cursor-pointer disabled:opacity-50'
+                  className='!px-2 !py-0.5 !text-sm !rounded'
                 >
                   {marking ? '...' : 'Marcar pagado'}
-                </button>
+                </Button>
               )}
             </div>
           </div>
         </div>
 
         {/* New fields: delivery type, payment method, delivery fee */}
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-4 text-sm'>
+        <div className='grid grid-cols-2 md:grid-cols-3 gap-4 text-16-20'>
           <div>
             <span className='text-gray-500'>Metodo de pago</span>
             <p className='text-gray-900 dark:text-gray-100'>
@@ -115,10 +115,10 @@ export const OrderManage: FC<OrderManageProps> = ({ order, invoiceId }) => {
         {order.addresses && (
           <div className='border-t border-border-card-children-light dark:border-border-card-children-dark pt-4'>
             <span className='text-sm text-gray-500'>Direccion de envio</span>
-            <p className='text-gray-900 dark:text-gray-100 text-sm mt-1'>
+            <p className='text-gray-900 dark:text-gray-100 text-16-20 mt-1'>
               {order.addresses.full_name}
             </p>
-            <p className='text-gray-600 dark:text-gray-400 text-xs'>
+            <p className='text-gray-600 dark:text-gray-400 text-sm'>
               {order.addresses.street}, {order.addresses.city} {order.addresses.postal_code},{' '}
               {order.addresses.province}
             </p>
@@ -126,14 +126,14 @@ export const OrderManage: FC<OrderManageProps> = ({ order, invoiceId }) => {
         )}
 
         <div className='border-t border-border-card-children-light dark:border-border-card-children-dark pt-4'>
-          <h2 className='text-18-24 font-semibold text-gray-900 dark:text-gray-100 mb-4'>
+          <h2 className='text-24-32 font-semibold text-gray-900 dark:text-gray-100 mb-4'>
             Productos
           </h2>
           {order.order_items?.map(item => (
             <div key={item.id} className='flex justify-between py-2'>
               <span className='text-gray-700 dark:text-gray-300'>
                 {item.products?.product_translations?.[0]?.name || 'Producto'} x {item.quantity}
-                <span className='text-xs text-gray-400 ml-2'>IVA {item.tax_rate}%</span>
+                <span className='text-sm text-gray-400 ml-2'>IVA {item.tax_rate}%</span>
               </span>
               <span className='font-medium text-gray-900 dark:text-gray-100'>
                 {formatPrice(item.total_price)}
@@ -154,7 +154,7 @@ export const OrderManage: FC<OrderManageProps> = ({ order, invoiceId }) => {
             </div>
           )}
           {order.delivery_fee > 0 && (
-            <div className='flex justify-between text-sm'>
+            <div className='flex justify-between text-16-20'>
               <span className='text-gray-500'>Gastos envio</span>
               <span>{formatPrice(order.delivery_fee)}</span>
             </div>
@@ -175,7 +175,7 @@ export const OrderManage: FC<OrderManageProps> = ({ order, invoiceId }) => {
         {order.stripe_checkout_session_id && (
           <div className='border-t border-border-card-children-light dark:border-border-card-children-dark pt-4'>
             <span className='text-sm text-gray-500'>Stripe Session</span>
-            <p className='text-gray-500 font-mono text-xs mt-1'>
+            <p className='text-gray-500 font-mono text-sm mt-1'>
               {order.stripe_checkout_session_id}
             </p>
           </div>

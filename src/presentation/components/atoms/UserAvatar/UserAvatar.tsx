@@ -28,6 +28,7 @@ export const UserAvatar: FC<UserAvatarProps> = ({ src, name, size = 'sm' }) => {
         width={px}
         height={px}
         className={`${className} rounded-full object-cover`}
+        referrerPolicy='no-referrer'
         onError={() => setImgError(true)}
       />
     );
@@ -35,7 +36,7 @@ export const UserAvatar: FC<UserAvatarProps> = ({ src, name, size = 'sm' }) => {
 
   return (
     <div
-      className={`${className} rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-bold text-gray-500`}
+      className={`${className} rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-xs font-bold text-amber-700 dark:text-amber-400`}
     >
       {initial}
     </div>

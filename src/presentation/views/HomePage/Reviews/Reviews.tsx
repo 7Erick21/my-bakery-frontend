@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Card } from '@/components/atoms';
+import { Button, Card } from '@/components/atoms';
+import { EmptyState } from '@/components/molecules';
 import type { ReviewWithProfile } from '@/lib/supabase/models';
 import { useTranslation } from '@/shared/hooks';
 
@@ -36,7 +37,7 @@ export function Reviews({ reviews }: ReviewsProps) {
   }, []);
 
   return (
-    <section id='reviews' className='relative min-h-dvh w-full pt-24'>
+    <section id='reviews' className='relative w-full pt-24'>
       {/* Background elements */}
       <div className='absolute -top-1/12 right-1/4 w-64 h-64 bg-amber-200/20 rounded-full blur-3xl' />
       <div className='absolute top-1/3 -left-0 w-80 h-80 bg-orange-200/20 rounded-full blur-3xl' />
@@ -53,24 +54,39 @@ export function Reviews({ reviews }: ReviewsProps) {
         </div>
 
         {reviews.length === 0 ? (
-          <div className='text-center py-16'>
-            <p className='text-24-36 text-gray-500 dark:text-gray-400 mb-4'>{t('reviews.empty')}</p>
-            <Link
-              href='/reviews'
-              className='px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-colors text-lg inline-block'
-            >
-              {t('reviews.writeFirst')}
-            </Link>
-          </div>
+          <EmptyState
+            icon={
+              <svg
+                className='w-16 h-16'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={1}
+                stroke='currentColor'
+                aria-hidden='true'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z'
+                />
+              </svg>
+            }
+            title={t('reviews.empty')}
+            description={t('reviews.emptyDescription', 'Se el primero en dejar una resena.')}
+            action={
+              <Link href='/reviews'>
+                <Button variant='primary'>{t('reviews.writeFirst')}</Button>
+              </Link>
+            }
+          />
         ) : (
           <>
             {/* Reviews Grid */}
-            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8 w-full'>
               {reviews.map((review, index) => (
-                <Card
-                  variant='glass'
+                <div
                   key={review.id}
-                  className={`review-card max-w-md transition-[opacity,translate] duration-700 ease-in-out ${
+                  className={`review-card transition-[opacity,translate] duration-700 ease-in-out ${
                     visibleCards.includes(index)
                       ? 'opacity-100 translate-y-0'
                       : 'opacity-0 translate-y-10'
@@ -80,19 +96,16 @@ export function Reviews({ reviews }: ReviewsProps) {
                     transitionDelay: `${index * 100}ms`
                   }}
                 >
-                  <div className='p-2'>
-                    <ReviewCard review={review} />
-                  </div>
-                </Card>
+                  <ReviewCard review={review} />
+                </div>
               ))}
             </div>
 
             {/* See all button */}
-            <Link
-              href='/reviews'
-              className='px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-colors text-lg'
-            >
-              {t('reviews.seeAll')}
+            <Link href='/reviews'>
+              <Button variant='primary' className='!px-8 !py-3 !text-lg'>
+                {t('reviews.seeAll')}
+              </Button>
             </Link>
           </>
         )}

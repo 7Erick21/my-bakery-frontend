@@ -3,10 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { type FC, useState } from 'react';
 
-import { Checkbox, DashboardCard, Input, Label } from '@/components/atoms';
+import { Checkbox, DashboardCard } from '@/components/atoms';
 import type { CategoryAdmin } from '@/lib/supabase/models';
 import { slugify } from '@/lib/utils/slugify';
 import { createCategory, updateCategory } from '@/server/actions/categories';
+import { useToastStore } from '@/shared/stores/toastStore';
 import { FormActions } from '../shared/FormActions';
 import { ImageUploader } from '../shared/ImageUploader';
 import { type Translation, TranslationFields } from '../shared/TranslationFields';
@@ -19,11 +20,11 @@ interface CategoryFormProps {
 
 export const CategoryForm: FC<CategoryFormProps> = ({ category, languages }) => {
   const router = useRouter();
+  const addToast = useToastStore(s => s.addToast);
   const isEditing = !!category;
 
   const [imageUrl, setImageUrl] = useState(category?.image_url || '');
   const [pendingFile, setPendingFile] = useState<File | null>(null);
-  const [sortOrder, setSortOrder] = useState(category?.sort_order?.toString() || '0');
   const [isVisible, setIsVisible] = useState(category?.is_visible ?? true);
   const [translations, setTranslations] = useState<Translation[]>(
     category?.category_translations || []
@@ -53,7 +54,6 @@ export const CategoryForm: FC<CategoryFormProps> = ({ category, languages }) => 
       const formData = new FormData();
       formData.set('slug', slug);
       formData.set('image_url', finalImageUrl);
-      formData.set('sort_order', sortOrder);
       formData.set('is_visible', String(isVisible));
       formData.set('translations', JSON.stringify(translations));
 
@@ -67,10 +67,15 @@ export const CategoryForm: FC<CategoryFormProps> = ({ category, languages }) => 
         await createCategory(formData);
       }
 
+      addToast({
+        message: isEditing ? 'Categoria actualizada' : 'Categoria creada',
+        type: 'success'
+      });
       router.push('/dashboard/categories');
       router.refresh();
     } catch (err) {
       console.error(err);
+      addToast({ message: 'Error al guardar la categoria', type: 'error' });
     } finally {
       setSubmitting(false);
     }
@@ -78,7 +83,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({ category, languages }) => 
 
   return (
     <form onSubmit={handleSubmit} className='space-y-8 max-w-3xl mx-auto'>
-      <h1 className='text-24-32 font-bold text-gray-900 dark:text-gray-100'>
+      <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100'>
         {isEditing ? 'Editar categoria' : 'Nueva categoria'}
       </h1>
 
@@ -104,20 +109,16 @@ export const CategoryForm: FC<CategoryFormProps> = ({ category, languages }) => 
             setPendingFile(file);
             if (file) setImageUrl('');
           }}
+          onRemove={() => {
+            setPendingFile(null);
+            setImageUrl('');
+          }}
         />
       </DashboardCard>
 
-      {/* 3. Configuracion: orden + visible */}
+      {/* 3. Configuracion */}
       <DashboardCard title='Configuracion' className='space-y-4'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-          <div>
-            <Label>Orden</Label>
-            <Input type='number' value={sortOrder} onChange={e => setSortOrder(e.target.value)} />
-          </div>
-          <div className='flex items-end'>
-            <Checkbox checked={isVisible} onChange={setIsVisible} label='Visible' />
-          </div>
-        </div>
+        <Checkbox checked={isVisible} onChange={setIsVisible} label='Visible' />
       </DashboardCard>
 
       {/* Botones */}

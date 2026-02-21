@@ -4,7 +4,18 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
 
-import { Button, DashboardCard, Input, Label, Select, StatusBadge } from '@/components/atoms';
+import {
+  Button,
+  DashboardCard,
+  IconButton,
+  Input,
+  Label,
+  Select,
+  StatusBadge
+} from '@/components/atoms';
+import { ConfirmDialog } from '@/components/molecules';
+import PencilIcon from '@/icons/pencil.svg';
+import TrashIcon from '@/icons/trash.svg';
 import type { ProductListItem, RecurringScheduleWithItems } from '@/lib/supabase/models';
 import { formatDate, formatPrice } from '@/lib/utils/format';
 import {
@@ -16,6 +27,7 @@ import {
 } from '@/server/actions/recurring';
 import { DELIVERY_TYPE_LABELS, PAYMENT_METHOD_LABELS } from '@/shared/constants/checkout';
 import { useTranslation } from '@/shared/hooks/useTranslate';
+import { useToastStore } from '@/shared/stores/toastStore';
 
 const DAY_NAMES = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
 
@@ -29,7 +41,9 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
   products = []
 }) => {
   const { t } = useTranslation();
+  const addToast = useToastStore(s => s.addToast);
   const [busy, setBusy] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const lang = 'es';
 
   // Add item form state
@@ -62,14 +76,16 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
   }
 
   async function handleDelete() {
-    if (!confirm('Eliminar este pedido recurrente?')) return;
     setBusy(true);
     try {
       await deleteRecurringScheduleAdmin(schedule.id);
+      addToast({ message: 'Pedido recurrente eliminado', type: 'success' });
     } catch (err) {
       console.error(err);
+      addToast({ message: 'Error al eliminar', type: 'error' });
       setBusy(false);
     }
+    setShowDeleteConfirm(false);
   }
 
   async function handleToggleItem(itemId: string, active: boolean) {
@@ -142,7 +158,7 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
       <DashboardCard className='space-y-6'>
         <div className='flex items-center justify-between'>
           <div>
-            <h1 className='text-24-32 font-bold text-gray-900 dark:text-gray-100'>
+            <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100'>
               {schedule.business_name}
             </h1>
             <p className='text-sm text-gray-500'>
@@ -151,9 +167,9 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
           </div>
           <div className='flex items-center gap-3'>
             <Link href={`/dashboard/recurring/${schedule.id}/edit` as Route}>
-              <Button variant='secondary' className='cursor-pointer text-xs'>
-                Editar
-              </Button>
+              <IconButton aria-label='Editar' variant='accent'>
+                <PencilIcon className='w-4 h-4' />
+              </IconButton>
             </Link>
             <button
               type='button'
@@ -165,23 +181,23 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
                 {schedule.is_active ? 'Activo' : 'Inactivo'}
               </StatusBadge>
             </button>
-            <button
-              type='button'
-              onClick={handleDelete}
+            <IconButton
+              aria-label='Eliminar'
+              variant='danger'
+              onClick={() => setShowDeleteConfirm(true)}
               disabled={busy}
-              className='px-3 py-1 text-xs bg-red-500 hover:bg-red-600 text-white rounded-lg cursor-pointer disabled:opacity-50'
             >
-              Eliminar
-            </button>
+              <TrashIcon className='w-4 h-4' />
+            </IconButton>
           </div>
         </div>
 
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 text-sm'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 text-16-20'>
           <div>
             <span className='text-gray-500'>Contacto</span>
             <p className='text-gray-900 dark:text-gray-100'>{schedule.contact_name || '—'}</p>
             {schedule.contact_phone && (
-              <p className='text-gray-500 text-xs'>{schedule.contact_phone}</p>
+              <p className='text-gray-500 text-sm'>{schedule.contact_phone}</p>
             )}
           </div>
           <div>
@@ -205,10 +221,10 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
         {schedule.addresses && (
           <div className='border-t border-border-card-children-light dark:border-border-card-children-dark pt-4'>
             <span className='text-sm text-gray-500'>Direccion</span>
-            <p className='text-gray-900 dark:text-gray-100 text-sm mt-1'>
+            <p className='text-gray-900 dark:text-gray-100 text-16-20 mt-1'>
               {schedule.addresses.full_name}
             </p>
-            <p className='text-gray-600 dark:text-gray-400 text-xs'>
+            <p className='text-gray-600 dark:text-gray-400 text-sm'>
               {schedule.addresses.street}, {schedule.addresses.city}{' '}
               {schedule.addresses.postal_code}
             </p>
@@ -217,7 +233,7 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
 
         {/* Weekly planning grid */}
         <div className='border-t border-border-card-children-light dark:border-border-card-children-dark pt-4'>
-          <h2 className='text-18-24 font-semibold text-gray-900 dark:text-gray-100 mb-4'>
+          <h2 className='text-24-32 font-semibold text-gray-900 dark:text-gray-100 mb-4'>
             Planificacion semanal
           </h2>
           <div className='grid grid-cols-7 gap-2'>
@@ -227,17 +243,17 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
 
               return (
                 <div key={dayName} className='text-center'>
-                  <div className='text-xs font-bold text-gray-600 dark:text-gray-400 mb-2'>
+                  <div className='text-sm font-bold text-gray-600 dark:text-gray-400 mb-2'>
                     {dayName}
                   </div>
                   {dayItems.length === 0 ? (
-                    <span className='text-xs text-gray-300'>—</span>
+                    <span className='text-sm text-gray-300'>—</span>
                   ) : (
                     <div className='space-y-1'>
                       {dayItems.map(item => (
                         <div
                           key={item.id}
-                          className={`text-xs p-1.5 rounded ${
+                          className={`text-sm p-1.5 rounded ${
                             item.is_active
                               ? 'bg-amber-50 dark:bg-amber-900/20'
                               : 'bg-gray-100 dark:bg-gray-800 opacity-50'
@@ -260,7 +276,7 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
                                   min='1'
                                   value={editQuantity}
                                   onChange={e => setEditQuantity(e.target.value)}
-                                  className='w-10 text-center text-xs border rounded px-1 py-0.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100'
+                                  className='w-10 text-center text-sm border rounded px-1 py-0.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100'
                                 />
                                 <button
                                   type='submit'
@@ -334,33 +350,23 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
                 <Select
                   id='add-product'
                   value={addProductId}
-                  onChange={e => setAddProductId(e.target.value)}
+                  onChange={setAddProductId}
                   required
-                >
-                  <option value=''>Seleccionar...</option>
-                  {products.map(p => {
+                  placeholder='Seleccionar...'
+                  options={products.map(p => {
                     const name = p.product_translations?.[0]?.name || p.slug;
-                    return (
-                      <option key={p.id} value={p.id}>
-                        {name} — {formatPrice(p.price)}
-                      </option>
-                    );
+                    return { value: p.id, label: `${name} — ${formatPrice(p.price)}` };
                   })}
-                </Select>
+                />
               </div>
               <div className='w-32'>
                 <Label htmlFor='add-day'>Dia</Label>
                 <Select
                   id='add-day'
                   value={addDayOfWeek}
-                  onChange={e => setAddDayOfWeek(e.target.value)}
-                >
-                  {DAY_NAMES.map((name, i) => (
-                    <option key={name} value={i + 1}>
-                      {name}
-                    </option>
-                  ))}
-                </Select>
+                  onChange={setAddDayOfWeek}
+                  options={DAY_NAMES.map((name, i) => ({ value: String(i + 1), label: name }))}
+                />
               </div>
               <div className='w-24'>
                 <Label htmlFor='add-qty'>Cantidad</Label>
@@ -393,6 +399,15 @@ export const RecurringScheduleDetail: FC<RecurringScheduleDetailProps> = ({
           </div>
         )}
       </DashboardCard>
+
+      <ConfirmDialog
+        isOpen={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        onConfirm={handleDelete}
+        title='¿Eliminar este pedido recurrente?'
+        description='Esta accion no se puede deshacer.'
+        loading={busy}
+      />
     </div>
   );
 };

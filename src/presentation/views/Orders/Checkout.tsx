@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { Button, Checkbox, Input, OptionCard, Textarea } from '@/components/atoms';
 import type { AddressItem } from '@/lib/supabase/models';
 import type { DeliveryType, PaymentMethod } from '@/lib/supabase/types';
 import { getErrorMessage } from '@/lib/utils/error';
@@ -127,18 +128,14 @@ const StripeForm: FC<StripeFormProps> = ({
             {t('checkout.savedCards', 'Tarjetas guardadas')}
           </p>
           {savedCards.map(card => (
-            <button
+            <OptionCard
               key={card.id}
-              type='button'
+              selected={!useNewCard && selectedSavedCard === card.id}
               onClick={() => {
                 setSelectedSavedCard(card.id);
                 setUseNewCard(false);
               }}
-              className={`w-full text-left p-3 rounded-xl border-2 text-sm cursor-pointer transition-all flex items-center gap-3 ${
-                !useNewCard && selectedSavedCard === card.id
-                  ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 shadow-sm'
-                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50'
-              }`}
+              className='flex items-center gap-3 !p-3'
             >
               <span className='font-medium text-gray-900 dark:text-gray-100 capitalize'>
                 {card.brand}
@@ -147,19 +144,11 @@ const StripeForm: FC<StripeFormProps> = ({
               <span className='text-gray-400 text-xs ml-auto'>
                 {String(card.expMonth).padStart(2, '0')}/{card.expYear}
               </span>
-            </button>
+            </OptionCard>
           ))}
-          <button
-            type='button'
-            onClick={() => setUseNewCard(true)}
-            className={`w-full text-left p-3 rounded-xl border-2 text-sm cursor-pointer transition-all ${
-              useNewCard
-                ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 shadow-sm'
-                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50'
-            }`}
-          >
+          <OptionCard selected={useNewCard} onClick={() => setUseNewCard(true)} className='!p-3'>
             {t('checkout.useNewCard', '+ Usar nueva tarjeta')}
-          </button>
+          </OptionCard>
         </div>
       )}
 
@@ -169,15 +158,16 @@ const StripeForm: FC<StripeFormProps> = ({
         </div>
       )}
 
-      <button
+      <Button
+        variant='default'
         type='submit'
         disabled={submitting || !stripe}
-        className='w-full px-6 py-4 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white rounded-2xl font-semibold text-lg transition-all cursor-pointer shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30'
+        className='w-full !px-6 !py-4 text-white !text-lg !font-semibold !rounded-2xl'
       >
         {submitting
           ? t('checkout.processing', 'Procesando...')
           : `${t('checkout.pay', 'Pagar')} ${formatPrice(total)}`}
-      </button>
+      </Button>
     </form>
   );
 };
@@ -339,8 +329,6 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
 
   const cardCls =
     'bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm';
-  const inputCls =
-    'w-full px-3 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-shadow';
   const sectionTitle =
     'text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-3';
 
@@ -458,19 +446,15 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
                 <h2 className={sectionTitle}>{t('checkout.deliveryType', 'Tipo de entrega')}</h2>
                 <div className='grid grid-cols-2 gap-3'>
                   {(['pickup', 'delivery'] as const).map(dt => (
-                    <button
+                    <OptionCard
                       key={dt}
-                      type='button'
+                      selected={deliveryType === dt}
                       onClick={() => setDeliveryType(dt)}
-                      className={`p-4 rounded-xl border-2 text-sm font-medium cursor-pointer transition-all ${
-                        deliveryType === dt
-                          ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 shadow-sm'
-                          : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50'
-                      }`}
+                      className='font-medium'
                     >
                       <span className='text-xl block mb-1'>{dt === 'pickup' ? '🏪' : '🚗'}</span>
                       {DELIVERY_TYPE_LABELS[dt]?.[lang] || dt}
-                    </button>
+                    </OptionCard>
                   ))}
                 </div>
               </div>
@@ -483,15 +467,10 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
                   {addresses.length > 0 && !showNewAddress && (
                     <div className='space-y-2 mb-3'>
                       {addresses.map(addr => (
-                        <button
+                        <OptionCard
                           key={addr.id}
-                          type='button'
+                          selected={selectedAddressId === addr.id}
                           onClick={() => setSelectedAddressId(addr.id)}
-                          className={`w-full text-left p-4 rounded-xl border-2 text-sm cursor-pointer transition-all ${
-                            selectedAddressId === addr.id
-                              ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 shadow-sm'
-                              : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50'
-                          }`}
                         >
                           <p className='font-medium text-gray-900 dark:text-gray-100'>
                             {addr.full_name} {addr.is_default && '(default)'}
@@ -499,72 +478,66 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
                           <p className='text-gray-500 text-xs mt-0.5'>
                             {addr.street}, {addr.city} {addr.postal_code}
                           </p>
-                        </button>
+                        </OptionCard>
                       ))}
                     </div>
                   )}
 
-                  <button
-                    type='button'
+                  <Button
+                    variant='ghost'
                     onClick={() => setShowNewAddress(!showNewAddress)}
-                    className='text-amber-600 dark:text-amber-400 text-sm font-medium cursor-pointer hover:text-amber-700 dark:hover:text-amber-300 transition-colors'
+                    className='!text-amber-600 dark:!text-amber-400 !text-sm !font-medium !border-0 !p-0 hover:!text-amber-700 dark:hover:!text-amber-300 hover:!bg-transparent'
                   >
                     {showNewAddress
                       ? t('checkout.useExisting', 'Usar direccion existente')
                       : t('checkout.newAddress', '+ Nueva direccion')}
-                  </button>
+                  </Button>
 
                   {showNewAddress && (
                     <div className='grid grid-cols-2 gap-3 mt-4'>
                       <div className='col-span-2'>
-                        <input
+                        <Input
                           type='text'
                           placeholder={t('checkout.fullName', 'Nombre completo')}
                           value={addrFullName}
                           onChange={e => setAddrFullName(e.target.value)}
-                          className={inputCls}
                           required
                         />
                       </div>
-                      <input
+                      <Input
                         type='tel'
                         placeholder={t('checkout.phone', 'Telefono')}
                         value={addrPhone}
                         onChange={e => setAddrPhone(e.target.value)}
-                        className={inputCls}
                       />
                       <div className='col-span-2'>
-                        <input
+                        <Input
                           type='text'
                           placeholder={t('checkout.street', 'Calle y numero')}
                           value={addrStreet}
                           onChange={e => setAddrStreet(e.target.value)}
-                          className={inputCls}
                           required
                         />
                       </div>
-                      <input
+                      <Input
                         type='text'
                         placeholder={t('checkout.city', 'Ciudad')}
                         value={addrCity}
                         onChange={e => setAddrCity(e.target.value)}
-                        className={inputCls}
                         required
                       />
-                      <input
+                      <Input
                         type='text'
                         placeholder={t('checkout.postalCode', 'Codigo postal')}
                         value={addrPostalCode}
                         onChange={e => setAddrPostalCode(e.target.value)}
-                        className={inputCls}
                         required
                       />
-                      <input
+                      <Input
                         type='text'
                         placeholder={t('checkout.province', 'Provincia')}
                         value={addrProvince}
                         onChange={e => setAddrProvince(e.target.value)}
-                        className={inputCls}
                         required
                       />
                     </div>
@@ -574,28 +547,18 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
 
               {/* Schedule delivery date */}
               <div className={cardCls}>
-                <div className='flex items-center gap-3 mb-3'>
-                  <input
-                    type='checkbox'
-                    id='futureDate'
-                    checked={useFutureDate}
-                    onChange={e => setUseFutureDate(e.target.checked)}
-                    className='w-4 h-4 accent-amber-500 cursor-pointer'
-                  />
-                  <label
-                    htmlFor='futureDate'
-                    className='text-sm text-gray-700 dark:text-gray-300 cursor-pointer select-none'
-                  >
-                    {t('checkout.scheduleDelivery', 'Programar fecha de entrega')}
-                  </label>
-                </div>
+                <Checkbox
+                  checked={useFutureDate}
+                  onChange={setUseFutureDate}
+                  label={t('checkout.scheduleDelivery', 'Programar fecha de entrega')}
+                  className='mb-3'
+                />
                 {useFutureDate && (
-                  <input
+                  <Input
                     type='date'
                     value={deliveryDate}
                     onChange={e => setDeliveryDate(e.target.value)}
                     min={minDate}
-                    className={inputCls}
                     required={useFutureDate}
                   />
                 )}
@@ -606,33 +569,25 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
                 <h2 className={sectionTitle}>{t('checkout.paymentMethod', 'Metodo de pago')}</h2>
                 <div className='grid grid-cols-3 gap-3'>
                   {(['stripe', 'bizum', 'cash'] as const).map(pm => (
-                    <button
+                    <OptionCard
                       key={pm}
-                      type='button'
+                      selected={paymentMethod === pm}
                       onClick={() => setPaymentMethod(pm)}
-                      className={`p-4 rounded-xl border-2 text-sm font-medium cursor-pointer transition-all text-center ${
-                        paymentMethod === pm
-                          ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 shadow-sm'
-                          : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50'
-                      }`}
+                      className='text-center font-medium'
                     >
                       <span className='text-xl block mb-1'>{paymentIcons[pm]}</span>
                       {PAYMENT_METHOD_LABELS[pm]?.[lang] || pm}
-                    </button>
+                    </OptionCard>
                   ))}
                 </div>
 
                 {paymentMethod === 'stripe' && (
                   <div className='mt-4'>
-                    <label className='flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer'>
-                      <input
-                        type='checkbox'
-                        checked={saveCard}
-                        onChange={e => setSaveCard(e.target.checked)}
-                        className='w-4 h-4 accent-amber-500 cursor-pointer'
-                      />
-                      {t('checkout.saveCard', 'Guardar tarjeta para futuras compras')}
-                    </label>
+                    <Checkbox
+                      checked={saveCard}
+                      onChange={setSaveCard}
+                      label={t('checkout.saveCard', 'Guardar tarjeta para futuras compras')}
+                    />
                   </div>
                 )}
 
@@ -657,12 +612,11 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
                 <h2 className={sectionTitle}>
                   {t('checkout.invoiceData', 'Datos de facturacion (opcional)')}
                 </h2>
-                <input
+                <Input
                   type='text'
                   value={buyerNif}
                   onChange={e => setBuyerNif(e.target.value)}
                   placeholder={t('checkout.nifPlaceholder', 'NIF/CIF (para factura completa)')}
-                  className={inputCls}
                 />
                 <p className='text-xs text-gray-400 mt-2'>
                   {t(
@@ -675,23 +629,21 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
               {/* Coupon */}
               <div className={cardCls}>
                 <h2 className={sectionTitle}>{t('checkout.coupon', 'Cupon de descuento')}</h2>
-                <input
+                <Input
                   type='text'
                   value={couponCode}
                   onChange={e => setCouponCode(e.target.value)}
                   placeholder='CODIGO'
-                  className={inputCls}
                 />
               </div>
 
               {/* Notes */}
               <div className={cardCls}>
                 <h2 className={sectionTitle}>{t('checkout.notes', 'Notas del pedido')}</h2>
-                <textarea
+                <Textarea
                   value={notes}
                   onChange={e => setNotes(e.target.value)}
                   rows={3}
-                  className={inputCls}
                   placeholder={t('checkout.notesPlaceholder', 'Instrucciones especiales...')}
                 />
               </div>
@@ -728,17 +680,18 @@ export const Checkout: FC<CheckoutProps> = ({ addresses = [], bizumPhone }) => {
                 </div>
               )}
 
-              <button
+              <Button
+                variant='default'
                 type='submit'
                 disabled={submitting}
-                className='w-full px-6 py-4 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white rounded-2xl font-semibold text-lg transition-all cursor-pointer shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30'
+                className='w-full !px-6 !py-4 text-white !text-lg !font-semibold !rounded-2xl'
               >
                 {submitting
                   ? t('checkout.processing', 'Procesando...')
                   : isOfflineMethod
                     ? t('checkout.confirmOrder', 'Confirmar pedido')
                     : `${t('checkout.pay', 'Pagar')} ${formatPrice(computedTotal)}`}
-              </button>
+              </Button>
             </form>
           )}
         </div>

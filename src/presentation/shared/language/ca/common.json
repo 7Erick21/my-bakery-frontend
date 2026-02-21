@@ -79,7 +79,14 @@
     "social": {
       "facebook": "Segueix-nos a Facebook",
       "instagram": "Segueix-nos a Instagram",
-      "twitter": "Segueix-nos a Twitter"
+      "twitter": "Segueix-nos a Twitter",
+      "tiktok": "Segueix-nos a TikTok",
+      "youtube": "Segueix-nos a YouTube",
+      "whatsapp": "Contacta'ns per WhatsApp",
+      "linkedin": "Segueix-nos a LinkedIn",
+      "pinterest": "Segueix-nos a Pinterest",
+      "telegram": "Uneix-te al nostre Telegram",
+      "threads": "Segueix-nos a Threads"
     },
     "copyright": "My Bakery. Tots els drets reservats."
   },

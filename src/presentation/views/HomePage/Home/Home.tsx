@@ -63,7 +63,7 @@ export const Home: FC<HomeProps> = ({ heroContent, businessInfo = [] }) => {
             {/* CTA Button */}
             {hero?.cta_text && hero?.cta_url && (
               <Link href={hero.cta_url as Route}>
-                <Button variant='primary' className='cursor-pointer w-fit'>
+                <Button variant='primary' className='w-fit'>
                   {hero.cta_text}
                 </Button>
               </Link>
@@ -71,10 +71,10 @@ export const Home: FC<HomeProps> = ({ heroContent, businessInfo = [] }) => {
           </div>
 
           {/* Image */}
-          <div className='relative transition-all duration-500 rounded-4xl w-11/12 animate-slide-in shadow-lg hover:shadow-2xl hover:scale-105 lg:w-full'>
+          <div className='relative transition-all duration-500 rounded-2xl w-11/12 animate-slide-in shadow-lg hover:shadow-2xl hover:scale-[1.02] lg:w-full'>
             <Card
-              variant='glass-heavy'
-              className='relative p-3 !rounded-4xl !shadow-none overflow-hidden'
+              variant='children'
+              className='relative p-3 !rounded-2xl !shadow-none overflow-hidden'
             >
               <div className=''>
                 {heroContent?.image_url ? (
@@ -83,14 +83,14 @@ export const Home: FC<HomeProps> = ({ heroContent, businessInfo = [] }) => {
                     alt='Panadería My Bakery con productos frescos'
                     width={800}
                     height={600}
-                    className='w-full h-full object-contain rounded-3xl'
+                    className='w-full h-full object-contain rounded-2xl'
                     priority
                   />
                 ) : (
                   <Image
                     src={MyBakery}
                     alt='Panadería My Bakery con productos frescos'
-                    className='w-full h-full object-contain rounded-3xl'
+                    className='w-full h-full object-contain rounded-2xl'
                     placeholder='blur'
                     priority
                   />

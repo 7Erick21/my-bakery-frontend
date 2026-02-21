@@ -58,23 +58,23 @@ export const NotificationsList: FC<NotificationsListProps> = ({ notifications })
                 <div className='flex items-start gap-3'>
                   <span className='text-xl mt-0.5'>{typeIcons[notification.type] || '📌'}</span>
                   <div>
-                    <p className='text-gray-900 dark:text-gray-100 text-14-16 font-medium'>
+                    <p className='text-gray-900 dark:text-gray-100 text-16-20 font-medium'>
                       {notification.title}
                     </p>
-                    <p className='text-gray-500 text-14-16 mt-0.5'>{notification.message}</p>
-                    <p className='text-gray-400 text-xs mt-1'>
+                    <p className='text-gray-500 text-16-20 mt-0.5'>{notification.message}</p>
+                    <p className='text-gray-400 text-sm mt-1'>
                       {formatDateTime(notification.created_at)}
                     </p>
                   </div>
                 </div>
                 {!notification.is_read && (
-                  <button
-                    type='button'
+                  <Button
+                    variant='ghost'
                     onClick={() => markNotificationRead(notification.id)}
-                    className='text-xs text-amber-600 hover:text-amber-700 font-medium cursor-pointer shrink-0'
+                    className='!text-sm !text-amber-600 hover:!text-amber-700 !border-0 !p-0 shrink-0'
                   >
                     Marcar leída
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>

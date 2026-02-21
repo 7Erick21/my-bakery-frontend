@@ -521,6 +521,7 @@ export interface ProductTranslationInput {
 export interface ProductImageInput {
   url: string;
   alt_text?: string | null;
+  is_primary?: boolean;
 }
 
 export interface IngredientTranslationInput {

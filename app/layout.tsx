@@ -1,11 +1,15 @@
 import type { Metadata, Viewport } from 'next';
+import { cookies } from 'next/headers';
 import { Aclonica, Lobster_Two } from 'next/font/google';
+
+import { ServiceWorkerRegister } from '@/components/atoms';
+import { getCmsSeoMetadata } from '@/server/queries/cms';
 
 import { Providers } from './providers';
 
 import './globals.css';
 
-const LobsterTwo = Lobster_Two({
+const lobsterTwo = Lobster_Two({
   subsets: ['latin'],
   weight: ['400', '700'],
   display: 'swap'
@@ -18,69 +22,94 @@ const aclonica = Aclonica({
   variable: '--font-aclonica'
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://my-bakery.app'),
-  title: 'My Bakery - Panadería Artesanal',
-  description:
-    'Descubre la mejor panadería artesanal en tu ciudad. Panes frescos, pasteles y dulces hechos con amor.',
-  keywords: 'panadería, bakery, pan artesanal, pasteles, dulces, repostería',
+const SITE_URL = 'https://my-bakery-frontend-delta.vercel.app';
+const FALLBACK_TITLE = 'My Bakery - Panaderia Artesanal';
+const FALLBACK_DESCRIPTION =
+  'Descubre la mejor panaderia artesanal en tu ciudad. Panes frescos, pasteles y dulces hechos con amor.';
 
-  // Metaetiquetas Open Graph
-  openGraph: {
-    title: 'My Bakery - Panadería Artesanal',
-    description:
-      'Descubre la mejor panadería artesanal en tu ciudad. Panes frescos, pasteles y dulces hechos con amor.',
-    url: 'https://my-bakery-frontend-delta.vercel.app/',
-    type: 'website',
-    locale: 'es_ES',
-    siteName: 'My Bakery',
-    images: [
-      {
-        url: '/my-bakery-logo.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'My Bakery - Panadería Artesanal'
-      }
-    ]
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get('preferred_language')?.value || 'es';
 
-  // Metaetiquetas Twitter
-  twitter: {
-    card: 'summary_large_image',
-    title: 'My Bakery - Panadería Artesanal',
-    description:
-      'Descubre la mejor panadería artesanal en tu ciudad. Panes frescos, pasteles y dulces hechos con amor.',
-    images: [
-      {
-        url: '/my-bakery-logo.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'My Bakery - Panadería Artesanal'
-      }
-    ]
-  },
+  let title = FALLBACK_TITLE;
+  let description = FALLBACK_DESCRIPTION;
 
-  // Metaetiquetas adicionales
-  robots: 'index, follow'
-};
+  try {
+    const seo = await getCmsSeoMetadata(lang);
+    if (seo.title) title = seo.title;
+    if (seo.description) description = seo.description;
+  } catch {
+    // CMS unavailable — use fallbacks
+  }
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    keywords: 'panaderia, bakery, pan artesanal, pasteles, dulces, reposteria',
+    openGraph: {
+      title,
+      description,
+      url: SITE_URL,
+      type: 'website',
+      locale: lang === 'ca' ? 'ca_ES' : lang === 'en' ? 'en_US' : 'es_ES',
+      siteName: 'My Bakery',
+      images: [
+        {
+          url: '/my-bakery-logo.jpg',
+          width: 1200,
+          height: 630,
+          alt: title
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [
+        {
+          url: '/my-bakery-logo.jpg',
+          width: 1200,
+          height: 630,
+          alt: title
+        }
+      ]
+    },
+    robots: 'index, follow',
+    manifest: '/manifest.json',
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'default',
+      title: 'My Bakery'
+    },
+    other: {
+      'apple-touch-icon': '/icons/apple-touch-icon.png'
+    }
+  };
+}
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: true,
-  themeColor: '#ffffff'
+  themeColor: '#f9e8d2'
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get('preferred_language')?.value || 'es';
+
   return (
-    <html lang='en' suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${LobsterTwo.className} ${aclonica.variable}`}>
+    <html lang={lang} suppressHydrationWarning>
+      <body suppressHydrationWarning className={`${lobsterTwo.className} ${aclonica.variable}`}>
         <Providers>{children}</Providers>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

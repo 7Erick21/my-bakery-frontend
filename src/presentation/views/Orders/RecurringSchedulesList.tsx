@@ -4,6 +4,7 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import type { FC } from 'react';
 
+import { Button } from '@/components/atoms';
 import type { RecurringScheduleWithItems } from '@/lib/supabase/models';
 import { Layout } from '@/presentation/layout/Layout';
 import { DELIVERY_TYPE_LABELS, PAYMENT_METHOD_LABELS } from '@/shared/constants/checkout';
@@ -24,11 +25,8 @@ export const RecurringSchedulesList: FC<RecurringSchedulesListProps> = ({ schedu
           <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100'>
             {t('recurring.title', 'Pedidos recurrentes')}
           </h1>
-          <Link
-            href={'/orders/recurring/new' as Route}
-            className='px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg'
-          >
-            {t('recurring.new', 'Nuevo')}
+          <Link href={'/orders/recurring/new' as Route}>
+            <Button variant='primary'>{t('recurring.new', 'Nuevo')}</Button>
           </Link>
         </div>
 

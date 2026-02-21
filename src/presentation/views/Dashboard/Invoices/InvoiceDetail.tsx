@@ -4,7 +4,7 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
 
-import { DashboardCard, StatusBadge } from '@/components/atoms';
+import { Button, DashboardCard, StatusBadge } from '@/components/atoms';
 import type { InvoiceWithItems } from '@/lib/supabase/models';
 import { formatDate, formatPrice } from '@/lib/utils/format';
 import { sendInvoiceEmail } from '@/server/actions/invoices';
@@ -53,7 +53,7 @@ export const InvoiceDetail: FC<InvoiceDetailProps> = ({ invoice }) => {
       <DashboardCard className='space-y-6'>
         <div className='flex items-center justify-between'>
           <div>
-            <h1 className='text-24-32 font-bold text-gray-900 dark:text-gray-100'>
+            <h1 className='text-32-48 font-bold text-gray-900 dark:text-gray-100'>
               {invoice.invoice_number}
             </h1>
             <p className='text-sm text-gray-500'>
@@ -69,14 +69,13 @@ export const InvoiceDetail: FC<InvoiceDetailProps> = ({ invoice }) => {
             >
               Descargar PDF
             </a>
-            <button
-              type='button'
+            <Button
+              variant='secondary'
               onClick={handleSendEmail}
               disabled={sending || !invoice.buyer_email}
-              className='px-4 py-2 border border-amber-500 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 text-sm font-medium rounded-lg cursor-pointer disabled:opacity-50'
             >
               {sending ? 'Enviando...' : 'Enviar email'}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -95,34 +94,38 @@ export const InvoiceDetail: FC<InvoiceDetailProps> = ({ invoice }) => {
         <div className='grid grid-cols-2 gap-6'>
           {/* Seller */}
           <div>
-            <h2 className='text-xs font-bold text-gray-500 mb-2 uppercase'>Emisor</h2>
+            <h2 className='text-sm font-bold text-gray-500 mb-2 uppercase'>Emisor</h2>
             <p className='text-gray-900 dark:text-gray-100 font-medium'>{invoice.seller_name}</p>
             {invoice.seller_nif && (
-              <p className='text-sm text-gray-500'>NIF: {invoice.seller_nif}</p>
+              <p className='text-16-20 text-gray-500'>NIF: {invoice.seller_nif}</p>
             )}
             {invoice.seller_address && (
-              <p className='text-sm text-gray-500'>{invoice.seller_address}</p>
+              <p className='text-16-20 text-gray-500'>{invoice.seller_address}</p>
             )}
           </div>
 
           {/* Buyer */}
           <div>
-            <h2 className='text-xs font-bold text-gray-500 mb-2 uppercase'>Cliente</h2>
+            <h2 className='text-sm font-bold text-gray-500 mb-2 uppercase'>Cliente</h2>
             <p className='text-gray-900 dark:text-gray-100 font-medium'>{invoice.buyer_name}</p>
-            {invoice.buyer_nif && <p className='text-sm text-gray-500'>NIF: {invoice.buyer_nif}</p>}
-            {invoice.buyer_address && (
-              <p className='text-sm text-gray-500'>{invoice.buyer_address}</p>
+            {invoice.buyer_nif && (
+              <p className='text-16-20 text-gray-500'>NIF: {invoice.buyer_nif}</p>
             )}
-            {invoice.buyer_email && <p className='text-sm text-gray-500'>{invoice.buyer_email}</p>}
+            {invoice.buyer_address && (
+              <p className='text-16-20 text-gray-500'>{invoice.buyer_address}</p>
+            )}
+            {invoice.buyer_email && (
+              <p className='text-16-20 text-gray-500'>{invoice.buyer_email}</p>
+            )}
           </div>
         </div>
 
         {/* Items */}
         <div className='border-t border-border-card-children-light dark:border-border-card-children-dark pt-4'>
-          <h2 className='text-18-24 font-semibold text-gray-900 dark:text-gray-100 mb-4'>Lineas</h2>
-          <table className='w-full text-sm'>
+          <h2 className='text-24-32 font-semibold text-gray-900 dark:text-gray-100 mb-4'>Lineas</h2>
+          <table className='w-full text-16-20'>
             <thead>
-              <tr className='text-gray-500 text-xs'>
+              <tr className='text-gray-500 text-sm'>
                 <th className='text-left py-2'>Producto</th>
                 <th className='text-center py-2'>Cant.</th>
                 <th className='text-right py-2'>Base unit.</th>
@@ -165,7 +168,7 @@ export const InvoiceDetail: FC<InvoiceDetailProps> = ({ invoice }) => {
             Desglose IVA
           </h3>
           {[...ivaByRate.entries()].map(([rate, { base, iva }]) => (
-            <div key={rate} className='flex justify-between text-sm'>
+            <div key={rate} className='flex justify-between text-16-20'>
               <span className='text-gray-500'>
                 IVA {rate}% (base: {formatPrice(base)})
               </span>

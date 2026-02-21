@@ -48,14 +48,14 @@ export const ContentList: FC<ContentListProps> = ({ cmsContent }) => {
               className='block p-6 rounded-xl bg-[image:var(--background-image-dashboard-card-light)] dark:bg-[image:var(--background-image-dashboard-card-dark)] backdrop-blur-sm border border-border-card-children-light dark:border-border-card-children-dark shadow-[--shadow-dashboard-card-light] dark:shadow-[--shadow-dashboard-card-dark] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 group'
             >
               <div className='flex items-center justify-between'>
-                <h3 className='text-18-24 font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors'>
+                <h3 className='text-24-32 font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors'>
                   {section.label}
                 </h3>
                 <StatusBadge variant={hasContent ? 'green' : 'gray'}>
                   {hasContent ? `${content.length} elemento(s)` : 'Vacío'}
                 </StatusBadge>
               </div>
-              <p className='text-14-16 text-gray-500 dark:text-gray-400 mt-2'>
+              <p className='text-16-20 text-gray-500 dark:text-gray-400 mt-2'>
                 Editar textos, imágenes y traducciones de esta sección
               </p>
             </Link>
@@ -69,11 +69,11 @@ export const ContentList: FC<ContentListProps> = ({ cmsContent }) => {
             className='block p-6 rounded-xl bg-[image:var(--background-image-dashboard-card-light)] dark:bg-[image:var(--background-image-dashboard-card-dark)] backdrop-blur-sm border border-border-card-children-light dark:border-border-card-children-dark shadow-[--shadow-dashboard-card-light] dark:shadow-[--shadow-dashboard-card-dark] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 group'
           >
             <div className='flex items-center justify-between'>
-              <h3 className='text-18-24 font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors'>
+              <h3 className='text-24-32 font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors'>
                 {section.label}
               </h3>
             </div>
-            <p className='text-14-16 text-gray-500 dark:text-gray-400 mt-2'>
+            <p className='text-16-20 text-gray-500 dark:text-gray-400 mt-2'>
               Gestionar datos de esta sección
             </p>
           </Link>

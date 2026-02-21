@@ -2,6 +2,8 @@
 
 import type { FC } from 'react';
 
+import { IconButton } from '@/components/atoms';
+import EyeIcon from '@/icons/eye.svg';
 import type { DailyReportWithItems } from '@/lib/supabase/models';
 import { DataTable } from '../shared/DataTable';
 import { PageHeader } from '../shared/PageHeader';
@@ -48,11 +50,10 @@ export const DailyReportHistory: FC<DailyReportHistoryProps> = ({ reports }) => 
       key: 'actions',
       header: '',
       render: (item: DailyReportWithItems) => (
-        <a
-          href={`/dashboard/inventory/daily-report?date=${item.report_date}`}
-          className='text-amber-600 hover:text-amber-700 text-xs font-medium'
-        >
-          Ver detalle
+        <a href={`/dashboard/inventory/daily-report?date=${item.report_date}`}>
+          <IconButton aria-label='Ver detalle' variant='info'>
+            <EyeIcon className='w-4 h-4' />
+          </IconButton>
         </a>
       )
     }
@@ -65,7 +66,7 @@ export const DailyReportHistory: FC<DailyReportHistoryProps> = ({ reports }) => 
         action={
           <a
             href='/dashboard/inventory/daily-report'
-            className='text-amber-600 hover:text-amber-700 text-14-16 font-medium'
+            className='text-amber-600 hover:text-amber-700 text-16-20 font-medium'
           >
             Informe de hoy
           </a>

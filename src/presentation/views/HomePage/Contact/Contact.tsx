@@ -84,7 +84,7 @@ export function Contact({ introContent, businessInfo = [] }: ContactProps) {
   }, []);
 
   return (
-    <section id='contact' className='min-h-dvh w-full py-24'>
+    <section id='contact' className='w-full py-24'>
       <div className='flex flex-col gap-16 w-full'>
         {/* Header */}
         <div className='text-center flex flex-col gap-4 animate-fade-in'>
@@ -96,9 +96,7 @@ export function Contact({ introContent, businessInfo = [] }: ContactProps) {
           </p>
           {intro?.cta_text && intro?.cta_url && (
             <Link href={intro.cta_url as Route} className='mx-auto'>
-              <Button variant='primary' className='cursor-pointer'>
-                {intro.cta_text}
-              </Button>
+              <Button variant='primary'>{intro.cta_text}</Button>
             </Link>
           )}
         </div>
@@ -144,9 +142,9 @@ export function Contact({ introContent, businessInfo = [] }: ContactProps) {
           {/* Map Placeholder */}
           <Card
             variant='glass-light'
-            className='transition-transform duration-700 ease-in-out p-3 rounded-4xl w-full h-full min-h-[500px] shadow-gray-700/20 shadow-xl dark:shadow-gray-200/20 hover:scale-105 hover:shadow-xl'
+            className='transition-transform duration-300 ease-in-out p-3 rounded-2xl w-full h-full min-h-[500px] shadow-gray-700/20 shadow-xl dark:shadow-gray-200/20 hover:scale-[1.02] hover:shadow-xl'
           >
-            <figure className='rounded-3xl w-full h-full overflow-hidden border border-solid border-gray-700 dark:border-gray-200'>
+            <figure className='rounded-2xl w-full h-full overflow-hidden border border-solid border-gray-700 dark:border-gray-200'>
               <iframe
                 title='Google Maps - My Bakery'
                 src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5982.196965017033!2d2.1744669!3d41.4370847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4bd3ccab05b89%3A0xebb6cb539a58e5e5!2sMy%20Bakery!5e0!3m2!1s${lang}!2ses!4v1752364589737!5m2!1s${lang}!2ses`}

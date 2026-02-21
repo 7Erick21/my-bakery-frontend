@@ -1,10 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { type FC, useState, useTransition } from 'react';
 
-import { Button, DashboardCard, Input, Label } from '@/components/atoms';
+import { Button, DashboardCard, DatePicker, Input, Label, Textarea } from '@/components/atoms';
 import type { DailyReportWithItems } from '@/lib/supabase/models';
-import { createDailyReport } from '@/server/actions/inventory';
+import { createDailyReport, replaceDailyReport } from '@/server/actions/inventory';
 import { PageHeader } from '../shared/PageHeader';
 
 interface ProductOption {
@@ -23,17 +24,23 @@ interface ReportLine {
 interface DailyReportProps {
   products: ProductOption[];
   todayReport: DailyReportWithItems | null;
+  suggestedQuantities?: Record<string, number>;
+  initialDate: string;
 }
 
-function getToday(): string {
-  return new Date().toISOString().split('T')[0];
-}
-
-export const DailyReport: FC<DailyReportProps> = ({ products, todayReport }) => {
+export const DailyReport: FC<DailyReportProps> = ({
+  products,
+  todayReport,
+  suggestedQuantities,
+  initialDate
+}) => {
+  const router = useRouter();
+  const [selectedDate, setSelectedDate] = useState(initialDate);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [notes, setNotes] = useState('');
+  const [notes, setNotes] = useState(todayReport?.notes ?? '');
+  const [isEditing, setIsEditing] = useState(false);
 
   // Initialize lines from existing report or empty
   const initialLines: ReportLine[] = todayReport
@@ -46,7 +53,7 @@ export const DailyReport: FC<DailyReportProps> = ({ products, todayReport }) => 
       }))
     : products.map(p => ({
         product_id: p.id,
-        produced: 0,
+        produced: suggestedQuantities?.[p.id] ?? 0,
         sold_physical: 0,
         damaged: 0,
         sold_online: 0
@@ -90,58 +97,84 @@ export const DailyReport: FC<DailyReportProps> = ({ products, todayReport }) => 
     }
 
     const formData = new FormData();
-    formData.set('report_date', getToday());
+    formData.set('report_date', selectedDate);
     formData.set('notes', notes);
     formData.set('items', JSON.stringify(items));
 
     startTransition(async () => {
       try {
-        await createDailyReport(formData);
+        if (todayReport && isEditing) {
+          await replaceDailyReport(todayReport.id, formData);
+        } else {
+          await createDailyReport(formData);
+        }
         setSuccess(true);
+        setIsEditing(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error al guardar el informe');
       }
     });
   }
 
-  const isReadonly = !!todayReport;
+  const isReadonly = !!todayReport && !isEditing;
 
   return (
     <div>
       <PageHeader
         title='Informe diario'
-        subtitle={`Fecha: ${getToday()}`}
+        subtitle={`Fecha: ${selectedDate}`}
         action={
           <a
             href='/dashboard/inventory/daily-report/history'
-            className='text-amber-600 hover:text-amber-700 text-14-16 font-medium'
+            className='text-amber-600 hover:text-amber-700 text-16-20 font-medium'
           >
             Ver historial
           </a>
         }
       />
 
+      <div className='mb-4'>
+        <Label>Fecha del informe</Label>
+        <DatePicker
+          value={selectedDate}
+          onChange={newDate => {
+            setSelectedDate(newDate);
+            router.push(`/dashboard/inventory/daily-report?date=${newDate}`);
+          }}
+          className='mt-1 w-64'
+          max={new Date().toISOString().split('T')[0]}
+        />
+      </div>
+
       {isReadonly && (
-        <div className='mb-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-14-16'>
-          Ya existe un informe para hoy. Los datos se muestran en modo lectura.
+        <div className='mb-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-16-20 flex items-center justify-between gap-3'>
+          <span>Ya existe un informe para esta fecha. Los datos se muestran en modo lectura.</span>
+          <Button
+            variant='secondary'
+            type='button'
+            className='cursor-pointer shrink-0'
+            onClick={() => setIsEditing(true)}
+          >
+            Editar
+          </Button>
         </div>
       )}
 
       {error && (
-        <div className='mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-14-16'>
+        <div className='mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-16-20'>
           {error}
         </div>
       )}
 
       {success && (
-        <div className='mb-4 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-14-16'>
+        <div className='mb-4 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-16-20'>
           Informe guardado correctamente.
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
         <DashboardCard noPadding className='overflow-x-auto mb-6'>
-          <table className='w-full text-14-16'>
+          <table className='w-full text-16-20'>
             <thead>
               <tr className='bg-amber-50/40 dark:bg-amber-950/20 border-b border-border-card-children-light dark:border-border-card-children-dark'>
                 <th className='px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400'>
@@ -174,17 +207,14 @@ export const DailyReport: FC<DailyReportProps> = ({ products, todayReport }) => 
                     {getProductName(line.product_id)}
                   </td>
                   <td className='px-4 py-3'>
-                    {isReadonly ? (
-                      line.produced
-                    ) : (
-                      <Input
-                        type='number'
-                        value={line.produced}
-                        onChange={e => updateLine(index, 'produced', Number(e.target.value))}
-                        className='w-20 py-1'
-                        min={0}
-                      />
-                    )}
+                    <div className='flex items-center gap-1.5'>
+                      <span>{line.produced}</span>
+                      {!todayReport && suggestedQuantities?.[line.product_id] ? (
+                        <span className='text-xs text-amber-600 dark:text-amber-400 whitespace-nowrap'>
+                          (sugerido)
+                        </span>
+                      ) : null}
+                    </div>
                   </td>
                   <td className='px-4 py-3'>
                     {isReadonly ? (
@@ -223,11 +253,11 @@ export const DailyReport: FC<DailyReportProps> = ({ products, todayReport }) => 
         {!isReadonly && (
           <DashboardCard className='mb-6'>
             <Label>Notas</Label>
-            <textarea
+            <Textarea
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={3}
-              className='w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-14-16 text-gray-900 dark:text-gray-100 mt-1'
+              className='mt-1'
               placeholder='Notas opcionales sobre el dia...'
             />
 
@@ -238,7 +268,11 @@ export const DailyReport: FC<DailyReportProps> = ({ products, todayReport }) => 
                 className='cursor-pointer'
                 disabled={isPending}
               >
-                {isPending ? 'Guardando...' : 'Guardar informe diario'}
+                {isPending
+                  ? 'Guardando...'
+                  : isEditing
+                    ? 'Actualizar informe diario'
+                    : 'Guardar informe diario'}
               </Button>
             </div>
           </DashboardCard>

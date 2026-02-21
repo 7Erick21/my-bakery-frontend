@@ -37,7 +37,7 @@ export const AuditLog: FC<AuditLogProps> = ({ entries }) => {
       key: 'date',
       header: 'Fecha',
       render: (entry: AuditEntry) => (
-        <span className='text-xs text-gray-500'>{formatDateTime(entry.created_at)}</span>
+        <span className='text-sm text-gray-500'>{formatDateTime(entry.created_at)}</span>
       )
     },
     {
@@ -48,7 +48,7 @@ export const AuditLog: FC<AuditLogProps> = ({ entries }) => {
     {
       key: 'table',
       header: 'Tabla',
-      render: (entry: AuditEntry) => <span className='font-mono text-xs'>{entry.table_name}</span>
+      render: (entry: AuditEntry) => <span className='font-mono text-sm'>{entry.table_name}</span>
     },
     {
       key: 'action',
@@ -61,7 +61,7 @@ export const AuditLog: FC<AuditLogProps> = ({ entries }) => {
       key: 'record',
       header: 'Registro',
       render: (entry: AuditEntry) => (
-        <span className='font-mono text-xs'>{entry.record_id?.slice(0, 8)}</span>
+        <span className='font-mono text-sm'>{entry.record_id?.slice(0, 8)}</span>
       )
     }
   ];
@@ -71,20 +71,24 @@ export const AuditLog: FC<AuditLogProps> = ({ entries }) => {
       <PageHeader title={t('dashboard.nav.audit', 'Auditoría')} />
 
       <div className='flex gap-4 mb-6'>
-        <Select value={filterTable} onChange={e => setFilterTable(e.target.value)}>
-          <option value=''>Todas las tablas</option>
-          {tables.map(table => (
-            <option key={table} value={table}>
-              {table}
-            </option>
-          ))}
-        </Select>
-        <Select value={filterAction} onChange={e => setFilterAction(e.target.value)}>
-          <option value=''>Todas las acciones</option>
-          <option value='create'>Create</option>
-          <option value='update'>Update</option>
-          <option value='delete'>Delete</option>
-        </Select>
+        <Select
+          value={filterTable}
+          onChange={setFilterTable}
+          options={[
+            { value: '', label: 'Todas las tablas' },
+            ...tables.map(table => ({ value: table, label: table }))
+          ]}
+        />
+        <Select
+          value={filterAction}
+          onChange={setFilterAction}
+          options={[
+            { value: '', label: 'Todas las acciones' },
+            { value: 'create', label: 'Create' },
+            { value: 'update', label: 'Update' },
+            { value: 'delete', label: 'Delete' }
+          ]}
+        />
       </div>
 
       <DataTable columns={columns} data={filtered} emptyMessage='No hay registros' />

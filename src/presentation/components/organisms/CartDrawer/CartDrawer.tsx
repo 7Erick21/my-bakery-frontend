@@ -3,9 +3,10 @@
 import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { type FC, useEffect } from 'react';
+import { type FC, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
-import { Button } from '@/components/atoms';
+import { Button, Card, IconButton } from '@/components/atoms';
 import { formatPrice } from '@/lib/utils/format';
 import { useTranslation } from '@/shared/hooks';
 import { useCartStore } from '@/shared/stores/cartStore';
@@ -18,6 +19,11 @@ interface CartDrawerProps {
 export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
   const { items, removeItem, updateQuantity, totalPrice } = useCartStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close on Escape key
   useEffect(() => {
@@ -41,25 +47,28 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       className={`fixed inset-0 z-50 transition-[visibility] duration-300 ${isOpen ? 'visible' : 'invisible'}`}
     >
       {/* Overlay */}
       <button
         type='button'
-        className={`absolute inset-0 w-full h-full bg-black/60 backdrop-blur-[2px] transition-opacity duration-300 cursor-default ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 w-full h-full bg-black/60 backdrop-blur-md transition-opacity duration-300 cursor-default ${isOpen ? 'opacity-100' : 'opacity-0'}`}
         onClick={onClose}
         aria-label='Cerrar carrito'
         tabIndex={-1}
       />
 
       {/* Panel */}
-      <div
-        className={`absolute right-0 top-0 h-full w-[90vw] max-w-lg bg-gradient-to-b from-white via-white to-amber-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800/50 shadow-2xl flex flex-col transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      <Card
+        variant='children'
+        className={`absolute right-0 top-0 h-full w-[90vw] max-w-lg !rounded-l-2xl !rounded-r-none flex flex-col transition-transform duration-300 ease-out !bg-modal-light dark:!bg-modal-dark ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Header */}
-        <div className='flex items-center justify-between px-6 py-5 border-b border-amber-100 dark:border-gray-700/50'>
+        <div className='flex items-center justify-between px-6 py-5 border-b border-border-card-children-light dark:border-border-card-children-dark'>
           <div className='flex items-center gap-3'>
             <svg
               className='w-6 h-6 text-amber-500'
@@ -84,12 +93,7 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
               </span>
             )}
           </div>
-          <button
-            type='button'
-            onClick={onClose}
-            className='p-2 -mr-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer'
-            aria-label='Cerrar carrito'
-          >
+          <IconButton onClick={onClose} aria-label='Cerrar carrito' className='-mr-2'>
             <svg
               className='w-5 h-5'
               viewBox='0 0 24 24'
@@ -100,7 +104,7 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
             >
               <path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12' />
             </svg>
-          </button>
+          </IconButton>
         </div>
 
         {/* Items */}
@@ -128,9 +132,10 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
           ) : (
             <div className='space-y-3'>
               {items.map(item => (
-                <div
+                <Card
                   key={item.productId}
-                  className='flex gap-3 p-3 rounded-2xl bg-white dark:bg-gray-800/80 border border-gray-100 dark:border-gray-700/40 shadow-sm'
+                  variant='glass-light'
+                  className='flex gap-3 p-3 rounded-2xl'
                 >
                   {item.imageUrl && (
                     <Image
@@ -152,28 +157,30 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                     </div>
                     <div className='flex items-center justify-between mt-2'>
                       <div className='flex items-center gap-0 rounded-lg border border-gray-200 dark:border-gray-600 overflow-hidden'>
-                        <button
-                          type='button'
+                        <IconButton
+                          size='sm'
                           onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                          className='w-8 h-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer flex items-center justify-center text-sm font-medium'
+                          aria-label={`Reducir ${item.name}`}
+                          className='!rounded-none !w-8 !h-8 text-sm font-medium'
                         >
                           −
-                        </button>
+                        </IconButton>
                         <span className='w-8 h-8 flex items-center justify-center text-sm font-bold text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700/50'>
                           {item.quantity}
                         </span>
-                        <button
-                          type='button'
+                        <IconButton
+                          size='sm'
                           onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                          className='w-8 h-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer flex items-center justify-center text-sm font-medium'
+                          aria-label={`Aumentar ${item.name}`}
+                          className='!rounded-none !w-8 !h-8 text-sm font-medium'
                         >
                           +
-                        </button>
+                        </IconButton>
                       </div>
-                      <button
-                        type='button'
+                      <IconButton
+                        variant='danger'
+                        size='sm'
                         onClick={() => removeItem(item.productId)}
-                        className='p-1.5 rounded-lg text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors cursor-pointer'
                         aria-label={`Eliminar ${item.name}`}
                       >
                         <svg
@@ -190,10 +197,10 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                             d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0'
                           />
                         </svg>
-                      </button>
+                      </IconButton>
                     </div>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           )}
@@ -201,7 +208,7 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className='px-6 py-5 border-t border-amber-100 dark:border-gray-700/50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm space-y-4'>
+          <div className='px-6 py-5 border-t border-border-card-children-light dark:border-border-card-children-dark space-y-4'>
             <div className='flex items-center justify-between'>
               <span className='text-base font-semibold text-gray-900 dark:text-gray-100'>
                 Total
@@ -217,8 +224,9 @@ export const CartDrawer: FC<CartDrawerProps> = ({ isOpen, onClose }) => {
             </Link>
           </div>
         )}
-      </div>
-    </div>
+      </Card>
+    </div>,
+    document.body
   );
 };
 

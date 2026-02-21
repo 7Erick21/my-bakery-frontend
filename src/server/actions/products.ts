@@ -79,13 +79,14 @@ export async function createProduct(formData: FormData) {
   // Insert images
   const images: ProductImageInput[] = JSON.parse((formData.get('images') as string) || '[]');
   if (images.length > 0) {
+    const hasPrimary = images.some(img => img.is_primary);
     await supabase.from('product_images').insert(
       images.map((img, idx) => ({
         product_id: product.id,
         url: img.url,
         alt_text: img.alt_text || null,
         sort_order: idx,
-        is_primary: idx === 0
+        is_primary: hasPrimary ? (img.is_primary ?? false) : idx === 0
       }))
     );
   }
@@ -193,13 +194,14 @@ export async function updateProduct(id: string, formData: FormData) {
     // Replace product_images: delete old rows, insert new
     await supabase.from('product_images').delete().eq('product_id', id);
     if (newImages.length > 0) {
+      const hasPrimary = newImages.some(img => img.is_primary);
       await supabase.from('product_images').insert(
         newImages.map((img, idx) => ({
           product_id: id,
           url: img.url,
           alt_text: img.alt_text || null,
           sort_order: idx,
-          is_primary: idx === 0
+          is_primary: hasPrimary ? (img.is_primary ?? false) : idx === 0
         }))
       );
     }
@@ -216,6 +218,24 @@ export async function updateProduct(id: string, formData: FormData) {
   if (stepsData) {
     await savePreparationSteps(supabase, id, stepsData as string);
   }
+
+  revalidatePath('/');
+  revalidatePath('/products');
+  revalidatePath('/dashboard/products');
+}
+
+export async function reorderProducts(orderedIds: string[]) {
+  await requireRole(['admin', 'super_admin']);
+  const supabase = await createClient();
+
+  await Promise.all(
+    orderedIds.map((id, index) =>
+      supabase
+        .from('products')
+        .update({ sort_order: index + 1 })
+        .eq('id', id)
+    )
+  );
 
   revalidatePath('/');
   revalidatePath('/products');

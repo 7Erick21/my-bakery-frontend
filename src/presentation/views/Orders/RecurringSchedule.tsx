@@ -4,6 +4,8 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
 
+import { Button, IconButton, Input, Select } from '@/components/atoms';
+import PencilIcon from '@/icons/pencil.svg';
 import type { ProductListItem, RecurringScheduleWithItems } from '@/lib/supabase/models';
 import { formatPrice } from '@/lib/utils/format';
 import { Layout } from '@/presentation/layout/Layout';
@@ -107,25 +109,24 @@ export const RecurringSchedule: FC<RecurringScheduleProps> = ({ schedule, produc
               )}
             </div>
             <div className='flex items-center gap-3'>
-              <button
-                type='button'
+              <Button
+                variant='secondary'
                 onClick={() => handleToggleSchedule(!schedule.is_active)}
                 disabled={busy}
-                className={`px-3 py-1.5 text-sm rounded-lg font-medium cursor-pointer disabled:opacity-50 ${
+                className={`!text-sm ${
                   schedule.is_active
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                    : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                    ? '!bg-green-100 !text-green-700 dark:!bg-green-900/30 dark:!text-green-400 !border-green-200 dark:!border-green-800'
+                    : ''
                 }`}
               >
                 {schedule.is_active
                   ? t('recurring.active', 'Activo')
                   : t('recurring.inactive', 'Inactivo')}
-              </button>
-              <Link
-                href={`/orders/recurring/${schedule.id}?edit=true` as Route}
-                className='px-3 py-1.5 text-sm rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-              >
-                {t('common.edit', 'Editar')}
+              </Button>
+              <Link href={`/orders/recurring/${schedule.id}?edit=true` as Route}>
+                <IconButton aria-label={t('common.edit', 'Editar')} variant='accent'>
+                  <PencilIcon className='w-4 h-4' />
+                </IconButton>
               </Link>
             </div>
           </div>
@@ -140,58 +141,48 @@ export const RecurringSchedule: FC<RecurringScheduleProps> = ({ schedule, produc
                 <label htmlFor='add-product' className='block text-xs text-gray-500 mb-1'>
                   Producto
                 </label>
-                <select
+                <Select
                   id='add-product'
                   value={addProductId}
-                  onChange={e => setAddProductId(e.target.value)}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm'
-                >
-                  <option value=''>Seleccionar...</option>
-                  {products.map(p => (
-                    <option key={p.id} value={p.id}>
-                      {p.product_translations?.[0]?.name || p.slug} — {formatPrice(p.price)}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setAddProductId}
+                  placeholder='Seleccionar...'
+                  options={products.map(p => ({
+                    value: p.id,
+                    label: `${p.product_translations?.[0]?.name || p.slug} — ${formatPrice(p.price)}`
+                  }))}
+                />
               </div>
               <div className='w-24'>
                 <label htmlFor='add-day' className='block text-xs text-gray-500 mb-1'>
                   Dia
                 </label>
-                <select
+                <Select
                   id='add-day'
-                  value={addDay}
-                  onChange={e => setAddDay(Number(e.target.value))}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm'
-                >
-                  {DAY_NAMES.map((name, i) => (
-                    <option key={name} value={i + 1}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
+                  value={String(addDay)}
+                  onChange={v => setAddDay(Number(v))}
+                  options={DAY_NAMES.map((name, i) => ({ value: String(i + 1), label: name }))}
+                />
               </div>
               <div className='w-20'>
                 <label htmlFor='add-qty' className='block text-xs text-gray-500 mb-1'>
                   Cant.
                 </label>
-                <input
+                <Input
                   id='add-qty'
                   type='number'
                   min={1}
                   value={addQty}
                   onChange={e => setAddQty(Math.max(1, Number(e.target.value)))}
-                  className='w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm'
                 />
               </div>
-              <button
-                type='button'
+              <Button
+                variant='primary'
                 onClick={handleAddItem}
                 disabled={busy || !addProductId}
-                className='px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium rounded-lg cursor-pointer disabled:opacity-50'
+                className='!text-sm'
               >
                 {t('common.add', 'Anadir')}
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -228,24 +219,23 @@ export const RecurringSchedule: FC<RecurringScheduleProps> = ({ schedule, produc
                           <div className='flex items-center justify-between mt-1'>
                             <span className='text-gray-500'>x{item.quantity}</span>
                             <div className='flex gap-1'>
-                              <button
-                                type='button'
+                              <IconButton
+                                size='sm'
                                 onClick={() => handleToggleItem(item.id, !item.is_active)}
                                 disabled={busy}
-                                className='text-gray-400 hover:text-amber-500 cursor-pointer disabled:opacity-50'
-                                title={item.is_active ? 'Desactivar' : 'Activar'}
+                                aria-label={item.is_active ? 'Desactivar' : 'Activar'}
                               >
                                 {item.is_active ? '⏸' : '▶'}
-                              </button>
-                              <button
-                                type='button'
+                              </IconButton>
+                              <IconButton
+                                size='sm'
+                                variant='danger'
                                 onClick={() => handleDeleteItem(item.id)}
                                 disabled={busy}
-                                className='text-gray-400 hover:text-red-500 cursor-pointer disabled:opacity-50'
-                                title='Eliminar'
+                                aria-label='Eliminar'
                               >
                                 ✕
-                              </button>
+                              </IconButton>
                             </div>
                           </div>
                         </div>

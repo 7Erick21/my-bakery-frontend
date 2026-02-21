@@ -2,12 +2,16 @@
 
 import type { Route } from 'next';
 import Link from 'next/link';
-import type { FC } from 'react';
+import { type FC, useState } from 'react';
 
+import { Button, IconButton } from '@/components/atoms';
+import { ConfirmDialog } from '@/components/molecules';
+import TrashIcon from '@/icons/trash.svg';
 import type { CouponItem } from '@/lib/supabase/models';
 import { formatDate } from '@/lib/utils/format';
 import { deleteCoupon, toggleCouponActive } from '@/server/actions/coupons';
 import { useTranslation } from '@/shared/hooks/useTranslate';
+import { useToastStore } from '@/shared/stores/toastStore';
 import { DataTable } from '../shared/DataTable';
 import { PageHeader } from '../shared/PageHeader';
 
@@ -17,6 +21,22 @@ interface CouponsListProps {
 
 export const CouponsList: FC<CouponsListProps> = ({ coupons }) => {
   const { t } = useTranslation();
+  const addToast = useToastStore(s => s.addToast);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
+  async function handleDelete() {
+    if (!deleteTarget) return;
+    setDeleting(true);
+    try {
+      await deleteCoupon(deleteTarget);
+      addToast({ message: 'Cupon eliminado correctamente', type: 'success' });
+    } catch {
+      addToast({ message: 'Error al eliminar el cupon', type: 'error' });
+    }
+    setDeleting(false);
+    setDeleteTarget(null);
+  }
 
   const columns = [
     {
@@ -41,7 +61,7 @@ export const CouponsList: FC<CouponsListProps> = ({ coupons }) => {
       key: 'validity',
       header: 'Validez',
       render: (coupon: CouponItem) => (
-        <span className='text-xs'>
+        <span className='text-sm'>
           {coupon.valid_until ? formatDate(coupon.valid_until) : 'Sin limite'}
         </span>
       )
@@ -50,32 +70,28 @@ export const CouponsList: FC<CouponsListProps> = ({ coupons }) => {
       key: 'status',
       header: 'Estado',
       render: (coupon: CouponItem) => (
-        <button
-          type='button'
+        <Button
+          variant='ghost'
           onClick={() => toggleCouponActive(coupon.id, !coupon.is_active)}
-          className={`px-2 py-0.5 rounded-full text-xs font-medium cursor-pointer ${
-            coupon.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
+          className={`!px-2 !py-0.5 !rounded-full !text-sm !font-medium !border-0 ${
+            coupon.is_active ? '!bg-green-100 !text-green-700' : '!bg-gray-100 !text-gray-500'
           }`}
         >
           {coupon.is_active ? 'Activo' : 'Inactivo'}
-        </button>
+        </Button>
       )
     },
     {
       key: 'actions',
       header: 'Acciones',
       render: (coupon: CouponItem) => (
-        <button
-          type='button'
-          onClick={() => {
-            if (confirm('¿Eliminar este cupon?')) {
-              deleteCoupon(coupon.id);
-            }
-          }}
-          className='text-red-500 hover:text-red-700 text-xs cursor-pointer'
+        <IconButton
+          aria-label='Eliminar'
+          variant='danger'
+          onClick={() => setDeleteTarget(coupon.id)}
         >
-          Eliminar
-        </button>
+          <TrashIcon className='w-4 h-4' />
+        </IconButton>
       )
     }
   ];
@@ -85,15 +101,21 @@ export const CouponsList: FC<CouponsListProps> = ({ coupons }) => {
       <PageHeader
         title={t('dashboard.nav.coupons', 'Cupones')}
         action={
-          <Link
-            href={'/dashboard/coupons/new' as Route}
-            className='px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-sm hover:shadow-md hover:shadow-amber-500/20 text-white rounded-lg text-sm font-medium transition-all'
-          >
-            Nuevo cupon
+          <Link href={'/dashboard/coupons/new' as Route}>
+            <Button variant='primary'>Nuevo cupon</Button>
           </Link>
         }
       />
       <DataTable columns={columns} data={coupons} emptyMessage='No hay cupones' />
+
+      <ConfirmDialog
+        isOpen={deleteTarget !== null}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={handleDelete}
+        title='¿Eliminar este cupon?'
+        description='Esta accion no se puede deshacer.'
+        loading={deleting}
+      />
     </div>
   );
 };

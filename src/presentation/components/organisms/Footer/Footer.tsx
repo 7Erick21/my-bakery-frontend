@@ -5,7 +5,14 @@ import type { FC } from 'react';
 import { Card } from '@/components/atoms';
 import FacebookIcon from '@/icons/facebooks.svg';
 import InstagramIcon from '@/icons/instagram.svg';
+import LinkedinIcon from '@/icons/linkedin.svg';
+import PinterestIcon from '@/icons/pinterest.svg';
+import TelegramIcon from '@/icons/telegram.svg';
+import ThreadsIcon from '@/icons/threads.svg';
+import TiktokIcon from '@/icons/tiktok.svg';
 import TwitterIcon from '@/icons/twitter.svg';
+import WhatsappIcon from '@/icons/whatsapp.svg';
+import YoutubeIcon from '@/icons/youtube.svg';
 import LogoImage from '@/images/logo.avif';
 import type {
   LandingBusinessInfoItem,
@@ -19,7 +26,14 @@ import { menusItems } from '@/shared/defaults';
 const socialIconMap: Record<string, typeof FacebookIcon> = {
   facebook: FacebookIcon,
   instagram: InstagramIcon,
-  twitter: TwitterIcon
+  twitter: TwitterIcon,
+  tiktok: TiktokIcon,
+  youtube: YoutubeIcon,
+  whatsapp: WhatsappIcon,
+  linkedin: LinkedinIcon,
+  pinterest: PinterestIcon,
+  telegram: TelegramIcon,
+  threads: ThreadsIcon
 };
 
 interface FooterProps {
@@ -41,7 +55,7 @@ export const Footer: FC<FooterProps> = ({ footerContent, businessInfo = [], soci
 
   const resolvedSocialLinks = socialLinks?.length
     ? socialLinks.map(link => ({
-        icon: socialIconMap[link.icon || link.platform] || FacebookIcon,
+        icon: socialIconMap[link.platform] || FacebookIcon,
         href: link.url,
         ariaLabel: t(`footer.social.${link.platform}`)
       }))

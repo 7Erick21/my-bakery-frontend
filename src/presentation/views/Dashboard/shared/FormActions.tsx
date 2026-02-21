@@ -21,10 +21,10 @@ export const FormActions: FC<FormActionsProps> = ({
 }) => {
   return (
     <div className='flex gap-4'>
-      <Button type='submit' variant='primary' disabled={submitting} className='cursor-pointer'>
+      <Button type='submit' variant='primary' disabled={submitting}>
         {submitting ? submittingLabel : submitLabel}
       </Button>
-      <Button type='button' variant='secondary' onClick={onCancel} className='cursor-pointer'>
+      <Button type='button' variant='secondary' onClick={onCancel}>
         {cancelLabel}
       </Button>
     </div>

@@ -16,7 +16,7 @@ export const CartButton: FC<CartButtonProps> = ({ onClick }) => {
     <Button
       variant='ghost'
       onClick={onClick}
-      className='relative p-2 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400'
+      className='relative p-2 !bg-transparent shadow-card-children-light dark:shadow-card-children-dark text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400'
       aria-label='Carrito de compras'
     >
       <svg

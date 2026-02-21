@@ -4,7 +4,8 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
 
-import { StatusBadge } from '@/components/atoms';
+import { Button, IconButton, Select, StatusBadge } from '@/components/atoms';
+import EyeIcon from '@/icons/eye.svg';
 import type { OrderAdmin } from '@/lib/supabase/models';
 import type { OrderStatus } from '@/lib/supabase/types';
 import { formatDate, formatPrice } from '@/lib/utils/format';
@@ -48,7 +49,7 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
       key: 'id',
       header: 'ID',
       render: (order: OrderAdmin) => (
-        <span className='font-mono text-xs'>{order.id.slice(0, 8)}</span>
+        <span className='font-mono text-sm'>{order.id.slice(0, 8)}</span>
       )
     },
     {
@@ -65,7 +66,7 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
       key: 'method',
       header: 'Metodo',
       render: (order: OrderAdmin) => (
-        <span className='text-xs'>
+        <span className='text-sm'>
           {PAYMENT_METHOD_LABELS[order.payment_method]?.es || order.payment_method}
         </span>
       )
@@ -79,14 +80,14 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
             {order.payment_status}
           </StatusBadge>
           {order.payment_status === 'pending' && order.payment_method !== 'stripe' && (
-            <button
-              type='button'
+            <Button
+              variant='primary'
               onClick={() => handleMarkAsPaid(order.id)}
               disabled={updatingId === order.id}
-              className='px-2 py-0.5 bg-green-500 hover:bg-green-600 text-white text-xs rounded cursor-pointer disabled:opacity-50'
+              className='!px-2 !py-0.5 !text-sm !rounded'
             >
               Pagado
-            </button>
+            </Button>
           )}
         </div>
       )
@@ -95,25 +96,20 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
       key: 'status',
       header: 'Estado',
       render: (order: OrderAdmin) => (
-        <select
+        <Select
           value={order.status}
-          onChange={e => handleStatusChange(order.id, e.target.value as OrderStatus)}
+          onChange={v => handleStatusChange(order.id, v as OrderStatus)}
           disabled={updatingId === order.id}
-          className={`px-2 py-1 rounded text-xs font-medium border-0 cursor-pointer ${ORDER_STATUS_COLORS[order.status] || ''}`}
-        >
-          {ORDER_STATUS_OPTIONS.map(s => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+          className={`px-2 py-1 rounded text-sm font-medium border-0 cursor-pointer ${ORDER_STATUS_COLORS[order.status] || ''}`}
+          options={ORDER_STATUS_OPTIONS.map(s => ({ value: s, label: s }))}
+        />
       )
     },
     {
       key: 'delivery',
       header: 'Entrega',
       render: (order: OrderAdmin) => (
-        <span className='text-xs'>
+        <span className='text-sm'>
           {order.delivery_date ? formatDate(order.delivery_date) : '—'}
         </span>
       )
@@ -121,17 +117,16 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
     {
       key: 'date',
       header: 'Fecha',
-      render: (order: OrderAdmin) => <span className='text-xs'>{formatDate(order.created_at)}</span>
+      render: (order: OrderAdmin) => <span className='text-sm'>{formatDate(order.created_at)}</span>
     },
     {
       key: 'actions',
       header: 'Acciones',
       render: (order: OrderAdmin) => (
-        <Link
-          href={`/dashboard/orders/${order.id}` as Route}
-          className='text-amber-600 hover:text-amber-700 text-xs font-medium'
-        >
-          Ver
+        <Link href={`/dashboard/orders/${order.id}` as Route}>
+          <IconButton aria-label='Ver' variant='info'>
+            <EyeIcon className='w-4 h-4' />
+          </IconButton>
         </Link>
       )
     }

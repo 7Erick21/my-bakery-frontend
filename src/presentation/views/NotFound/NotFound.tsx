@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import type { FC } from 'react';
 
+import { Button } from '@/components/atoms';
 import { OvenAnimate } from '@/components/molecules';
 import { useTranslation } from '@/presentation/shared/hooks/useTranslate';
 
@@ -27,20 +28,19 @@ export const NotFound: FC = () => {
           </p>
 
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <Link
-              href={{ pathname: '/' }}
-              className='bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
-              aria-label={t('notFound.homeButton')}
-            >
-              {t('notFound.homeButton')}
+            <Link href={{ pathname: '/' }} aria-label={t('notFound.homeButton')}>
+              <Button variant='default' className='!rounded-full !px-8 !py-3 text-white'>
+                {t('notFound.homeButton')}
+              </Button>
             </Link>
-            <button
+            <Button
+              variant='outline'
               onClick={() => window.history.back()}
-              className='border border-amber-600 text-amber-600 cursor-pointer hover:bg-amber-50 dark:hover:bg-amber-900/20 px-8 py-3 rounded-full transition-all duration-300 transform animate-pulse hover:scale-105'
+              className='!rounded-full !px-8 !py-3'
               aria-label={t('notFound.backButton')}
             >
               {t('notFound.backButton')}
-            </button>
+            </Button>
           </div>
         </div>
 

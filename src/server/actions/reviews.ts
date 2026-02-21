@@ -24,7 +24,7 @@ export async function createReview(formData: FormData) {
       rating,
       comment,
       review_type: reviewType,
-      status: 'pending'
+      status: 'approved'
     })
     .select('id')
     .single();

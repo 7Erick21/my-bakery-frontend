@@ -2,7 +2,17 @@
 
 import { type FC, useState } from 'react';
 
-import { Button, Checkbox, DashboardCard, Input, Label } from '@/components/atoms';
+import {
+  Button,
+  Checkbox,
+  DashboardCard,
+  IconButton,
+  Input,
+  Label,
+  Select
+} from '@/components/atoms';
+import PencilIcon from '@/icons/pencil.svg';
+import TrashIcon from '@/icons/trash.svg';
 import type {
   ProductAdminListItem,
   ProductionScheduleItem,
@@ -207,36 +217,24 @@ export const ProductionSchedule: FC<ProductionScheduleProps> = ({
         <form onSubmit={handleAdd} className='flex flex-wrap gap-4 items-end'>
           <div className='flex-1 min-w-48'>
             <Label>Producto</Label>
-            <select
+            <Select
               value={selectedProduct}
-              onChange={e => setSelectedProduct(e.target.value)}
+              onChange={setSelectedProduct}
               required
-              className='w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-14-16 text-gray-900 dark:text-gray-100'
-            >
-              <option value=''>Seleccionar producto...</option>
-              {products.map(p => {
+              placeholder='Seleccionar producto...'
+              options={products.map(p => {
                 const tr = getTranslation(p.product_translations, 'es');
-                return (
-                  <option key={p.id} value={p.id}>
-                    {tr?.name ?? p.slug}
-                  </option>
-                );
+                return { value: p.id, label: tr?.name ?? p.slug };
               })}
-            </select>
+            />
           </div>
           <div className='w-40'>
             <Label>Día</Label>
-            <select
-              value={selectedDay}
-              onChange={e => setSelectedDay(Number(e.target.value))}
-              className='w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-14-16 text-gray-900 dark:text-gray-100'
-            >
-              {DAY_NAMES.map((name, i) => (
-                <option key={name} value={i + 1}>
-                  {name}
-                </option>
-              ))}
-            </select>
+            <Select
+              value={String(selectedDay)}
+              onChange={v => setSelectedDay(Number(v))}
+              options={DAY_NAMES.map((name, i) => ({ value: String(i + 1), label: name }))}
+            />
           </div>
           <div className='w-28'>
             <Label>Cantidad</Label>
@@ -252,7 +250,7 @@ export const ProductionSchedule: FC<ProductionScheduleProps> = ({
             {submitting ? 'Añadiendo...' : 'Añadir'}
           </Button>
         </form>
-        <p className='text-xs text-gray-500 mt-2'>
+        <p className='text-sm text-gray-500 mt-2'>
           Si el producto ya existe para ese día, se actualizará la cantidad.
         </p>
       </DashboardCard>
@@ -274,7 +272,7 @@ export const ProductionSchedule: FC<ProductionScheduleProps> = ({
 
             return (
               <DashboardCard key={day} title={DAY_NAMES[day - 1]}>
-                <table className='w-full text-14-16'>
+                <table className='w-full text-16-20'>
                   <thead>
                     <tr className='border-b border-border-card-children-light dark:border-border-card-children-dark text-left'>
                       <th className='py-2 px-3 font-medium text-gray-500'>Producto</th>
@@ -282,7 +280,7 @@ export const ProductionSchedule: FC<ProductionScheduleProps> = ({
                       <th className='py-2 px-3 font-medium text-gray-500'>Recurrentes</th>
                       <th className='py-2 px-3 font-medium text-gray-500'>Total</th>
                       <th className='py-2 px-3 font-medium text-gray-500'>Activo</th>
-                      <th className='py-2 px-3 font-medium text-gray-500'>Acción</th>
+                      <th className='py-2 px-3 font-medium text-gray-500 text-center'>Acción</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -328,13 +326,13 @@ export const ProductionSchedule: FC<ProductionScheduleProps> = ({
                             )}
                             {isExpanded && row.recurring_details.length > 0 && (
                               <div className='absolute z-10 left-0 top-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-3 min-w-48'>
-                                <p className='text-xs font-semibold text-gray-500 mb-1'>
+                                <p className='text-sm font-semibold text-gray-500 mb-1'>
                                   Desglose:
                                 </p>
                                 {row.recurring_details.map(d => (
                                   <div
                                     key={d.business_name}
-                                    className='flex justify-between text-xs py-0.5'
+                                    className='flex justify-between text-sm py-0.5'
                                   >
                                     <span>{d.business_name}</span>
                                     <span className='font-medium ml-4'>{d.quantity}</span>
@@ -353,52 +351,54 @@ export const ProductionSchedule: FC<ProductionScheduleProps> = ({
                                 onChange={() => handleToggle(row.scheduleItem!)}
                               />
                             ) : (
-                              <span className='text-xs text-gray-400'>—</span>
+                              <span className='text-sm text-gray-400'>—</span>
                             )}
                           </td>
-                          <td className='py-2 px-3'>
+                          <td className='py-2 px-3 text-center'>
                             {row.scheduleItem ? (
                               isEditing ? (
-                                <div className='flex gap-2'>
-                                  <button
-                                    type='button'
+                                <div className='flex gap-2 justify-center'>
+                                  <Button
+                                    variant='primary'
                                     onClick={() => handleSaveQuantity(row.scheduleItem!)}
-                                    className='text-green-600 hover:text-green-700 text-xs font-medium cursor-pointer'
+                                    className='!text-sm !px-2 !py-0.5'
                                   >
                                     Guardar
-                                  </button>
-                                  <button
-                                    type='button'
+                                  </Button>
+                                  <Button
+                                    variant='secondary'
                                     onClick={() => setEditingId(null)}
-                                    className='text-gray-500 text-xs cursor-pointer'
+                                    className='!text-sm !px-2 !py-0.5'
                                   >
                                     Cancelar
-                                  </button>
+                                  </Button>
                                 </div>
                               ) : (
-                                <div className='flex gap-2'>
-                                  <button
-                                    type='button'
+                                <div className='flex gap-1 justify-center'>
+                                  <IconButton
+                                    aria-label='Editar'
+                                    variant='accent'
+                                    size='sm'
                                     onClick={() => {
                                       setEditingId(row.scheduleItem!.id);
                                       setEditQuantity(row.scheduleItem!.base_quantity);
                                     }}
-                                    className='text-amber-600 hover:text-amber-700 text-xs font-medium cursor-pointer'
                                   >
-                                    Editar
-                                  </button>
-                                  <button
-                                    type='button'
+                                    <PencilIcon className='w-3.5 h-3.5' />
+                                  </IconButton>
+                                  <IconButton
+                                    aria-label='Eliminar'
+                                    variant='danger'
+                                    size='sm'
                                     onClick={() => handleDelete(row.scheduleItem!.id)}
                                     disabled={!!isDeleting}
-                                    className='text-red-600 hover:text-red-700 text-xs font-medium cursor-pointer disabled:opacity-50'
                                   >
-                                    {isDeleting ? 'Eliminando...' : 'Eliminar'}
-                                  </button>
+                                    <TrashIcon className='w-3.5 h-3.5' />
+                                  </IconButton>
                                 </div>
                               )
                             ) : (
-                              <span className='text-xs text-gray-400'>Solo recurrente</span>
+                              <span className='text-sm text-gray-400'>Solo recurrente</span>
                             )}
                           </td>
                         </tr>

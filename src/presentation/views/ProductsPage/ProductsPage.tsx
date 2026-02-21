@@ -1,10 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { type FC, useMemo, useState } from 'react';
 
+import { Button } from '@/components/atoms';
 import { ProductCard } from '@/components/molecules';
 import type { CategoryListItem, ProductListItem } from '@/lib/supabase/models';
-import { Layout } from '@/presentation/layout/Layout';
 import { useTranslation } from '@/shared/hooks/useTranslate';
 
 interface ProductsPageProps {
@@ -29,66 +30,74 @@ export const ProductsPage: FC<ProductsPageProps> = ({ products, categories }) =>
   }, [products, selectedCategory, selectedSeason]);
 
   return (
-    <Layout>
-      <section className='min-h-dvh pt-24 pb-16'>
-        <div className='flex flex-col gap-12'>
-          {/* Header */}
-          <div className='text-center'>
-            <h1 className='text-60-96 font-bold text-gray-900 dark:text-gray-100'>
-              {t('products.title')}
-            </h1>
-            <p className='text-xl text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto'>
-              {t('products.description')}
-            </p>
-          </div>
+    <section className='pt-24 pb-16'>
+      <div className='flex flex-col gap-12'>
+        {/* Back button */}
+        <Link
+          href='/#products'
+          className='inline-flex items-center gap-2 text-base text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors group'
+        >
+          <svg
+            className='w-4 h-4 transition-transform group-hover:-translate-x-0.5'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={2}
+            stroke='currentColor'
+            aria-hidden='true'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
+          </svg>
+          {t('products.backToHome', 'Volver')}
+        </Link>
 
-          {/* Filters */}
-          <div className='flex flex-wrap gap-3 justify-center'>
-            <button
-              type='button'
-              onClick={() => setSelectedCategory(null)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors cursor-pointer ${
-                !selectedCategory
-                  ? 'bg-amber-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-              }`}
-            >
-              {t('products.allCategories', 'Todos')}
-            </button>
-            {categories.map(cat => {
-              const catName = cat.category_translations?.[0]?.name || cat.slug;
-              return (
-                <button
-                  key={cat.id}
-                  type='button'
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors cursor-pointer ${
-                    selectedCategory === cat.id
-                      ? 'bg-amber-500 text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  {catName}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Products grid */}
-          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {filteredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          {filteredProducts.length === 0 && (
-            <p className='text-center text-gray-500 dark:text-gray-400 py-12'>
-              {t('products.noProducts', 'No se encontraron productos')}
-            </p>
-          )}
+        {/* Header */}
+        <div className='text-center'>
+          <h1 className='text-60-96 font-bold text-gray-900 dark:text-gray-100'>
+            {t('products.title')}
+          </h1>
+          <p className='text-xl text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto'>
+            {t('products.description')}
+          </p>
         </div>
-      </section>
-    </Layout>
+
+        {/* Filters */}
+        <div className='flex flex-wrap gap-3 justify-center'>
+          <Button
+            variant={!selectedCategory ? 'primary' : 'secondary'}
+            onClick={() => setSelectedCategory(null)}
+            className='!rounded-full !px-4 !py-2 !text-sm'
+          >
+            {t('products.allCategories', 'Todos')}
+          </Button>
+          {categories.map(cat => {
+            const catName = cat.category_translations?.[0]?.name || cat.slug;
+            return (
+              <Button
+                key={cat.id}
+                variant={selectedCategory === cat.id ? 'primary' : 'secondary'}
+                onClick={() => setSelectedCategory(cat.id)}
+                className='!rounded-full !px-4 !py-2 !text-sm'
+              >
+                {catName}
+              </Button>
+            );
+          })}
+        </div>
+
+        {/* Products grid */}
+        <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          {filteredProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+
+        {filteredProducts.length === 0 && (
+          <p className='text-center text-gray-500 dark:text-gray-400 py-12'>
+            {t('products.noProducts', 'No se encontraron productos')}
+          </p>
+        )}
+      </div>
+    </section>
   );
 };
 

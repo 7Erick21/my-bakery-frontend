@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { type FC, useState } from 'react';
 
-import { Card } from '@/components/atoms';
+import { Button, Card } from '@/components/atoms';
 import type { ProductListItem } from '@/lib/supabase/models';
 import { SALES_ENABLED } from '@/lib/utils/features';
 import { formatPrice } from '@/lib/utils/format';
@@ -43,16 +43,16 @@ export const ProductCard: FC<ProductCardProps> = ({ product, className = '' }) =
     <Link href={`/products/${product.slug}` as Route}>
       <Card
         variant='glass'
-        className={`group rounded-3xl transition-all duration-500 hover:shadow-xl cursor-pointer h-full ${className}`}
+        className={`group rounded-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer h-full ${className}`}
       >
         {primaryImage && (
-          <div className='rounded-t-3xl overflow-hidden aspect-square'>
+          <div className='rounded-t-2xl overflow-hidden aspect-square'>
             <Image
               src={primaryImage.url}
               alt={primaryImage.alt_text || translation?.name || ''}
               width={400}
               height={400}
-              className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'
+              className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
             />
           </div>
         )}
@@ -78,15 +78,17 @@ export const ProductCard: FC<ProductCardProps> = ({ product, className = '' }) =
             </p>
           )}
           {SALES_ENABLED && (
-            <button
-              type='button'
+            <Button
+              variant='primary'
               onClick={handleAddToCart}
-              className={`mt-1 w-full py-2 rounded-xl text-sm font-medium transition-all cursor-pointer ${
-                added ? 'bg-green-500 text-white' : 'bg-amber-500 hover:bg-amber-600 text-white'
+              className={`mt-1 w-full !rounded-xl !py-2 !text-sm ${
+                added
+                  ? '!from-green-500 !to-green-500 !hover:from-green-600 !hover:to-green-600'
+                  : ''
               }`}
             >
               {added ? t('cart.added', 'Añadido') : t('cart.add', 'Añadir al carrito')}
-            </button>
+            </Button>
           )}
         </div>
       </Card>

@@ -4,7 +4,8 @@ import type { Route } from 'next';
 import Link from 'next/link';
 import type { FC } from 'react';
 
-import { StatusBadge } from '@/components/atoms';
+import { IconButton, StatusBadge } from '@/components/atoms';
+import EyeIcon from '@/icons/eye.svg';
 import type { InvoiceWithItems } from '@/lib/supabase/models';
 import { formatDate, formatPrice } from '@/lib/utils/format';
 import { useTranslation } from '@/shared/hooks/useTranslate';
@@ -23,14 +24,14 @@ export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
       key: 'number',
       header: 'Numero',
       render: (inv: InvoiceWithItems) => (
-        <span className='font-mono text-xs font-medium'>{inv.invoice_number}</span>
+        <span className='font-mono text-sm font-medium'>{inv.invoice_number}</span>
       )
     },
     {
       key: 'date',
       header: 'Fecha',
       render: (inv: InvoiceWithItems) => (
-        <span className='text-xs'>{formatDate(inv.invoice_date || inv.created_at)}</span>
+        <span className='text-sm'>{formatDate(inv.invoice_date || inv.created_at)}</span>
       )
     },
     {
@@ -39,7 +40,7 @@ export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
       render: (inv: InvoiceWithItems) => (
         <div>
           <span className='text-sm'>{inv.buyer_name}</span>
-          {inv.buyer_email && <p className='text-xs text-gray-500'>{inv.buyer_email}</p>}
+          {inv.buyer_email && <p className='text-sm text-gray-500'>{inv.buyer_email}</p>}
         </div>
       )
     },
@@ -47,14 +48,14 @@ export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
       key: 'base',
       header: 'Base',
       render: (inv: InvoiceWithItems) => (
-        <span className='text-xs'>{formatPrice(inv.subtotal_base)}</span>
+        <span className='text-sm'>{formatPrice(inv.subtotal_base)}</span>
       )
     },
     {
       key: 'iva',
       header: 'IVA',
       render: (inv: InvoiceWithItems) => (
-        <span className='text-xs'>{formatPrice(inv.total_iva)}</span>
+        <span className='text-sm'>{formatPrice(inv.total_iva)}</span>
       )
     },
     {
@@ -77,11 +78,10 @@ export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
       key: 'actions',
       header: 'Acciones',
       render: (inv: InvoiceWithItems) => (
-        <Link
-          href={`/dashboard/invoices/${inv.id}` as Route}
-          className='text-amber-600 hover:text-amber-700 text-xs font-medium'
-        >
-          Ver
+        <Link href={`/dashboard/invoices/${inv.id}` as Route}>
+          <IconButton aria-label='Ver' variant='info'>
+            <EyeIcon className='w-4 h-4' />
+          </IconButton>
         </Link>
       )
     }

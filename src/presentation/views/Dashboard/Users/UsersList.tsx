@@ -2,7 +2,7 @@
 
 import type { FC } from 'react';
 
-import { UserAvatar } from '@/components/atoms';
+import { Select, UserAvatar } from '@/components/atoms';
 import type { UserProfile } from '@/lib/supabase/models';
 import type { UserRole } from '@/lib/supabase/types';
 import { formatDate } from '@/lib/utils/format';
@@ -49,31 +49,26 @@ export const UsersList: FC<UsersListProps> = ({ users }) => {
       key: 'role',
       header: 'Rol',
       render: (user: UserProfile) => (
-        <select
+        <Select
           value={user.role}
-          onChange={e => updateUserRole(user.id, e.target.value as UserRole)}
-          className={`px-2 py-1 rounded text-xs font-medium border-0 cursor-pointer ${roleColors[user.role] || ''}`}
-        >
-          {roleOptions.map(role => (
-            <option key={role} value={role}>
-              {role}
-            </option>
-          ))}
-        </select>
+          onChange={v => updateUserRole(user.id, v as UserRole)}
+          className={`px-2 py-1 rounded text-sm font-medium border-0 cursor-pointer ${roleColors[user.role] || ''}`}
+          options={roleOptions.map(role => ({ value: role, label: role }))}
+        />
       )
     },
     {
       key: 'language',
       header: 'Idioma',
       render: (user: UserProfile) => (
-        <span className='text-xs'>{user.preferred_language || 'es'}</span>
+        <span className='text-sm'>{user.preferred_language || 'es'}</span>
       )
     },
     {
       key: 'registered',
       header: 'Registro',
       render: (user: UserProfile) => (
-        <span className='text-xs text-gray-500'>{formatDate(user.created_at)}</span>
+        <span className='text-sm text-gray-500'>{formatDate(user.created_at)}</span>
       )
     }
   ];
